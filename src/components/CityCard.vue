@@ -1,0 +1,66 @@
+<template>
+  <div v-if="city" class="position-relative mb-5">
+    <img
+      v-if="city.photo"
+      class="img-fluid rounded-3 mb-3"
+      :src="city.photo"
+      alt="..."
+    />
+    <img
+      v-else
+      class="img-fluid rounded-3 mb-3"
+      src="https://dummyimage.com/1300x700/343a40/6c757d"
+      alt="..."
+    />
+    <router-link
+      v-if="isPlanned"
+      :to="{
+        name: 'RecommendationsPlanned',
+        params: {
+          citydid: city.dId,
+        },
+      }"
+      class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+    >
+      <div class="h5 card-title mb-3">{{ city.name }}, {{ city.country }}</div>
+    </router-link>
+    <router-link
+      v-else
+      :to="{
+        name: 'RecommendationsVisited',
+        params: {
+          citydid: city.dId,
+        },
+      }"
+      class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+    >
+      <div class="h5 card-title mb-3">{{ city.name }}, {{ city.country }}</div>
+    </router-link>
+  </div>
+</template>
+
+<script lang="ts">
+import { City } from "@/store/types/types";
+import { PropType } from "vue";
+import { defineComponent } from "@vue/runtime-core";
+import { useRoute } from "vue-router";
+
+export default defineComponent({
+  props: {
+    city: {
+      type: Object as PropType<City>,
+      defafult: undefined,
+    },
+  },
+  setup() {
+    const route = useRoute();
+    let isPlanned = true;
+    if (route.name == "CitiesVisited") {
+      isPlanned = false;
+    }
+    return {
+      isPlanned,
+    };
+  },
+});
+</script>

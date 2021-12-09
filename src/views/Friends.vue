@@ -1,0 +1,78 @@
+<template>
+  <!-- Friends section-->
+  <section class="py-5">
+    <div class="container px-5 my-5">
+      <div class="text-center">
+        <h2 class="fw-bolder">Your contacts</h2>
+        <p class="lead fw-normal text-muted mb-5">
+          People connected with your living idea
+        </p>
+      </div>
+      <div
+        class="
+          row
+          gx-5
+          row-cols-1 row-cols-sm-2 row-cols-xl-4
+          justify-content-center
+        "
+      >
+        <div
+          v-for="friend in friends"
+          class="col mb-5 mb-5 mb-xl-0"
+          :key="friend.dId"
+        >
+          <router-link
+            :to="{
+              name: 'UserPublicProfile',
+              params: {
+                userdid: friend.dId,
+              },
+            }"
+            class="nav-link"
+          >
+            <div class="text-center">
+              <img
+                class="img-fluid rounded-circle mb-4 px-4"
+                :src="friend.photo"
+                alt="..."
+              />
+              <h5 class="fw-bolder">{{ friend.name }}</h5>
+              <div class="fst-italic text-muted">
+                {{ friend.shortFact1 }} <i class="bi bi-star"></i>
+                {{ friend.shortFact2 }} <i class="bi bi-star"></i>
+                {{ friend.shortFact3 }}
+              </div>
+            </div></router-link
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script lang="ts">
+// import axios from "axios";
+import { defineComponent } from "@vue/runtime-core";
+import { User } from "@/store/types/types";
+import {
+  allowOrRedirectToHome,
+  getFriends,
+  getUserByDId,
+} from "@/services/dataService";
+import { getUserDIdFromRoute } from "./helpers";
+
+export default defineComponent({
+  setup() {
+    allowOrRedirectToHome();
+    const userDId: string = getUserDIdFromRoute();
+    const user: User | undefined = getUserByDId(userDId);
+
+    return {
+      friends: getFriends(user),
+      // loading: true,
+      loading: false,
+      errored: false,
+    };
+  },
+});
+</script>
