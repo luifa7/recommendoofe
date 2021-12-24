@@ -38,9 +38,9 @@
               />
               <h5 class="fw-bolder">{{ friend.name }}</h5>
               <div class="fst-italic text-muted">
-                {{ friend.shortFact1 }} <i class="bi bi-star"></i>
-                {{ friend.shortFact2 }} <i class="bi bi-star"></i>
-                {{ friend.shortFact3 }}
+                <i class="bi bi-star"></i> {{ friend.shortFact1 }}<br />
+                <i class="bi bi-star"></i> {{ friend.shortFact2 }}<br />
+                <i class="bi bi-star"></i> {{ friend.shortFact3 }}
               </div>
             </div></router-link
           >
