@@ -11,6 +11,11 @@ function getUserByUsername(userName: string): User | undefined {
   return testUsers.find((user: User) => user.userName === userName);
 }
 
+function addNewUser(user: User): string {
+  testUsers.push(user);
+  return user.dId;
+}
+
 function getFriends(user: User | undefined): User[] {
   const friends = new Array<User>();
   if (user) {
@@ -120,4 +125,5 @@ export {
   getCitiyByNameAndUserDId,
   createCity,
   createRecommendation,
+  addNewUser,
 };

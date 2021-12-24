@@ -12,7 +12,7 @@
         </div>
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
-            <form id="add-city-form" @submit.prevent="loginUser">
+            <form id="login-form" @submit.prevent="loginUser">
               <!-- Username input-->
               <div class="form-floating mb-3">
                 <input
@@ -94,7 +94,7 @@ export default defineComponent({
     function loginUser(): boolean {
       const user = getUserByUsername(username.value);
       if (user) {
-        console.log(password.value);
+        console.log(user.dId);
         store.commit("loginUser", user);
         router.push({
           name: "UserPublicProfile",
