@@ -6,7 +6,7 @@
       <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
         <img
-          class="masthead-avatar mb-4 rounded-circle"
+          class="masthead-avatar mb-4 rounded-3"
           :src="user.photo"
           alt="..."
         />
@@ -98,7 +98,7 @@
               <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon">
-                  <i class="bi bi-fingerprint"></i>
+                  <i class="bi bi-hand-thumbs-up"></i>
                 </div>
                 <div class="divider-custom-line"></div>
               </div>

@@ -32,7 +32,7 @@
           >
             <div class="text-center">
               <img
-                class="img-fluid rounded-circle mb-4 px-4"
+                class="img-fluid rounded-3 img-same-size mb-4"
                 :src="friend.photo"
                 alt="..."
               />

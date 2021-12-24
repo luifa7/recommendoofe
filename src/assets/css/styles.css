@@ -8323,6 +8323,12 @@ fieldset:disabled .btn {
   border-top-left-radius: 0.25rem !important;
 }
 
+.img-same-size {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+}
+
 .visible {
   visibility: visible !important;
 }
