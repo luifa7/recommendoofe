@@ -16,14 +16,14 @@
             >
               <img
                 v-if="recommendedByUser.photo"
-                class="img-fluid rounded-circle"
+                class="img-fluid rounded-3"
                 :src="recommendedByUser.photo"
                 alt="..."
                 style="max-height: 150px; max-width: 150px"
               />
               <img
                 v-else
-                class="img-fluid rounded-circle"
+                class="img-fluid rounded-3"
                 src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
                 alt="..."
               />

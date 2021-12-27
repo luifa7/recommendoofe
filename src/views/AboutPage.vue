@@ -100,12 +100,7 @@
         </p>
       </div>
       <div
-        class="
-          row
-          gx-5
-          row-cols-1 row-cols-sm-2 row-cols-xl-4
-          justify-content-center
-        "
+        class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
       >
         <div class="col mb-5 mb-5 mb-xl-0">
           <div class="text-center">

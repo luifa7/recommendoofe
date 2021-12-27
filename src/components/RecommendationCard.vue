@@ -47,14 +47,14 @@
         <div class="d-flex align-items-center">
           <img
             v-if="recommendedByUser.photo"
-            class="rounded-circle me-3"
+            class="rounded-3 me-3"
             :src="recommendedByUser.photo"
             alt="..."
             style="max-height: 100px; max-width: 100px"
           />
           <img
             v-else
-            class="rounded-circle me-3"
+            class="rounded-3 me-3"
             src="https://dummyimage.com/40x40/ced4da/6c757d"
             alt="..."
           />
