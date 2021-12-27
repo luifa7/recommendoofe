@@ -27,7 +27,7 @@
 
 <script lang="ts">
 // import axios from "axios";
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { CityCard } from "@/components";
 import {
   allowOrRedirectToHome,

@@ -71,8 +71,7 @@
 
 <script lang="ts">
 import { Recommendation, User } from "@/store/types/types";
-import { PropType } from "vue";
-import { defineComponent } from "@vue/runtime-core";
+import { PropType, defineComponent } from "vue";
 import { getUserByDId } from "@/services/dataService";
 
 export default defineComponent({

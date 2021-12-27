@@ -41,8 +41,7 @@
 
 <script lang="ts">
 import { City } from "@/store/types/types";
-import { PropType } from "vue";
-import { defineComponent } from "@vue/runtime-core";
+import { PropType, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({

@@ -13,12 +13,7 @@
               and family . Also share yours with the people you know.
             </p>
             <div
-              class="
-                d-grid
-                gap-3
-                d-sm-flex
-                justify-content-sm-center justify-content-xl-start
-              "
+              class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
             >
               <router-link
                 class="btn btn-primary btn-lg px-4 me-sm-3"
@@ -142,7 +137,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 
 export default defineComponent({});
 </script>

@@ -59,8 +59,7 @@
 
 <script lang="ts">
 import { City, Recommendation } from "@/store/types/types";
-import { PropType } from "vue";
-import { defineComponent } from "@vue/runtime-core";
+import { PropType, defineComponent } from "vue";
 
 export default defineComponent({
   props: {

@@ -19,12 +19,7 @@
           {{ user.shortFact3 }}
         </p>
         <div
-          class="
-            d-grid
-            gap-3
-            d-sm-flex
-            justify-content-sm-center justify-content-xl-start
-          "
+          class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
         >
           <router-link
             class="btn btn-primary btn-lg px-4 me-sm-3"
@@ -115,7 +110,7 @@
 
 <script lang="ts">
 // import axios from "axios";
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { getUserByDId, allowOrRedirectToHome } from "@/services/dataService";
 import { getUserDIdFromRoute } from "./helpers";
 

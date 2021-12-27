@@ -32,7 +32,7 @@
 
 <script lang="ts">
 // import axios from "axios";
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { RecommendationCard } from "@/components";
 import {
   allowOrRedirectToHome,

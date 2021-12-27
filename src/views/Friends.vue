@@ -9,12 +9,7 @@
         </p>
       </div>
       <div
-        class="
-          row
-          gx-5
-          row-cols-1 row-cols-sm-2 row-cols-xl-4
-          justify-content-center
-        "
+        class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
       >
         <div
           v-for="friend in friends"
@@ -52,7 +47,7 @@
 
 <script lang="ts">
 // import axios from "axios";
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { User } from "@/store/types/types";
 import {
   allowOrRedirectToHome,
