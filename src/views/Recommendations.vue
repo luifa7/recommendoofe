@@ -33,7 +33,7 @@
 <script lang="ts">
 // import axios from "axios";
 import { defineComponent } from "vue";
-import { RecommendationCard } from "@/components";
+import RecommendationCard from "@/components/RecommendationCard.vue";
 import {
   allowOrRedirectToHome,
   getCitiyByDId,

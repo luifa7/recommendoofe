@@ -97,7 +97,8 @@
 <script lang="ts">
 // import axios from "axios";
 import { defineComponent } from "vue";
-import { DetailsInfoCard, GoogleMapsIframe } from "@/components";
+import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
+import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
 import { City, Recommendation, User } from "@/store/types/types";
 import {
   allowOrRedirectToHome,
