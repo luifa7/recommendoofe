@@ -98,7 +98,7 @@
                 <div class="divider-custom-line"></div>
               </div>
               <div class="fs-4 mb-4 fst-italic">
-                {{ user.description }}
+                {{ user.aboutMe }}
               </div>
             </div>
           </div>

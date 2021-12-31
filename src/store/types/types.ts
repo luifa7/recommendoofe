@@ -33,7 +33,7 @@ type User = {
   shortFact1: string;
   shortFact2: string;
   shortFact3: string;
-  description: string;
+  aboutMe: string;
   interestedIn: string;
   photo: string;
   friends: Array<string>;

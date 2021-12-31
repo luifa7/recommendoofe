@@ -9,18 +9,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
+    name: "LoginUser",
+    component: () => import("../views/LoginUser.vue"),
   },
   {
     path: "/logout",
-    name: "Logout",
-    component: () => import("../views/Logout.vue"),
+    name: "LogoutUser",
+    component: () => import("../views/LogoutUser.vue"),
   },
   {
     path: "/register",
-    name: "Register",
-    component: () => import("../views/Register.vue"),
+    name: "RegisterUser",
+    component: () => import("../views/RegisterUser.vue"),
   },
   {
     path: "/users/:userdid",
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/users/:userdid/contacts",
     name: "UserContacts",
-    component: () => import("../views/Friends.vue"),
+    component: () => import("../views/FriendsList.vue"),
   },
   {
     path: "/users/:userdid/visited/cities",
@@ -50,12 +50,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/users/:userdid/planned/cities/:citydid/recommendations",
     name: "RecommendationsPlanned",
-    component: () => import("../views/Recommendations.vue"),
+    component: () => import("../views/RecommendationsList.vue"),
   },
   {
     path: "/users/:userdid/visited/cities/:citydid/recommendations",
     name: "RecommendationsVisited",
-    component: () => import("../views/Recommendations.vue"),
+    component: () => import("../views/RecommendationsList.vue"),
   },
   {
     path: "/users/:userdid/cities/:citydid/recommendations/:recommendationdid",

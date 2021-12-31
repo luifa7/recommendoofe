@@ -1,6 +1,6 @@
 <template>
   <div class="spinner-border text-warning" role="status">
-    <span class="sr-only">Login out...</span>
+    <span class="sr-only">Loging out...</span>
   </div>
 </template>
 

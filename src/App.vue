@@ -72,7 +72,7 @@
             >
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Logout' }" class="nav-link"
+            <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
               >Logout</router-link
             >
           </li>
@@ -90,12 +90,12 @@
             >
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Register' }" class="nav-link"
+            <router-link :to="{ name: 'RegisterUser' }" class="nav-link"
               >Register</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Login' }" class="nav-link"
+            <router-link :to="{ name: 'LoginUser' }" class="nav-link"
               >Login</router-link
             >
           </li>

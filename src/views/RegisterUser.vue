@@ -216,7 +216,7 @@ export default defineComponent({
           shortFact1: shortFact1.value,
           shortFact2: shortFact2.value,
           shortFact3: shortFact3.value,
-          description: aboutMe.value,
+          aboutMe: aboutMe.value,
           interestedIn: interestedIn.value,
           photo: photo.value,
           friends: [],

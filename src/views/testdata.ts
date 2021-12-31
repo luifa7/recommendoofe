@@ -83,7 +83,7 @@ export const testUsers: Array<User> = [
     shortFact1: "Developer",
     shortFact2: "Love to drink Mate",
     shortFact3: "Vegetarian",
-    description:
+    aboutMe:
       "I love to visit vegetarian restaurant of all kind of coultures. Bouldering is a hobby but also nice marathons are something i enjoy.",
     interestedIn: "Restaurants, bars, local football teams, dancing",
     photo:
@@ -97,7 +97,7 @@ export const testUsers: Array<User> = [
     shortFact1: "Traveler",
     shortFact2: "Dreamer",
     shortFact3: "Idealist",
-    description:
+    aboutMe:
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn: "wine, beer, metal, books, small cafes",
     photo: "https://f4.bcbits.com/img/a0747725074_10.jpg",
@@ -110,7 +110,7 @@ export const testUsers: Array<User> = [
     shortFact1: "Bookworm",
     shortFact2: "Love sweets",
     shortFact3: "Football is my biggest hobby",
-    description:
+    aboutMe:
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn: "Local traditional food, weird museums, mystery places",
     photo:
@@ -124,7 +124,7 @@ export const testUsers: Array<User> = [
     shortFact1: "Hobby fighter",
     shortFact2: "Taekwondist",
     shortFact3: "Ice-cream is my weakness",
-    description:
+    aboutMe:
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn:
       "small towns near big cities, cafes you cannot find in google maps",
@@ -139,7 +139,7 @@ export const testUsers: Array<User> = [
     shortFact1: "The road is my home",
     shortFact2: "Motorbikes <3",
     shortFact3: "BBQ lover",
-    description:
+    aboutMe:
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn: "traditional clothes, national museums, art galleries",
     photo:
@@ -153,7 +153,7 @@ export const testUsers: Array<User> = [
     shortFact1: "I love bloody stakes",
     shortFact2: "Like to experiment",
     shortFact3: "Bizarrist",
-    description:
+    aboutMe:
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn: "liquours, nerd stuff, local vegan dishes",
     photo:
