@@ -26,6 +26,14 @@ type City = {
   visited: boolean;
 };
 
+type CreateCity = {
+  name: string;
+  country: string;
+  photo: string;
+  userDId: string;
+  visited: boolean;
+};
+
 type User = {
   dId: string;
   userName: string;
@@ -38,4 +46,4 @@ type User = {
   photo: string;
 };
 
-export { Recommendation, City, User };
+export { Recommendation, City, CreateCity, User };

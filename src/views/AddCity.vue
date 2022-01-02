@@ -89,9 +89,9 @@
 </template>
 
 <script lang="ts">
-import { City } from "@/store/types/types";
+import { CreateCity } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import { createCity } from "@/services/dataService";
+import { createCity } from "@/services/cityService";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 
@@ -104,8 +104,7 @@ export default defineComponent({
     const photo = ref("");
 
     function addCity() {
-      const newCity: City = {
-        dId: Date.now().toString(),
+      const newCity: CreateCity = {
         name: name.value,
         country: country.value,
         photo: photo.value,

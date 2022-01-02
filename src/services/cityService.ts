@@ -1,4 +1,4 @@
-import { City } from "@/store/types/types";
+import { City, CreateCity } from "@/store/types/types";
 import axios from "axios";
 
 export const API_URL = "http://localhost:5003";
@@ -33,4 +33,15 @@ export async function getCitiesByUserDId(
     }
     return cities;
   }
+}
+
+export function createCity(city: CreateCity) {
+  axios
+    .post(`${API_URL}/cities`, city)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
