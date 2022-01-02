@@ -23,3 +23,11 @@ export function allowOrRedirectToProfile() {
     });
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function redirectToUserProfile(userDId: string) {
+  router.push({
+    name: "UserPublicProfile",
+    params: { userdid: userDId },
+  });
+}

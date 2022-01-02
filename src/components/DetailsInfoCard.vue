@@ -87,7 +87,6 @@ export default defineComponent({
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 i {
   margin: 0 1rem 0 0;

@@ -178,21 +178,21 @@
 </template>
 
 <script lang="ts">
-import { City, Recommendation } from "@/store/types/types";
+import { Recommendation } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import { createRecommendation, getCitiyByDId } from "@/services/dataService";
+import { createRecommendation } from "@/services/dataService";
 import { useStore } from "vuex";
 import { getCityDIdFromRoute, getUserDIdFromRoute } from "./helpers";
-import { allowOrRedirectToHome } from "@/services/authService";
+import {
+  allowOrRedirectToHome,
+  redirectToUserProfile,
+} from "@/services/authService";
+import { getCityByDId } from "@/services/cityService";
 
 export default defineComponent({
   setup() {
     allowOrRedirectToHome();
-    const store = useStore();
-    const loggedUserDId = store.getters.getLoggedUser.dId;
-    const userDId: string = getUserDIdFromRoute();
-    const cityDId: string = getCityDIdFromRoute();
-    const city: City | undefined = getCitiyByDId(cityDId);
+    const city = ref();
     const placeName = ref("");
     const title = ref("");
     const text = ref("");
@@ -205,8 +205,13 @@ export default defineComponent({
     const otherLink = ref("");
     var tags: Array<string> = [];
 
+    (async () => {
+      city.value = await getCityByDId(getCityDIdFromRoute());
+    })();
+
     function addRecommendation() {
-      if (city) {
+      if (city.value) {
+        const store = useStore();
         const newRecommendation: Recommendation = {
           dId: Date.now().toString(),
           placeName: placeName.value,
@@ -220,15 +225,19 @@ export default defineComponent({
           otherLink: otherLink.value,
           photo: photo.value,
           createdOn: Date.now(),
-          cityDId: cityDId,
+          cityDId: city.value.dId,
           tags: tags,
-          fromUserDId: loggedUserDId,
-          toUserDId: userDId,
+          fromUserDId: store.getters.getLoggedUser.dId,
+          toUserDId: getUserDIdFromRoute(),
         };
         createRecommendation(newRecommendation);
+      } else {
+        const store = useStore();
+        redirectToUserProfile(store.getters.getLoggedUser.dId);
       }
     }
     return {
+      city,
       placeName,
       title,
       text,
@@ -239,7 +248,6 @@ export default defineComponent({
       instagram,
       facebook,
       otherLink,
-      city,
       addRecommendation,
     };
   },

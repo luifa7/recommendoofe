@@ -109,32 +109,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { getUserByDId } from "@/services/userService";
-import { User } from "@/store/types/types";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getUserDIdFromRoute } from "./helpers";
 
 export default defineComponent({
-  beforeCreate() {
+  setup() {
     allowOrRedirectToHome();
-  },
-  data() {
     const store = useStore();
-    let user: User | undefined = store.getters.getLoggedUser;
-    return { user };
-  },
-  async mounted() {
+    const user = ref();
     const userDId: string = getUserDIdFromRoute();
-    if (!this.user || this.user.dId !== userDId) {
-      this.user = await getUserByDId("c2f708a5-1f35-486f-aa17-97d3d084ee89");
-    }
+    (async () => {
+      if (store.getters.getLoggedUser.dId !== userDId) {
+        user.value = await getUserByDId(userDId);
+      } else {
+        user.value = store.getters.getLoggedUser;
+      }
+    })();
+    return { user };
   },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .masthead {
   padding-top: 3rem;

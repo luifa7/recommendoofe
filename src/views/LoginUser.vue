@@ -77,7 +77,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { allowOrRedirectToProfile } from "@/services/authService";
+import {
+  allowOrRedirectToProfile,
+  redirectToUserProfile,
+} from "@/services/authService";
 import { useStore } from "vuex";
 import router from "@/router";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
@@ -100,10 +103,7 @@ export default defineComponent({
         store.commit("setLoggedUserFriends", friends);
         const cities = await getCitiesByUserDId(myUserDId);
         store.commit("setLoggedUserCities", cities);
-        router.push({
-          name: "UserPublicProfile",
-          params: { userdid: user.dId },
-        });
+        redirectToUserProfile(user.dId);
       }
     }
     return {

@@ -46,30 +46,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { User } from "@/store/types/types";
+import { defineComponent, ref } from "vue";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 
 export default defineComponent({
-  beforeCreate() {
+  setup() {
     allowOrRedirectToHome();
-  },
-  data() {
     const store = useStore();
-    let user: User | undefined = store.getters.getLoggedUser;
-    let friends: Array<User> = store.getters.getLoggedUserFriends;
-    return { user, friends };
-  },
-  async mounted() {
+    const user = ref();
     const userDId: string = getUserDIdFromRoute();
-    if (!this.user || this.user.dId !== userDId) {
-      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
-      this.user = await getUserByDId(myUserDId);
-      this.friends = await getFriendsByUserDId(myUserDId);
-    }
+    const friends = ref();
+
+    (async () => {
+      if (store.getters.getLoggedUser.dId !== userDId) {
+        user.value = await getUserByDId(userDId);
+        friends.value = await getFriendsByUserDId(userDId);
+      } else {
+        user.value = store.getters.getLoggedUser;
+        friends.value = store.getters.getLoggedUserFriends;
+      }
+    })();
+
+    return { user, friends };
   },
 });
 </script>

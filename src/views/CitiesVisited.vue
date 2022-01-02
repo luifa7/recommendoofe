@@ -15,34 +15,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import CityCard from "@/components/CityCard.vue";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
-import { City, User } from "@/store/types/types";
-import { getUserByDId } from "@/services/userService";
+import { City } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 
 export default defineComponent({
   components: { CityCard },
-  beforeCreate() {
+  setup() {
     allowOrRedirectToHome();
-  },
-  data() {
     const store = useStore();
-    let user: User | undefined = store.getters.getLoggedUser;
-    let cities: Array<City> = store.getters.getLoggedUserCities;
-    return { user, cities };
-  },
-  async mounted() {
     const userDId: string = getUserDIdFromRoute();
-    if (!this.user || this.user.dId !== userDId) {
-      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
-      this.user = await getUserByDId(myUserDId);
-      this.cities = await getCitiesByUserDId(myUserDId);
-    }
-    this.cities = this.cities.filter((city) => city.visited);
+    const cities = ref();
+
+    (async () => {
+      if (store.getters.getLoggedUser.dId !== userDId) {
+        cities.value = await getCitiesByUserDId(userDId);
+      } else {
+        cities.value = store.getters.getLoggedUserCities;
+      }
+      cities.value = cities.value.filter((c: City) => c.visited);
+    })();
+
+    return { cities };
   },
 });
 </script>

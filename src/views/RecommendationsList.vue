@@ -31,28 +31,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import RecommendationCard from "@/components/RecommendationCard.vue";
 import { getCityDIdFromRoute } from "./helpers";
-import { City, Recommendation } from "@/store/types/types";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationsByCityDId } from "@/services/recommendationService";
 
 export default defineComponent({
   components: { RecommendationCard },
-  beforeCreate() {
+  setup() {
     allowOrRedirectToHome();
-  },
-  data() {
-    let city: City | undefined;
-    let recommendations: Array<Recommendation> = [];
-    return { city, recommendations };
-  },
-  async mounted() {
+    const city = ref();
+    const recommendations = ref();
     const cityDId: string = getCityDIdFromRoute();
-    this.city = await getCityByDId(cityDId);
-    this.recommendations = await getRecommendationsByCityDId(cityDId);
+
+    (async () => {
+      city.value = await getCityByDId(cityDId);
+      recommendations.value = await getRecommendationsByCityDId(cityDId);
+    })();
+
+    return { city, recommendations };
   },
 });
 </script>

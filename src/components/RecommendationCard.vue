@@ -71,9 +71,9 @@
 
 <script lang="ts">
 import { getUserByDId } from "@/services/userService";
-import { Recommendation, User } from "@/store/types/types";
+import { Recommendation } from "@/store/types/types";
 import { getDateFromDatetime } from "@/views/helpers";
-import { PropType, defineComponent } from "vue";
+import { PropType, defineComponent, ref } from "vue";
 
 export default defineComponent({
   props: {
@@ -82,23 +82,24 @@ export default defineComponent({
       defafult: undefined,
     },
   },
-  data() {
-    let recommendedByUser: User | undefined;
-    let createdOn = "";
+  setup(props) {
+    const recommendedByUser = ref();
+    const createdOn = ref("");
+
+    (async () => {
+      if (props.recommendation) {
+        recommendedByUser.value = await getUserByDId(
+          props.recommendation.fromUserDId
+        );
+        createdOn.value = getDateFromDatetime(props.recommendation.createdOn);
+      }
+    })();
+
     return { recommendedByUser, createdOn };
-  },
-  async mounted() {
-    if (this.recommendation) {
-      this.recommendedByUser = await getUserByDId(
-        this.recommendation.fromUserDId
-      );
-      this.createdOn = getDateFromDatetime(this.recommendation.createdOn);
-    }
   },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

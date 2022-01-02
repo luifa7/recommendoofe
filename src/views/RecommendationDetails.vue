@@ -95,10 +95,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
 import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
-import { City, Recommendation, User } from "@/store/types/types";
 import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getUserByDId } from "@/services/userService";
@@ -107,27 +106,27 @@ import { getRecommendationByDId } from "@/services/recommendationService";
 
 export default defineComponent({
   components: { GoogleMapsIframe, DetailsInfoCard },
-  beforeCreate() {
+  setup() {
     allowOrRedirectToHome();
-  },
-  data() {
-    let recommendation: Recommendation | undefined;
-    let city: City | undefined;
-    let recommendedByUser: User | undefined;
-    let createdOn = "";
-    return { recommendation, city, recommendedByUser, createdOn };
-  },
-  async mounted() {
-    this.recommendation = await getRecommendationByDId(
-      getRecommendationDIdFromRoute()
-    );
-    if (this.recommendation) {
-      this.recommendedByUser = await getUserByDId(
-        this.recommendation.fromUserDId
+    const recommendation = ref();
+    const city = ref();
+    const recommendedByUser = ref();
+    const createdOn = ref("");
+
+    (async () => {
+      recommendation.value = await getRecommendationByDId(
+        getRecommendationDIdFromRoute()
       );
-      this.city = await getCityByDId(this.recommendation.cityDId);
-      this.createdOn = getDateFromDatetime(this.recommendation.createdOn);
-    }
+      if (recommendation.value) {
+        recommendedByUser.value = await getUserByDId(
+          recommendation.value.fromUserDId
+        );
+        city.value = await getCityByDId(recommendation.value.cityDId);
+        createdOn.value = getDateFromDatetime(recommendation.value.createdOn);
+      }
+    })();
+
+    return { recommendation, city, recommendedByUser, createdOn };
   },
 });
 </script>
