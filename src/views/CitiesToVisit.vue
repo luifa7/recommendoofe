@@ -26,37 +26,36 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { defineComponent } from "vue";
 import CityCard from "@/components/CityCard.vue";
-import {
-  allowOrRedirectToHome,
-  getCitiesPlannedForUserDId,
-} from "@/services/dataService";
 import { useStore } from "vuex";
 import { getUserDIdFromRoute } from "./helpers";
+import { allowOrRedirectToHome } from "@/services/authService";
+import { City, User } from "@/store/types/types";
+import { getUserByDId } from "@/services/userService";
+import { getCitiesByUserDId } from "@/services/cityService";
 
 export default defineComponent({
   components: { CityCard },
-  setup() {
+  beforeCreate() {
     allowOrRedirectToHome();
-    const userDId: string = getUserDIdFromRoute();
+  },
+  data() {
     const store = useStore();
-    let displayAddButton = false;
-    if (
-      store.getters.getLoggedUser &&
-      store.getters.getLoggedUser.dId === userDId
-    ) {
-      displayAddButton = true;
+    let user: User | undefined = store.getters.getLoggedUser;
+    let cities: Array<City> = store.getters.getLoggedUserCities;
+    let displayAddButton = true;
+    return { user, cities, displayAddButton };
+  },
+  async mounted() {
+    const userDId: string = getUserDIdFromRoute();
+    if (!this.user || this.user.dId !== userDId) {
+      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
+      this.user = await getUserByDId(myUserDId);
+      this.cities = await getCitiesByUserDId(myUserDId);
+      this.displayAddButton = false;
     }
-
-    return {
-      cities: getCitiesPlannedForUserDId(userDId),
-      // loading: true,
-      loading: false,
-      errored: false,
-      displayAddButton,
-    };
+    this.cities = this.cities.filter((city) => !city.visited);
   },
 });
 </script>

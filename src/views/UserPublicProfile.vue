@@ -109,21 +109,27 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { defineComponent } from "vue";
-import { getUserByDId, allowOrRedirectToHome } from "@/services/dataService";
+import { getUserByDId } from "@/services/userService";
+import { User } from "@/store/types/types";
+import { allowOrRedirectToHome } from "@/services/authService";
+import { useStore } from "vuex";
 import { getUserDIdFromRoute } from "./helpers";
 
 export default defineComponent({
-  setup() {
+  beforeCreate() {
     allowOrRedirectToHome();
+  },
+  data() {
+    const store = useStore();
+    let user: User | undefined = store.getters.getLoggedUser;
+    return { user };
+  },
+  async mounted() {
     const userDId: string = getUserDIdFromRoute();
-    return {
-      user: getUserByDId(userDId),
-      // loading: true,
-      loading: false,
-      errored: false,
-    };
+    if (!this.user || this.user.dId !== userDId) {
+      this.user = await getUserByDId("c2f708a5-1f35-486f-aa17-97d3d084ee89");
+    }
   },
 });
 </script>

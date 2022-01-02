@@ -36,7 +36,6 @@ type User = {
   aboutMe: string;
   interestedIn: string;
   photo: string;
-  friends: Array<string>;
 };
 
 export { Recommendation, City, User };

@@ -8,7 +8,7 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import router from "@/router";
-import { allowOrRedirectToHome } from "@/services/dataService";
+import { allowOrRedirectToHome } from "@/services/authService";
 
 export default defineComponent({
   setup() {

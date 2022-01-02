@@ -70,9 +70,10 @@
 </template>
 
 <script lang="ts">
+import { getUserByDId } from "@/services/userService";
 import { Recommendation, User } from "@/store/types/types";
+import { getDateFromDatetime } from "@/views/helpers";
 import { PropType, defineComponent } from "vue";
-import { getUserByDId } from "@/services/dataService";
 
 export default defineComponent({
   props: {
@@ -81,24 +82,18 @@ export default defineComponent({
       defafult: undefined,
     },
   },
-  setup(props) {
-    let createdOn = undefined;
-    let recommendedByUser: User | undefined = undefined;
-    if (props.recommendation) {
-      recommendedByUser = getUserByDId(props.recommendation.fromUserDId);
+  data() {
+    let recommendedByUser: User | undefined;
+    let createdOn = "";
+    return { recommendedByUser, createdOn };
+  },
+  async mounted() {
+    if (this.recommendation) {
+      this.recommendedByUser = await getUserByDId(
+        this.recommendation.fromUserDId
+      );
+      this.createdOn = getDateFromDatetime(this.recommendation.createdOn);
     }
-
-    if (props.recommendation?.createdOn) {
-      const createdDatetime = new Date(props.recommendation.createdOn);
-      const year = createdDatetime.getFullYear();
-      const month = createdDatetime.getMonth();
-      const day = createdDatetime.getDate();
-      createdOn = `${day}/${month}/${year}`;
-    }
-    return {
-      createdOn,
-      recommendedByUser,
-    };
   },
 });
 </script>

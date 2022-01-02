@@ -31,43 +31,28 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { defineComponent } from "vue";
 import RecommendationCard from "@/components/RecommendationCard.vue";
-import {
-  allowOrRedirectToHome,
-  getCitiyByDId,
-  getRecommendationsForUserDIdInCityDId,
-} from "@/services/dataService";
-import { getCityDIdFromRoute, getUserDIdFromRoute } from "./helpers";
+import { getCityDIdFromRoute } from "./helpers";
 import { City, Recommendation } from "@/store/types/types";
+import { allowOrRedirectToHome } from "@/services/authService";
+import { getCityByDId } from "@/services/cityService";
+import { getRecommendationsByCityDId } from "@/services/recommendationService";
 
 export default defineComponent({
   components: { RecommendationCard },
-  setup() {
+  beforeCreate() {
     allowOrRedirectToHome();
-    const cityDId: string = getCityDIdFromRoute();
-    const recommendations: Array<Recommendation> =
-      getRecommendationsForUserDIdInCityDId(getUserDIdFromRoute(), cityDId);
-    const city: City | undefined = getCitiyByDId(cityDId);
-
-    return {
-      recommendations,
-      city,
-      // loading: true,
-      loading: false,
-      errored: false,
-    };
   },
-  // mounted() {
-  //   axios
-  //     .get("http://localhost:5003/recommendations")
-  //     .then((response) => (this.info = response.data as Recommendations))
-  //     .catch((error) => {
-  //       console.log(error);
-  //       this.errored = true;
-  //     })
-  //     .finally(() => (this.loading = false));
-  // },
+  data() {
+    let city: City | undefined;
+    let recommendations: Array<Recommendation> = [];
+    return { city, recommendations };
+  },
+  async mounted() {
+    const cityDId: string = getCityDIdFromRoute();
+    this.city = await getCityByDId(cityDId);
+    this.recommendations = await getRecommendationsByCityDId(cityDId);
+  },
 });
 </script>

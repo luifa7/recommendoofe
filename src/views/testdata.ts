@@ -88,7 +88,7 @@ export const testUsers: Array<User> = [
     interestedIn: "Restaurants, bars, local football teams, dancing",
     photo:
       "https://profile-images.xing.com/images/88103bffbef61b6fd5d47236924b7fed-2/luis-alfredo-godoy-alvarez.1024x1024.jpg",
-    friends: ["user2", "user3", "user4"],
+    // friends: ["user2", "user3", "user4"],
   },
   {
     dId: "user2",
@@ -101,7 +101,7 @@ export const testUsers: Array<User> = [
       "Traveling is my biggest hobby, but i also enjoy to discover new places in my city. Also recommend me interestin hotels, since i like to change it every time i travel.",
     interestedIn: "wine, beer, metal, books, small cafes",
     photo: "https://f4.bcbits.com/img/a0747725074_10.jpg",
-    friends: ["user1", "user3", "user6"],
+    // friends: ["user1", "user3", "user6"],
   },
   {
     dId: "user3",
@@ -115,7 +115,7 @@ export const testUsers: Array<User> = [
     interestedIn: "Local traditional food, weird museums, mystery places",
     photo:
       "https://upload.wikimedia.org/wikipedia/commons/0/0e/DEATH_NOTE_L_wallpaper.jpg",
-    friends: ["user1", "user2", "user4"],
+    // friends: ["user1", "user2", "user4"],
   },
   {
     dId: "user4",
@@ -130,7 +130,7 @@ export const testUsers: Array<User> = [
       "small towns near big cities, cafes you cannot find in google maps",
     photo:
       "https://assets.cdn.moviepilot.de/files/d8e9d2e1a642ae710715bb3acc2fec13d6f71dca6427eabbe7c96e4016df/fill/992/477/Ragnar%20Lodbrok.jpg",
-    friends: ["user1", "user3", "user5", "user6"],
+    // friends: ["user1", "user3", "user5", "user6"],
   },
   {
     dId: "user5",
@@ -144,7 +144,7 @@ export const testUsers: Array<User> = [
     interestedIn: "traditional clothes, national museums, art galleries",
     photo:
       "https://a2.tvspielfilm.de/imedia/7334/10507334,q1ecYDc39Cy2qkADbhdCK2Ta48SRUV0rii2I2SczJwKWZIFywA8meL0j3_do8365e3CcUUFEri0P6ZfSKTgb+A==.jpg",
-    friends: ["user4"],
+    // friends: ["user4"],
   },
   {
     dId: "user6",
@@ -158,7 +158,7 @@ export const testUsers: Array<User> = [
     interestedIn: "liquours, nerd stuff, local vegan dishes",
     photo:
       "https://www.rollingstone.de/wp-content/uploads/2021/05/10/14/till-kopie-992x560.jpg",
-    friends: ["user2", "user4"],
+    // friends: ["user2", "user4"],
   },
 ];
 

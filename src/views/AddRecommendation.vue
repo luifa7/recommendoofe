@@ -178,16 +178,12 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { City, Recommendation } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import {
-  allowOrRedirectToHome,
-  createRecommendation,
-  getCitiyByDId,
-} from "@/services/dataService";
+import { createRecommendation, getCitiyByDId } from "@/services/dataService";
 import { useStore } from "vuex";
 import { getCityDIdFromRoute, getUserDIdFromRoute } from "./helpers";
+import { allowOrRedirectToHome } from "@/services/authService";
 
 export default defineComponent({
   setup() {

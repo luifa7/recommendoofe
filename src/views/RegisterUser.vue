@@ -182,14 +182,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import {
-  addNewUser,
-  allowOrRedirectToProfile,
-  getUserByUsername,
-} from "@/services/dataService";
+import { addNewUser, getUserByUsername } from "@/services/dataService";
 import { useStore } from "vuex";
 import router from "@/router";
 import { User } from "@/store/types/types";
+import { allowOrRedirectToProfile } from "@/services/authService";
 
 export default defineComponent({
   setup() {
@@ -219,10 +216,8 @@ export default defineComponent({
           aboutMe: aboutMe.value,
           interestedIn: interestedIn.value,
           photo: photo.value,
-          friends: [],
         };
         addNewUser(newUser);
-        console.log(newUser.dId);
         store.commit("loginUser", newUser);
         router.push({
           name: "UserPublicProfile",

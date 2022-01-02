@@ -77,12 +77,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import {
-  allowOrRedirectToProfile,
-  getUserByUsername,
-} from "@/services/dataService";
+import { allowOrRedirectToProfile } from "@/services/authService";
 import { useStore } from "vuex";
 import router from "@/router";
+import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
+import { User } from "@/store/types/types";
+import { getCitiesByUserDId } from "@/services/cityService";
 
 export default defineComponent({
   setup() {
@@ -91,17 +91,20 @@ export default defineComponent({
     const username = ref("");
     const password = ref("");
 
-    function loginUser(): boolean {
-      const user = getUserByUsername(username.value);
+    async function loginUser() {
+      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
+      const user: User | undefined = await getUserByDId(myUserDId);
       if (user) {
-        console.log(user.dId);
         store.commit("loginUser", user);
+        const friends = await getFriendsByUserDId(myUserDId);
+        store.commit("setLoggedUserFriends", friends);
+        const cities = await getCitiesByUserDId(myUserDId);
+        store.commit("setLoggedUserCities", cities);
         router.push({
           name: "UserPublicProfile",
           params: { userdid: user.dId },
         });
       }
-      return false;
     }
     return {
       username,

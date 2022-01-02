@@ -26,3 +26,11 @@ export function getRecommendationDIdFromRoute(): string {
   }
   return recommendationDId;
 }
+
+export function getDateFromDatetime(dateOnDatetime: number): string {
+  const dateAsDatetime = new Date(dateOnDatetime);
+  const year = dateAsDatetime.getFullYear();
+  const month = dateAsDatetime.getMonth();
+  const day = dateAsDatetime.getDate();
+  return `${day}/${month}/${year}`;
+}

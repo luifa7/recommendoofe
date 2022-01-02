@@ -95,54 +95,43 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { defineComponent } from "vue";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
 import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
 import { City, Recommendation, User } from "@/store/types/types";
-import {
-  allowOrRedirectToHome,
-  getCitiyByDId,
-  getRecommendationByDId,
-  getUserByDId,
-} from "@/services/dataService";
-import { getRecommendationDIdFromRoute } from "./helpers";
+import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
+import { allowOrRedirectToHome } from "@/services/authService";
+import { getUserByDId } from "@/services/userService";
+import { getCityByDId } from "@/services/cityService";
+import { getRecommendationByDId } from "@/services/recommendationService";
 
 export default defineComponent({
   components: { GoogleMapsIframe, DetailsInfoCard },
-  setup() {
+  beforeCreate() {
     allowOrRedirectToHome();
-    const recommendation: Recommendation | undefined = getRecommendationByDId(
+  },
+  data() {
+    let recommendation: Recommendation | undefined;
+    let city: City | undefined;
+    let recommendedByUser: User | undefined;
+    let createdOn = "";
+    return { recommendation, city, recommendedByUser, createdOn };
+  },
+  async mounted() {
+    this.recommendation = await getRecommendationByDId(
       getRecommendationDIdFromRoute()
     );
-    let city: City | undefined = undefined;
-    let recommendedByUser: User | undefined = undefined;
-    if (recommendation) {
-      city = getCitiyByDId(recommendation.cityDId);
-      recommendedByUser = getUserByDId(recommendation.fromUserDId);
+    if (this.recommendation) {
+      this.recommendedByUser = await getUserByDId(
+        this.recommendation.fromUserDId
+      );
+      this.city = await getCityByDId(this.recommendation.cityDId);
+      this.createdOn = getDateFromDatetime(this.recommendation.createdOn);
     }
-    let createdOn = undefined;
-    if (recommendation?.createdOn) {
-      const createdDatetime = new Date(recommendation.createdOn);
-      const year = createdDatetime.getFullYear();
-      const month = createdDatetime.getMonth();
-      const day = createdDatetime.getDate();
-      createdOn = `${day}/${month}/${year}`;
-    }
-    return {
-      recommendation,
-      createdOn,
-      city,
-      recommendedByUser,
-      // loading: true,
-      loading: false,
-      errored: false,
-    };
   },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

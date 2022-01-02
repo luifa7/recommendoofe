@@ -46,28 +46,30 @@
 </template>
 
 <script lang="ts">
-// import axios from "axios";
 import { defineComponent } from "vue";
 import { User } from "@/store/types/types";
-import {
-  allowOrRedirectToHome,
-  getFriends,
-  getUserByDId,
-} from "@/services/dataService";
 import { getUserDIdFromRoute } from "./helpers";
+import { allowOrRedirectToHome } from "@/services/authService";
+import { useStore } from "vuex";
+import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 
 export default defineComponent({
-  setup() {
+  beforeCreate() {
     allowOrRedirectToHome();
+  },
+  data() {
+    const store = useStore();
+    let user: User | undefined = store.getters.getLoggedUser;
+    let friends: Array<User> = store.getters.getLoggedUserFriends;
+    return { user, friends };
+  },
+  async mounted() {
     const userDId: string = getUserDIdFromRoute();
-    const user: User | undefined = getUserByDId(userDId);
-
-    return {
-      friends: getFriends(user),
-      // loading: true,
-      loading: false,
-      errored: false,
-    };
+    if (!this.user || this.user.dId !== userDId) {
+      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
+      this.user = await getUserByDId(myUserDId);
+      this.friends = await getFriendsByUserDId(myUserDId);
+    }
   },
 });
 </script>

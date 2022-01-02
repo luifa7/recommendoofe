@@ -91,8 +91,9 @@
 <script lang="ts">
 import { City } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import { allowOrRedirectToHome, createCity } from "@/services/dataService";
+import { createCity } from "@/services/dataService";
 import { getUserDIdFromRoute } from "./helpers";
+import { allowOrRedirectToHome } from "@/services/authService";
 
 export default defineComponent({
   setup() {
