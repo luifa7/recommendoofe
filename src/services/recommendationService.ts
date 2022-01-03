@@ -1,4 +1,4 @@
-import { Recommendation } from "@/store/types/types";
+import { CreateRecommendation, Recommendation } from "@/store/types/types";
 import axios from "axios";
 
 export const API_URL = "http://localhost:5003";
@@ -35,4 +35,15 @@ export async function getRecommendationsByCityDId(
     }
     return recommendations;
   }
+}
+
+export function createRecommendation(recommendation: CreateRecommendation) {
+  axios
+    .post(`${API_URL}/recommendations`, recommendation)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }

@@ -17,6 +17,23 @@ type Recommendation = {
   toUserDId: string;
 };
 
+type CreateRecommendation = {
+  placeName: string;
+  title: string;
+  text: string;
+  address: string;
+  maps: string;
+  website: string;
+  instagram: string;
+  facebook: string;
+  otherLink: string;
+  photo: string;
+  cityDId: string;
+  tags: Array<string>;
+  fromUserDId: string;
+  toUserDId: string;
+};
+
 type City = {
   dId: string;
   name: string;
@@ -46,4 +63,22 @@ type User = {
   photo: string;
 };
 
-export { Recommendation, City, CreateCity, User };
+type CreateUser = {
+  userName: string;
+  name: string;
+  shortFact1: string;
+  shortFact2: string;
+  shortFact3: string;
+  aboutMe: string;
+  interestedIn: string;
+  photo: string;
+};
+
+export {
+  Recommendation,
+  CreateRecommendation,
+  City,
+  CreateCity,
+  User,
+  CreateUser,
+};

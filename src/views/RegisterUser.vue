@@ -182,10 +182,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { addNewUser, getUserByUsername } from "@/services/dataService";
+import { createUser, getUserByUsername } from "@/services/userService";
 import { useStore } from "vuex";
 import router from "@/router";
-import { User } from "@/store/types/types";
+import { CreateUser, User } from "@/store/types/types";
 import { allowOrRedirectToProfile } from "@/services/authService";
 
 export default defineComponent({
@@ -203,11 +203,10 @@ export default defineComponent({
     const password = ref("");
     const passwordRepeat = ref("");
 
-    function newUser(): boolean {
-      const user = getUserByUsername(username.value);
+    async function newUser(): Promise<boolean> {
+      const user: Array<User> = await getUserByUsername(username.value);
       if (!user) {
-        const newUser: User = {
-          dId: Date.now().toString(),
+        const newUser: CreateUser = {
           userName: username.value,
           name: fullName.value,
           shortFact1: shortFact1.value,
@@ -217,12 +216,12 @@ export default defineComponent({
           interestedIn: interestedIn.value,
           photo: photo.value,
         };
-        addNewUser(newUser);
+        createUser(newUser);
         store.commit("loginUser", newUser);
-        router.push({
-          name: "UserPublicProfile",
-          params: { userdid: newUser.dId },
-        });
+        // router.push({
+        //   name: "UserPublicProfile",
+        //   params: { userdid: newUser.dId },
+        // });
       }
       return false;
     }

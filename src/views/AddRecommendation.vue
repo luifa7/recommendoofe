@@ -178,9 +178,9 @@
 </template>
 
 <script lang="ts">
-import { Recommendation } from "@/store/types/types";
+import { CreateRecommendation, Recommendation } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import { createRecommendation } from "@/services/dataService";
+import { createRecommendation } from "@/services/recommendationService";
 import { useStore } from "vuex";
 import { getCityDIdFromRoute, getUserDIdFromRoute } from "./helpers";
 import {
@@ -212,8 +212,7 @@ export default defineComponent({
     function addRecommendation() {
       if (city.value) {
         const store = useStore();
-        const newRecommendation: Recommendation = {
-          dId: Date.now().toString(),
+        const newRecommendation: CreateRecommendation = {
           placeName: placeName.value,
           title: title.value,
           text: text.value,
@@ -224,7 +223,6 @@ export default defineComponent({
           facebook: facebook.value,
           otherLink: otherLink.value,
           photo: photo.value,
-          createdOn: Date.now(),
           cityDId: city.value.dId,
           tags: tags,
           fromUserDId: store.getters.getLoggedUser.dId,
