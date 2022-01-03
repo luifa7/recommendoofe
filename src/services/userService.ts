@@ -1,5 +1,5 @@
 import { CreateUser, User } from "@/store/types/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const API_URL = "http://localhost:5003";
 
@@ -74,13 +74,15 @@ export async function getFriendsByUserDId(
   }
 }
 
-export function createUser(user: CreateUser) {
-  axios
+export async function createUser(user: CreateUser) {
+  const response = await axios
     .post(`${API_URL}/users`, user)
-    .then(function (response) {
-      console.log(response);
-    })
+    .then((response) => response as AxiosResponse)
     .catch(function (error) {
       console.log(error);
     });
+  if (!response) {
+    return undefined;
+  }
+  return response;
 }

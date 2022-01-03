@@ -82,7 +82,6 @@ import {
   redirectToUserProfile,
 } from "@/services/authService";
 import { useStore } from "vuex";
-import router from "@/router";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";

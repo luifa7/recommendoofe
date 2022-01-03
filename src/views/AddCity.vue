@@ -91,19 +91,21 @@
 <script lang="ts">
 import { CreateCity } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
-import { createCity } from "@/services/cityService";
+import { createCity, getCitiesByUserDId } from "@/services/cityService";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     allowOrRedirectToHome();
+    const store = useStore();
     const userDId: string = getUserDIdFromRoute();
     const name = ref("");
     const country = ref("");
     const photo = ref("");
 
-    function addCity() {
+    async function addCity() {
       const newCity: CreateCity = {
         name: name.value,
         country: country.value,
@@ -111,7 +113,15 @@ export default defineComponent({
         userDId: userDId,
         visited: false,
       };
-      createCity(newCity);
+      const response = await createCity(newCity);
+      if (!response) {
+        console.log("Error: No Response on Create City");
+      } else if (response.status !== 201) {
+        console.log(response.statusText);
+      } else {
+        const cities = await getCitiesByUserDId(userDId);
+        store.commit("setLoggedUserCities", cities);
+      }
     }
     return {
       name,

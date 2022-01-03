@@ -178,7 +178,7 @@
 </template>
 
 <script lang="ts">
-import { CreateRecommendation, Recommendation } from "@/store/types/types";
+import { CreateRecommendation } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useStore } from "vuex";
@@ -192,6 +192,8 @@ import { getCityByDId } from "@/services/cityService";
 export default defineComponent({
   setup() {
     allowOrRedirectToHome();
+    const userDId: string = getUserDIdFromRoute();
+    const store = useStore();
     const city = ref();
     const placeName = ref("");
     const title = ref("");
@@ -209,9 +211,8 @@ export default defineComponent({
       city.value = await getCityByDId(getCityDIdFromRoute());
     })();
 
-    function addRecommendation() {
+    async function addRecommendation() {
       if (city.value) {
-        const store = useStore();
         const newRecommendation: CreateRecommendation = {
           placeName: placeName.value,
           title: title.value,
@@ -226,11 +227,17 @@ export default defineComponent({
           cityDId: city.value.dId,
           tags: tags,
           fromUserDId: store.getters.getLoggedUser.dId,
-          toUserDId: getUserDIdFromRoute(),
+          toUserDId: userDId,
         };
-        createRecommendation(newRecommendation);
+        const response = await createRecommendation(newRecommendation);
+        if (!response) {
+          console.log("Error: No Response on Create Recommendation");
+        } else if (response.status !== 201) {
+          console.log(response.statusText);
+        } else {
+          console.log("Recommendation Created");
+        }
       } else {
-        const store = useStore();
         redirectToUserProfile(store.getters.getLoggedUser.dId);
       }
     }

@@ -22,6 +22,7 @@
                   placeholder="Enter your username..."
                   v-model="username"
                   required
+                  style="text-transform: lowercase"
                 />
                 <label for="username">Username</label>
                 <div class="invalid-feedback">Your username is required.</div>
@@ -104,7 +105,7 @@
                   style="height: 10rem"
                   v-model="interestedIn"
                 ></textarea>
-                <label for="aboutMe">About me</label>
+                <label for="interestedIn">Interested in</label>
               </div>
               <div class="form-floating mb-3">
                 <input
@@ -184,9 +185,11 @@
 import { defineComponent, ref } from "vue";
 import { createUser, getUserByUsername } from "@/services/userService";
 import { useStore } from "vuex";
-import router from "@/router";
 import { CreateUser, User } from "@/store/types/types";
-import { allowOrRedirectToProfile } from "@/services/authService";
+import {
+  allowOrRedirectToProfile,
+  redirectToUserProfile,
+} from "@/services/authService";
 
 export default defineComponent({
   setup() {
@@ -203,11 +206,13 @@ export default defineComponent({
     const password = ref("");
     const passwordRepeat = ref("");
 
-    async function newUser(): Promise<boolean> {
-      const user: Array<User> = await getUserByUsername(username.value);
-      if (!user) {
+    async function newUser() {
+      const user: Array<User> = await getUserByUsername(
+        username.value.toLowerCase()
+      );
+      if (user.length === 0) {
         const newUser: CreateUser = {
-          userName: username.value,
+          userName: username.value.toLowerCase(),
           name: fullName.value,
           shortFact1: shortFact1.value,
           shortFact2: shortFact2.value,
@@ -216,14 +221,19 @@ export default defineComponent({
           interestedIn: interestedIn.value,
           photo: photo.value,
         };
-        createUser(newUser);
-        store.commit("loginUser", newUser);
-        // router.push({
-        //   name: "UserPublicProfile",
-        //   params: { userdid: newUser.dId },
-        // });
+        const response = await createUser(newUser);
+        if (!response) {
+          console.log("Error: No Response on Create City");
+        } else if (response.status !== 201) {
+          console.log(response.statusText);
+        } else {
+          const createdUser: User = response.data as User;
+          store.commit("loginUser", createdUser);
+          redirectToUserProfile(createdUser.dId);
+        }
+      } else {
+        console.log("User Name Already Exist");
       }
-      return false;
     }
     return {
       username,

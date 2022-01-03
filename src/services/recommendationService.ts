@@ -1,5 +1,5 @@
 import { CreateRecommendation, Recommendation } from "@/store/types/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const API_URL = "http://localhost:5003";
 
@@ -37,13 +37,17 @@ export async function getRecommendationsByCityDId(
   }
 }
 
-export function createRecommendation(recommendation: CreateRecommendation) {
-  axios
+export async function createRecommendation(
+  recommendation: CreateRecommendation
+) {
+  const response = await axios
     .post(`${API_URL}/recommendations`, recommendation)
-    .then(function (response) {
-      console.log(response);
-    })
+    .then((response) => response as AxiosResponse)
     .catch(function (error) {
       console.log(error);
     });
+  if (!response) {
+    return undefined;
+  }
+  return response;
 }

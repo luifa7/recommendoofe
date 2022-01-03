@@ -1,5 +1,5 @@
 import { City, CreateCity } from "@/store/types/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const API_URL = "http://localhost:5003";
 
@@ -35,13 +35,15 @@ export async function getCitiesByUserDId(
   }
 }
 
-export function createCity(city: CreateCity) {
-  axios
+export async function createCity(city: CreateCity) {
+  const response = await axios
     .post(`${API_URL}/cities`, city)
-    .then(function (response) {
-      console.log(response);
-    })
+    .then((response) => response as AxiosResponse)
     .catch(function (error) {
       console.log(error);
     });
+  if (!response) {
+    return undefined;
+  }
+  return response;
 }
