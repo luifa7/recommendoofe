@@ -19,6 +19,22 @@
               id="add-recommendation-form"
               @submit.prevent="addRecommendation"
             >
+              <div
+                class="alert alert-success"
+                role="alert"
+                style="text-align: center"
+                v-if="showSuccess"
+              >
+                {{ showSuccess }}
+              </div>
+              <div
+                class="alert alert-danger"
+                role="alert"
+                style="text-align: center"
+                v-if="showError"
+              >
+                {{ showError }}
+              </div>
               <!-- Place name input-->
               <div class="form-floating mb-3">
                 <input
@@ -30,9 +46,6 @@
                   required
                 />
                 <label for="place-name">Name of the place</label>
-                <div class="invalid-feedback">
-                  A name for this place is required.
-                </div>
               </div>
               <!-- Title input-->
               <div class="form-floating mb-3">
@@ -45,7 +58,6 @@
                   required
                 />
                 <label for="title">Title</label>
-                <div class="invalid-feedback">A title is required.</div>
               </div>
               <!-- Text input-->
               <div class="form-floating mb-3">
@@ -59,7 +71,6 @@
                   required
                 ></textarea>
                 <label for="text">Text</label>
-                <div class="invalid-feedback">A text is required.</div>
               </div>
               <!-- Address input-->
               <div class="form-floating mb-3">
@@ -72,7 +83,6 @@
                   required
                 />
                 <label for="address">Street and street number</label>
-                <div class="invalid-feedback">Address is required.</div>
               </div>
               <!-- Google Maps input-->
               <div class="form-floating mb-3">
@@ -82,7 +92,6 @@
                   type="text"
                   placeholder="Enter the google maps link..."
                   v-model="maps"
-                  required
                 />
                 <label for="maps">Google Maps Link</label>
               </div>
@@ -182,7 +191,7 @@ import { CreateRecommendation } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useStore } from "vuex";
-import { getCityDIdFromRoute, getUserDIdFromRoute } from "./helpers";
+import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
 import {
   allowOrRedirectToHome,
   redirectToUserProfile,
@@ -195,6 +204,8 @@ export default defineComponent({
     const userDId: string = getUserDIdFromRoute();
     const store = useStore();
     const city = ref();
+    const showSuccess = ref("");
+    const showError = ref("");
     const placeName = ref("");
     const title = ref("");
     const text = ref("");
@@ -211,31 +222,63 @@ export default defineComponent({
       city.value = await getCityByDId(getCityDIdFromRoute());
     })();
 
+    function resetAllInputs() {
+      placeName.value = "";
+      title.value = "";
+      text.value = "";
+      address.value = "";
+      maps.value = "";
+      photo.value = "";
+      website.value = "";
+      instagram.value = "";
+      facebook.value = "";
+      otherLink.value = "";
+    }
+
     async function addRecommendation() {
       if (city.value) {
-        const newRecommendation: CreateRecommendation = {
-          placeName: placeName.value,
-          title: title.value,
-          text: text.value,
-          address: address.value,
-          maps: maps.value,
-          website: website.value,
-          instagram: instagram.value,
-          facebook: facebook.value,
-          otherLink: otherLink.value,
-          photo: photo.value,
-          cityDId: city.value.dId,
-          tags: tags,
-          fromUserDId: store.getters.getLoggedUser.dId,
-          toUserDId: userDId,
-        };
-        const response = await createRecommendation(newRecommendation);
-        if (!response) {
-          console.log("Error: No Response on Create Recommendation");
-        } else if (response.status !== 201) {
-          console.log(response.statusText);
+        if (!placeName.value) {
+          showError.value = "A name for this place is required.";
+        } else if (!title.value) {
+          showError.value = "A title is required.";
+        } else if (!text.value) {
+          showError.value = "A text is required.";
+        } else if (!address.value) {
+          showError.value = "Address is required.";
         } else {
-          console.log("Recommendation Created");
+          const newRecommendation: CreateRecommendation = {
+            placeName: placeName.value,
+            title: title.value,
+            text: text.value,
+            address: address.value,
+            maps: maps.value,
+            website: website.value,
+            instagram: instagram.value,
+            facebook: facebook.value,
+            otherLink: otherLink.value,
+            photo: photo.value,
+            cityDId: city.value.dId,
+            tags: tags,
+            fromUserDId: store.getters.getLoggedUser.dId,
+            toUserDId: userDId,
+          };
+          const response = await createRecommendation(newRecommendation);
+          if (!response) {
+            showSuccess.value = "";
+            showError.value = "Error while creating the Recommendation :(";
+            console.log("Error: No Response on Create Recommendation");
+            moveUp();
+          } else if (response.status !== 201) {
+            showSuccess.value = "";
+            showError.value = "Error while creating the Recommendation :(";
+            console.log("Error: HttpResponse " + response.statusText);
+            moveUp();
+          } else {
+            showError.value = "";
+            showSuccess.value = "Recommendation Created! :)";
+            resetAllInputs();
+            moveUp();
+          }
         }
       } else {
         redirectToUserProfile(store.getters.getLoggedUser.dId);
@@ -253,6 +296,8 @@ export default defineComponent({
       instagram,
       facebook,
       otherLink,
+      showSuccess,
+      showError,
       addRecommendation,
     };
   },

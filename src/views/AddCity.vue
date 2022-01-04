@@ -13,6 +13,22 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
             <form id="add-city-form" @submit.prevent="addCity">
+              <div
+                class="alert alert-success"
+                role="alert"
+                style="text-align: center"
+                v-if="showSuccess"
+              >
+                {{ showSuccess }}
+              </div>
+              <div
+                class="alert alert-danger"
+                role="alert"
+                style="text-align: center"
+                v-if="showError"
+              >
+                {{ showError }}
+              </div>
               <!-- Name input-->
               <div class="form-floating mb-3">
                 <input
@@ -24,9 +40,6 @@
                   required
                 />
                 <label for="name">City name</label>
-                <div class="invalid-feedback">
-                  A name for this city is required.
-                </div>
               </div>
               <!-- Country input-->
               <div class="form-floating mb-3">
@@ -39,7 +52,6 @@
                   required
                 />
                 <label for="country">Country</label>
-                <div class="invalid-feedback">A country is required.</div>
               </div>
               <!-- Photo input-->
               <div class="form-floating mb-3">
@@ -92,7 +104,7 @@
 import { CreateCity } from "@/store/types/types";
 import { defineComponent, ref } from "vue";
 import { createCity, getCitiesByUserDId } from "@/services/cityService";
-import { getUserDIdFromRoute } from "./helpers";
+import { getUserDIdFromRoute, moveUp } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 
@@ -101,32 +113,58 @@ export default defineComponent({
     allowOrRedirectToHome();
     const store = useStore();
     const userDId: string = getUserDIdFromRoute();
+    const showSuccess = ref("");
+    const showError = ref("");
     const name = ref("");
     const country = ref("");
     const photo = ref("");
 
+    function resetAllInputs() {
+      name.value = "";
+      country.value = "";
+      photo.value = "";
+    }
+
     async function addCity() {
-      const newCity: CreateCity = {
-        name: name.value,
-        country: country.value,
-        photo: photo.value,
-        userDId: userDId,
-        visited: false,
-      };
-      const response = await createCity(newCity);
-      if (!response) {
-        console.log("Error: No Response on Create City");
-      } else if (response.status !== 201) {
-        console.log(response.statusText);
+      if (!name.value) {
+        showError.value = "A name for this city is required.";
+      } else if (!country.value) {
+        showError.value = "A country is required.";
       } else {
-        const cities = await getCitiesByUserDId(userDId);
-        store.commit("setLoggedUserCities", cities);
+        const newCity: CreateCity = {
+          name: name.value,
+          country: country.value,
+          photo: photo.value,
+          userDId: userDId,
+          visited: false,
+        };
+        const response = await createCity(newCity);
+        if (!response) {
+          showSuccess.value = "";
+          showError.value = "Error while creating the City :(";
+          console.log("Error: No Response on Create City");
+          moveUp();
+        } else if (response.status !== 201) {
+          showSuccess.value = "";
+          showError.value = "Error while creating the Recommendation :(";
+          console.log("Error: HttpResponse " + response.statusText);
+          moveUp();
+        } else {
+          const cities = await getCitiesByUserDId(userDId);
+          store.commit("setLoggedUserCities", cities);
+          showError.value = "";
+          showSuccess.value = "City Created! :)";
+          resetAllInputs();
+          moveUp();
+        }
       }
     }
     return {
       name,
       country,
       photo,
+      showSuccess,
+      showError,
       addCity,
     };
   },

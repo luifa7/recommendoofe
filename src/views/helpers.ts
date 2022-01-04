@@ -34,3 +34,7 @@ export function getDateFromDatetime(dateOnDatetime: number): string {
   const day = dateAsDatetime.getDate();
   return `${day}/${month}/${year}`;
 }
+
+export function moveUp() {
+  window.scrollTo(0, 0);
+}
