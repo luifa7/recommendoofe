@@ -13,9 +13,9 @@
       alt="..."
     />
     <router-link
-      v-if="isPlanned"
+      v-if="isVisited"
       :to="{
-        name: 'RecommendationsPlanned',
+        name: 'RecommendationsVisited',
         params: {
           citydid: city.dId,
         },
@@ -27,7 +27,7 @@
     <router-link
       v-else
       :to="{
-        name: 'RecommendationsVisited',
+        name: 'RecommendationsToVisit',
         params: {
           citydid: city.dId,
         },
@@ -53,12 +53,12 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
-    let isPlanned = true;
+    let isVisited = false;
     if (route.name == "CitiesVisited") {
-      isPlanned = false;
+      isVisited = true;
     }
     return {
-      isPlanned,
+      isVisited,
     };
   },
 });

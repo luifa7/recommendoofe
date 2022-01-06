@@ -4,7 +4,8 @@
     <div class="container px-5 my-5">
       <div class="text-center mb-5">
         <h1 class="fw-bolder">
-          Cities to visit
+          <span v-if="isVisited">Visited Cities </span>
+          <span v-else>Cities to visit </span>
           <router-link
             v-if="displayAddButton"
             :to="{
@@ -33,11 +34,17 @@ import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { City } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: { CityCard },
   setup() {
     allowOrRedirectToHome();
+    const route = useRoute();
+    let isVisited = false;
+    if (route.name == "CitiesVisited") {
+      isVisited = true;
+    }
     const store = useStore();
     const userDId: string = getUserDIdFromRoute();
     const cities = ref();
@@ -45,15 +52,15 @@ export default defineComponent({
 
     (async () => {
       if (store.getters.getLoggedUser.dId !== userDId) {
-        cities.value = await getCitiesByUserDId(userDId);
         displayAddButton.value = false;
+        cities.value = await getCitiesByUserDId(userDId);
       } else {
         cities.value = store.getters.getLoggedUserCities;
       }
-      cities.value = cities.value.filter((c: City) => !c.visited);
+      cities.value = cities.value.filter((c: City) => c.visited === isVisited);
     })();
 
-    return { cities, displayAddButton };
+    return { isVisited, cities, displayAddButton };
   },
 });
 </script>

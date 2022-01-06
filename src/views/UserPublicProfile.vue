@@ -24,7 +24,7 @@
           <router-link
             class="btn btn-primary btn-lg px-4 me-sm-3"
             :to="{
-              name: 'CitiesPlanned',
+              name: 'CitiesToVisit',
             }"
             >Cities I will visit</router-link
           >
@@ -72,7 +72,7 @@
               <router-link
                 class="btn btn-warning btn-lg px-4 me-sm-3 text-white fw-bolder"
                 :to="{
-                  name: 'CitiesPlanned',
+                  name: 'CitiesToVisit',
                 }"
                 >Recommend me something!</router-link
               >

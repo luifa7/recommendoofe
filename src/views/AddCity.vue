@@ -64,6 +64,18 @@
                 />
                 <label for="photo">Photo</label>
               </div>
+              <!-- Is visited input-->
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  id="isVisited"
+                  type="checkbox"
+                  v-model="isVisited"
+                />
+                <label for="isVisited">
+                  Have you already visited this city?
+                </label>
+              </div>
               <!-- Submit Button-->
               <div class="d-grid">
                 <button
@@ -100,11 +112,13 @@ export default defineComponent({
     const name = ref("");
     const country = ref("");
     const photo = ref("");
+    const isVisited = ref(false);
 
     function resetAllInputs() {
       name.value = "";
       country.value = "";
       photo.value = "";
+      isVisited.value = false;
     }
 
     async function addCity() {
@@ -118,7 +132,7 @@ export default defineComponent({
           country: country.value,
           photo: photo.value,
           userDId: userDId,
-          visited: false,
+          visited: isVisited.value,
         };
         const response = await createCity(newCity);
         if (!response) {
@@ -145,6 +159,7 @@ export default defineComponent({
       name,
       country,
       photo,
+      isVisited,
       showSuccess,
       showError,
       addCity,
@@ -152,3 +167,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.form-check {
+  margin: 0 0 1rem 0;
+}
+</style>

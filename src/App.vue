@@ -50,7 +50,7 @@
           <li class="nav-item">
             <router-link
               :to="{
-                name: 'CitiesPlanned',
+                name: 'CitiesToVisit',
                 params: {
                   userdid: actualUser.dId,
                 },
