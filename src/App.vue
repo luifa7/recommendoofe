@@ -4,14 +4,13 @@
     <div class="container px-5">
       <router-link
         :to="{ name: 'Home' }"
-        class="navbar-brand"
-        style="font-size: 1.4rem"
+        class="navbar-brand logo-font"
         id="name-logo"
         ><img
           src="./assets/logo-2.png"
           class="center"
           style="height: 3rem; width: 3rem"
-        />Recommendoo</router-link
+        />Rcmd</router-link
       >
       <button
         class="navbar-toggler"
@@ -124,11 +123,13 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 #name-logo {
-  font-family: "Shrikhand", cursive;
   color: orange;
-  font-size: xx-large;
+  font-size: 2.4rem;
 }
 #navbarSupportedContent {
   font-size: 2rem;
+}
+.logo-font {
+  font-family: "Shrikhand", cursive;
 }
 </style>

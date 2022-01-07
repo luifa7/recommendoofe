@@ -5,9 +5,12 @@
       <div class="row gx-5 align-items-center justify-content-center">
         <div class="col-lg-12 col-xl-7 col-xxl-6">
           <div class="my-5 text-center text-xl-start">
-            <h1 class="display-5 fw-bolder text-white mb-2">
-              A place to find recommendations with a personal meaning for you
+            <h1 class="display-5 fw-bolder text-white mb-2 logo-font">
+              Recommendoo
             </h1>
+            <h2 class="display-5 text-white mb-2">
+              A place to find recommendations with a personal meaning for you
+            </h2>
             <p class="lead fw-bold text-white-50 mb-4">
               Get recommendations for places you will visit only from friends
               and family . Also share yours with the people you know.

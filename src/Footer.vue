@@ -4,11 +4,8 @@
       class="row align-items-center justify-content-between flex-column flex-sm-row"
     >
       <div class="col-auto">
-        <div
-          class="small m-0 text-white"
-          style="font-family: 'Shrikhand', cursive"
-        >
-          Copyright &copy; Recommendoo 2021
+        <div class="small m-0 text-white logo-font">
+          Copyright &copy; Recommendoo - Established Since 2021
         </div>
       </div>
       <div class="col-auto">
