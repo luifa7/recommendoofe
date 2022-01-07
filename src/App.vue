@@ -2,7 +2,11 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container px-5">
-      <router-link :to="{ name: 'Home' }" class="navbar-brand" id="name-logo"
+      <router-link
+        :to="{ name: 'Home' }"
+        class="navbar-brand"
+        style="font-size: 1.4rem"
+        id="name-logo"
         ><img
           src="./assets/logo-2.png"
           class="center"
