@@ -150,6 +150,37 @@
                 />
                 <label for="other-link">Other related link</label>
               </div>
+              <!-- Tags input-->
+              <div class="form-floating mb-4">
+                <input
+                  class="form-control mb-2"
+                  style="width: 85%; display: inline"
+                  id="tagInput"
+                  type="text"
+                  placeholder="Add tags like restaurant, bar, gym..."
+                  v-model="tagInput"
+                />
+                <label for="tagInput"
+                  >Add tags like restaurant, bar, gym...</label
+                >
+                <span
+                  @click="addTag()"
+                  style="cursor: pointer; font-size: 2rem; margin-left: 1rem"
+                >
+                  <i class="bi bi-plus-square-fill" style="color: orange"></i>
+                </span>
+                <!-- Tags -->
+                <button
+                  v-for="tag in tags"
+                  type="button"
+                  class="btn btn-light"
+                  @click="removeTag(tag)"
+                  :key="tag"
+                >
+                  {{ tag }}
+                  <span class="badge bg-danger">X</span>
+                </button>
+              </div>
               <!-- Submit Button-->
               <div class="d-grid">
                 <button
@@ -198,11 +229,49 @@ export default defineComponent({
     const instagram = ref("");
     const facebook = ref("");
     const otherLink = ref("");
-    var tags: Array<string> = [];
+    const tagInput = ref("");
+    let tagHolder: Array<string> = [];
+    const tags = ref(tagHolder);
 
     (async () => {
       city.value = await getCityByDId(getCityDIdFromRoute());
     })();
+
+    function addTag() {
+      if (tagInput.value) {
+        if (tagInput.value.includes(",")) {
+          const tags = tagInput.value.split(",");
+          tags.forEach((tag) => {
+            if (tag.includes(" ")) {
+              const subTags = tag.split(" ");
+              subTags.forEach((subTag) => {
+                addTagIfNotDuplicated(subTag);
+              });
+            } else {
+              addTagIfNotDuplicated(tag);
+            }
+          });
+        } else if (tagInput.value.includes(" ")) {
+          const tags = tagInput.value.split(" ");
+          tags.forEach((tag) => {
+            addTagIfNotDuplicated(tag);
+          });
+        } else {
+          addTagIfNotDuplicated(tagInput.value);
+        }
+        tagInput.value = "";
+      }
+    }
+
+    function addTagIfNotDuplicated(tag: string) {
+      if (!tags.value.includes(tag)) {
+        tags.value.push(tag);
+      }
+    }
+
+    function removeTag(tag: string) {
+      tags.value = tags.value.filter((t) => t !== tag);
+    }
 
     function resetAllInputs() {
       placeName.value = "";
@@ -215,6 +284,7 @@ export default defineComponent({
       instagram.value = "";
       facebook.value = "";
       otherLink.value = "";
+      tagInput.value = "";
     }
 
     async function addRecommendation() {
@@ -240,7 +310,7 @@ export default defineComponent({
             otherLink: otherLink.value,
             photo: photo.value,
             cityDId: city.value.dId,
-            tags: tags,
+            tags: tags.value,
             fromUserDId: store.getters.getLoggedUser.dId,
             toUserDId: userDId,
           };
@@ -278,8 +348,12 @@ export default defineComponent({
       instagram,
       facebook,
       otherLink,
+      tagInput,
+      tags,
       showSuccess,
       showError,
+      addTag,
+      removeTag,
       addRecommendation,
     };
   },
