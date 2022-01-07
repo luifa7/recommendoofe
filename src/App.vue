@@ -32,8 +32,8 @@
                 },
               }"
               class="nav-link"
-              >My Profile</router-link
-            >
+              ><i class="bi bi-person"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link
@@ -44,8 +44,8 @@
                 },
               }"
               class="nav-link"
-              >Your Contacts</router-link
-            >
+              ><i class="bi bi-people"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link
@@ -56,8 +56,8 @@
                 },
               }"
               class="nav-link"
-              >To Visit</router-link
-            >
+              ><i class="bi bi-journal-bookmark"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link
@@ -68,36 +68,31 @@
                 },
               }"
               class="nav-link"
-              >Visited</router-link
-            >
+              ><i class="bi bi-journal-check"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
-              >Logout</router-link
-            >
+              ><i class="bi bi-power"></i
+            ></router-link>
           </li>
         </ul>
         <!-- No user logged -->
         <ul v-else class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link :to="{ name: 'Home' }" class="nav-link"
-              >Home</router-link
-            >
+              ><i class="bi bi-house-door"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'About' }" class="nav-link"
-              >About</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'RegisterUser' }" class="nav-link"
-              >Register</router-link
-            >
+              ><i class="bi bi-info-square"></i
+            ></router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'LoginUser' }" class="nav-link"
-              >Login</router-link
-            >
+              ><i class="bi bi-key"></i
+            ></router-link>
           </li>
         </ul>
       </div>
@@ -128,5 +123,8 @@ export default defineComponent({
   font-family: "Shrikhand", cursive;
   color: orange;
   font-size: xx-large;
+}
+#navbarSupportedContent {
+  font-size: 2rem;
 }
 </style>
