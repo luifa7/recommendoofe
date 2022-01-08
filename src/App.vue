@@ -1,7 +1,7 @@
 <template>
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container px-5">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container px-3" style="text-align: right">
       <router-link
         :to="{ name: 'Home' }"
         class="navbar-brand logo-font"
@@ -23,7 +23,11 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        style="margin-right: 0.7rem"
+      >
         <!-- User is logged -->
         <ul v-if="actualUser" class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -41,7 +45,7 @@
           <li class="nav-item">
             <router-link
               :to="{
-                name: 'UserContacts',
+                name: 'UserFriends',
                 params: {
                   userdid: actualUser.dId,
                 },

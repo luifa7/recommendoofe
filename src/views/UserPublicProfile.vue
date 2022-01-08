@@ -38,7 +38,7 @@
           <router-link
             class="btn btn-outline-light btn-lg px-4"
             :to="{
-              name: 'UserContacts',
+              name: 'UserFriends',
               params: {
                 userdid: user.dId,
               },

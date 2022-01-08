@@ -3,7 +3,16 @@
   <section class="py-5">
     <div class="container px-5 my-5">
       <div class="text-center">
-        <h2 class="fw-bolder">Your contacts</h2>
+        <h1 class="fw-bolder">
+          <span>Friends </span>
+          <router-link
+            :to="{
+              name: 'AddFriend',
+            }"
+          >
+            <i class="bi bi-plus-square-fill" style="color: orange"></i>
+          </router-link>
+        </h1>
         <p class="lead fw-normal text-muted mb-5">
           People connected with your living idea
         </p>

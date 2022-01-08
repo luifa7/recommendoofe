@@ -28,9 +28,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/UserPublicProfile.vue"),
   },
   {
-    path: "/users/:userdid/contacts",
-    name: "UserContacts",
+    path: "/users/:userdid/friends",
+    name: "UserFriends",
     component: () => import("../views/FriendsList.vue"),
+  },
+  {
+    path: "/users/:userdid/friends/new",
+    name: "AddFriend",
+    component: () => import("../views/AddFriend.vue"),
   },
   {
     path: "/users/:userdid/cities/visited",
