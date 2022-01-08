@@ -20,34 +20,8 @@
       <div
         class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
       >
-        <div
-          v-for="friend in friends"
-          class="col mb-5 mb-5 mb-xl-0"
-          :key="friend.dId"
-        >
-          <router-link
-            :to="{
-              name: 'UserPublicProfile',
-              params: {
-                userdid: friend.dId,
-              },
-            }"
-            class="nav-link"
-          >
-            <div class="text-center">
-              <img
-                class="img-fluid rounded-3 img-same-size mb-4"
-                :src="friend.photo"
-                alt="..."
-              />
-              <h5 class="fw-bolder">{{ friend.name }}</h5>
-              <div class="fst-italic text-muted">
-                <i class="bi bi-star"></i> {{ friend.shortFact1 }}<br />
-                <i class="bi bi-star"></i> {{ friend.shortFact2 }}<br />
-                <i class="bi bi-star"></i> {{ friend.shortFact3 }}
-              </div>
-            </div></router-link
-          >
+        <div v-for="friend in friends" :key="friend.dId">
+          <friend-card :friend="friend" />
         </div>
       </div>
     </div>
@@ -60,8 +34,10 @@ import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
+import FriendCard from "@/components/FriendCard.vue";
 
 export default defineComponent({
+  components: { FriendCard },
   setup() {
     allowOrRedirectToHome();
     const store = useStore();
