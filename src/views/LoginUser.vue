@@ -5,10 +5,9 @@
       <!-- Login form-->
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-3">
-          <div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
-            <i class="bi bi-file-person-fill"></i>
-          </div>
-          <h1 class="fw-bolder">Login</h1>
+          <h1 class="fw-bolder">
+            Login <i class="bi bi-key-fill" style="color: orange"></i>
+          </h1>
         </div>
         <div class="row gx-5 justify-content-center mb-4">
           <div class="col-lg-8 col-xl-6">

@@ -74,6 +74,21 @@ export async function getFriendsByUserDId(
   }
 }
 
+export async function getAllUsers(): Promise<undefined | User> {
+  {
+    const user = await axios
+      .get(`${API_URL}/users`)
+      .then((response) => response.data as User)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!user) {
+      return undefined;
+    }
+    return user;
+  }
+}
+
 export async function createUser(user: CreateUser) {
   const response = await axios
     .post(`${API_URL}/users`, user)
