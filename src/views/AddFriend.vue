@@ -11,6 +11,34 @@
           Expand your network. Increase your experiences.
         </p>
       </div>
+      <div class="row gx-5 justify-content-center mb-4">
+        <div class="col-lg-8 col-xl-6">
+          <form id="search-form" @submit.prevent="searchUser">
+            <!-- Search input-->
+            <div class="form-floating mb-3">
+              <input
+                class="form-control"
+                id="username"
+                type="text"
+                placeholder="Username to find..."
+                v-model="username"
+                required
+              />
+              <label for="username">Search by username</label>
+            </div>
+            <!-- Submit Button-->
+            <div class="d-grid">
+              <button
+                class="btn btn-primary btn-lg"
+                id="submitButton"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
       <div
         class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
       >
@@ -25,7 +53,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { allowOrRedirectToHome } from "@/services/authService";
-import { getAllUsers } from "@/services/userService";
+import { getUserByUsername } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
 
 export default defineComponent({
@@ -33,12 +61,15 @@ export default defineComponent({
   setup() {
     allowOrRedirectToHome();
     const users = ref();
+    const username = ref("");
 
-    (async () => {
-      users.value = await getAllUsers();
-    })();
+    async function searchUser() {
+      if (username.value) {
+        users.value = await getUserByUsername(username.value.toLowerCase());
+      }
+    }
 
-    return { users };
+    return { username, users, searchUser };
   },
 });
 </script>
