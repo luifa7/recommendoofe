@@ -21,7 +21,7 @@
               <router-link
                 class="btn btn-primary btn-lg px-4 me-sm-3"
                 :to="{
-                  name: 'RegisterUser',
+                  name: 'LoginUser',
                 }"
                 >Find Recommendations</router-link
               >
