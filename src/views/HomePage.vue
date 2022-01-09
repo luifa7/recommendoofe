@@ -1,6 +1,6 @@
 <template>
   <!-- Header-->
-  <header class="bg-orange py-5">
+  <header class="bg-orange py-3 py-md-5">
     <div class="container px-5">
       <div class="row gx-5 align-items-center justify-content-center">
         <div class="col-lg-12 col-xl-7 col-xxl-6">
@@ -46,7 +46,7 @@
     </div>
   </header>
   <!-- Features section-->
-  <section class="py-5" id="features">
+  <section class="py-3 py-md-5" id="features">
     <div class="container px-5 my-5">
       <div class="row gx-5">
         <div class="col-lg-4 mb-5 mb-lg-0">
@@ -88,8 +88,8 @@
               </div>
               <h2 class="h5">Someone who know someone</h2>
               <p class="mb-0">
-                Maybe your contacts haven been on that city, but you can see if
-                some of them know someone who been there.
+                Maybe your contacts haven't been on that city, but you can see
+                if some of them know someone who has been there.
               </p>
             </div>
             <div class="col h-100">
@@ -110,7 +110,7 @@
     </div>
   </section>
   <!-- Testimonial section-->
-  <div class="py-5 bg-light">
+  <div class="py-3 py-md-5 bg-light">
     <div class="container px-5 my-5">
       <div class="row gx-5 justify-content-center">
         <div class="col-lg-10 col-xl-7">
@@ -118,7 +118,7 @@
             <div class="fs-4 mb-4 fst-italic">
               "Using Recommendoo has saved me lot of time when searching for new
               places to visit! Trusting the recommendations instead of filtering
-              throug fake reviews is unpayable!"
+              through fake reviews is unpayable!"
             </div>
             <div class="d-flex align-items-center justify-content-center">
               <img

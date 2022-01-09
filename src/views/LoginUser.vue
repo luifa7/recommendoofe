@@ -1,9 +1,9 @@
 <template>
   <!-- Page content-->
-  <section class="py-5">
-    <div class="container px-5">
+  <section class="bg-light py-5">
+    <div class="container px-4 px-md-5">
       <!-- Login form-->
-      <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+      <div class="py-5 px-md-5 mb-5">
         <div class="text-center mb-3">
           <h1 class="fw-bolder">
             Login <i class="bi bi-key-fill" style="color: orange"></i>
