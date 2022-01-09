@@ -83,7 +83,7 @@ export default defineComponent({
     const password = ref("");
 
     async function loginUser() {
-      const myUserDId = "c2f708a5-1f35-486f-aa17-97d3d084ee89";
+      const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
       const user: User | undefined = await getUserByDId(myUserDId);
       if (user) {
         store.commit("loginUser", user);

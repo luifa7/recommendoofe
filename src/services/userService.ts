@@ -1,4 +1,4 @@
-import { CreateUser, User } from "@/store/types/types";
+import { CreateUser, FriendRequest, User } from "@/store/types/types";
 import axios, { AxiosResponse } from "axios";
 
 export const API_URL = "http://localhost:5003";
@@ -49,6 +49,39 @@ export async function getFriendsDIdsByUserDId(
       return [];
     }
     return friendDIds;
+  }
+}
+
+export async function postFriendRequest(friendRequest: FriendRequest) {
+  {
+    const response = await axios
+      .post(`${API_URL}/friends`, friendRequest)
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    return response;
+  }
+}
+
+export async function isFriendRequestPending(
+  user1DId: string,
+  user2DId: string
+): Promise<boolean> {
+  {
+    const isPending = await axios
+      .get(`${API_URL}/friends/${user1DId}/ispending?userid=${user2DId}`)
+      .then((response) => response.data as boolean)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!isPending) {
+      return false;
+    }
+    return isPending;
   }
 }
 

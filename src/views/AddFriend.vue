@@ -23,6 +23,7 @@
                 placeholder="Username to find..."
                 v-model="username"
                 required
+                style="text-transform: lowercase"
               />
               <label for="username">Search by username</label>
             </div>

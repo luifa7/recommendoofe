@@ -74,6 +74,11 @@ type CreateUser = {
   photo: string;
 };
 
+type FriendRequest = {
+  userDId: string;
+  friendDId: string;
+};
+
 export {
   Recommendation,
   CreateRecommendation,
@@ -81,4 +86,5 @@ export {
   CreateCity,
   User,
   CreateUser,
+  FriendRequest,
 };

@@ -22,14 +22,14 @@
           class="d-grid d-sm-flex justify-content-sm-center justify-content-xl-start"
         >
           <router-link
-            class="btn btn-primary btn-lg px-2 me-sm-2"
+            class="btn btn-primary btn-lg px-2 my-2 me-sm-2"
             :to="{
               name: 'CitiesToVisit',
             }"
             ><i class="bi bi-journal-bookmark"></i> To visit</router-link
           >
           <router-link
-            class="btn btn-success btn-lg px-2 me-sm-2"
+            class="btn btn-success btn-lg px-2 my-2 me-sm-2"
             :to="{
               name: 'CitiesVisited',
             }"
@@ -37,10 +37,16 @@
           >
           <div
             v-if="showAddFriendButton"
-            class="btn btn-outline-light btn-lg px-2"
+            class="btn btn-outline-light btn-lg my-2 px-2"
             @click="sendFriendRequest"
           >
             <i class="bi bi-person-plus"></i> Add friend
+          </div>
+          <div
+            v-if="showRequestAlreadySent"
+            class="btn-secondary btn-lg my-2 px-2"
+          >
+            <i class="bi bi-person-plus"></i> Friend request pending
           </div>
         </div>
       </div>
@@ -101,10 +107,15 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { getUserByDId } from "@/services/userService";
+import {
+  getUserByDId,
+  isFriendRequestPending,
+  postFriendRequest,
+} from "@/services/userService";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
+import { FriendRequest } from "@/store/types/types";
 
 export default defineComponent({
   setup() {
@@ -112,6 +123,7 @@ export default defineComponent({
     const store = useStore();
     const user = ref();
     const showAddFriendButton = ref(false);
+    const showRequestAlreadySent = ref(false);
     const userDId: string = getUserDIdFromRoute();
     (async () => {
       if (store.getters.getLoggedUser.dId !== userDId) {
@@ -120,15 +132,42 @@ export default defineComponent({
           userDId,
           store.getters.getLoggedUserFriends
         );
+        if (showAddFriendButton.value) {
+          const isPending = await isFriendRequestPending(
+            store.getters.getLoggedUser.dId,
+            userDId
+          );
+          if (isPending) {
+            showAddFriendButton.value = false;
+            showRequestAlreadySent.value = true;
+          }
+        }
       } else {
         user.value = store.getters.getLoggedUser;
       }
     })();
 
-    function sendFriendRequest() {
-      console.log(userDId);
+    async function sendFriendRequest() {
+      const friendRequest: FriendRequest = {
+        userDId: store.getters.getLoggedUser.dId,
+        friendDId: userDId,
+      };
+      const response = await postFriendRequest(friendRequest);
+      if (!response) {
+        console.log("Error: No Response on Send Friend Request");
+      } else if (response.status !== 201) {
+        console.log(response.statusText);
+      } else {
+        showAddFriendButton.value = false;
+        showRequestAlreadySent.value = true;
+      }
     }
-    return { user, showAddFriendButton, sendFriendRequest };
+    return {
+      user,
+      showAddFriendButton,
+      showRequestAlreadySent,
+      sendFriendRequest,
+    };
   },
 });
 </script>

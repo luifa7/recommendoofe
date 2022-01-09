@@ -21,6 +21,8 @@ export const store = createStore<State>({
       state.loggedInUser = user;
     },
     logoutUser(state) {
+      state.userFriends = [];
+      state.userCities = [];
       state.loggedInUser = undefined;
     },
     setLoggedUserFriends(state, userFriends: Array<User>) {
