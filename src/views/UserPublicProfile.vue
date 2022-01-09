@@ -19,32 +19,29 @@
           {{ user.shortFact3 }}
         </p>
         <div
-          class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
+          class="d-grid d-sm-flex justify-content-sm-center justify-content-xl-start"
         >
           <router-link
-            class="btn btn-primary btn-lg px-4 me-sm-3"
+            class="btn btn-primary btn-lg px-2 me-sm-2"
             :to="{
               name: 'CitiesToVisit',
             }"
-            >Cities I will visit</router-link
+            ><i class="bi bi-journal-bookmark"></i> To visit</router-link
           >
           <router-link
-            class="btn btn-outline-light btn-lg px-4"
+            class="btn btn-success btn-lg px-2 me-sm-2"
             :to="{
               name: 'CitiesVisited',
             }"
-            >Visited cities</router-link
+            ><i class="bi bi-journal-check"></i> Visited</router-link
           >
-          <router-link
-            class="btn btn-outline-light btn-lg px-4"
-            :to="{
-              name: 'UserFriends',
-              params: {
-                userdid: user.dId,
-              },
-            }"
-            >Friends</router-link
+          <div
+            v-if="showAddFriendButton"
+            class="btn btn-outline-light btn-lg px-2"
+            @click="sendFriendRequest"
           >
+            <i class="bi bi-person-plus"></i> Add friend
+          </div>
         </div>
       </div>
     </header>
@@ -56,14 +53,10 @@
           <div class="col-lg-10 col-xl-7">
             <div class="text-center">
               <h2 class="text-center text-uppercase fw-bolder">
-                Interested in
+                Interested in <i class="bi bi-hand-thumbs-up-fill"></i>
               </h2>
               <!-- Icon Divider-->
               <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon">
-                  <i class="bi bi-hand-thumbs-up-fill"></i>
-                </div>
                 <div class="divider-custom-line"></div>
               </div>
               <div class="fs-4 mb-4 fst-italic">
@@ -88,13 +81,11 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-10 col-xl-7">
             <div class="text-center">
-              <h2 class="text-center text-uppercase fw-bolder">About me</h2>
+              <h2 class="text-center text-uppercase fw-bolder">
+                About me <i class="bi bi-person-lines-fill"></i>
+              </h2>
               <!-- Icon Divider-->
               <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon">
-                  <i class="bi bi-hand-thumbs-up"></i>
-                </div>
                 <div class="divider-custom-line"></div>
               </div>
               <div class="fs-4 mb-4 fst-italic">
@@ -113,22 +104,31 @@ import { defineComponent, ref } from "vue";
 import { getUserByDId } from "@/services/userService";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
-import { getUserDIdFromRoute } from "./helpers";
+import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
 
 export default defineComponent({
   setup() {
     allowOrRedirectToHome();
     const store = useStore();
     const user = ref();
+    const showAddFriendButton = ref(false);
     const userDId: string = getUserDIdFromRoute();
     (async () => {
       if (store.getters.getLoggedUser.dId !== userDId) {
         user.value = await getUserByDId(userDId);
+        showAddFriendButton.value = !isThisUserMyFriend(
+          userDId,
+          store.getters.getLoggedUserFriends
+        );
       } else {
         user.value = store.getters.getLoggedUser;
       }
     })();
-    return { user };
+
+    function sendFriendRequest() {
+      console.log(userDId);
+    }
+    return { user, showAddFriendButton, sendFriendRequest };
   },
 });
 </script>

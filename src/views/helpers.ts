@@ -1,3 +1,4 @@
+import { User } from "@/store/types/types";
 import { useRoute } from "vue-router";
 
 export function getUserDIdFromRoute(): string {
@@ -33,6 +34,13 @@ export function getDateFromDatetime(dateOnDatetime: number): string {
   const month = dateAsDatetime.getMonth();
   const day = dateAsDatetime.getDate();
   return `${day}/${month}/${year}`;
+}
+
+export function isThisUserMyFriend(
+  userDId: string,
+  userFriends: Array<User>
+): boolean {
+  return userFriends.filter((u: User) => u.dId === userDId).length > 0;
 }
 
 export function moveUp() {

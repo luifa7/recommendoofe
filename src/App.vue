@@ -10,7 +10,7 @@
           src="./assets/logo-2.png"
           class="center"
           style="height: 3rem; width: 3rem"
-        />Rcmd</router-link
+        />Recommendoo</router-link
       >
       <button
         class="navbar-toggler"
@@ -128,7 +128,7 @@ export default defineComponent({
 }
 #name-logo {
   color: orange;
-  font-size: 2.4rem;
+  font-size: 1.5rem;
 }
 #navbarSupportedContent {
   font-size: 2rem;
