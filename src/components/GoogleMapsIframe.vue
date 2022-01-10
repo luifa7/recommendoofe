@@ -14,15 +14,6 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  props: {
-    mapsUrl: {
-      type: String,
-      defafult: "",
-    },
-  },
-});
+<script lang="ts" setup>
+const props = defineProps<{ mapsUrl: string }>();
 </script>

@@ -30,28 +30,21 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import RecommendationCard from "@/components/RecommendationCard.vue";
 import { getCityDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationsByCityDId } from "@/services/recommendationService";
 
-export default defineComponent({
-  components: { RecommendationCard },
-  setup() {
-    allowOrRedirectToHome();
-    const city = ref();
-    const recommendations = ref();
-    const cityDId: string = getCityDIdFromRoute();
+allowOrRedirectToHome();
+const city = ref();
+const recommendations = ref();
+const cityDId: string = getCityDIdFromRoute();
 
-    (async () => {
-      city.value = await getCityByDId(cityDId);
-      recommendations.value = await getRecommendationsByCityDId(cityDId);
-    })();
-
-    return { city, recommendations };
-  },
-});
+(async () => {
+  city.value = await getCityByDId(cityDId);
+  recommendations.value = await getRecommendationsByCityDId(cityDId);
+})();
 </script>

@@ -26,16 +26,8 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { User } from "@/store/types/types";
-import { PropType, defineComponent } from "vue";
 
-export default defineComponent({
-  props: {
-    friend: {
-      type: Object as PropType<User>,
-      defafult: undefined,
-    },
-  },
-});
+const props = defineProps<{ friend: User }>();
 </script>

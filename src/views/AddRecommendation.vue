@@ -199,9 +199,9 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { CreateRecommendation } from "@/store/types/types";
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useStore } from "vuex";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
@@ -211,151 +211,127 @@ import {
 } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 
-export default defineComponent({
-  setup() {
-    allowOrRedirectToHome();
-    const userDId: string = getUserDIdFromRoute();
-    const store = useStore();
-    const city = ref();
-    const showSuccess = ref("");
-    const showError = ref("");
-    const placeName = ref("");
-    const title = ref("");
-    const text = ref("");
-    const address = ref("");
-    const maps = ref("");
-    const photo = ref("");
-    const website = ref("");
-    const instagram = ref("");
-    const facebook = ref("");
-    const otherLink = ref("");
-    const tagInput = ref("");
-    let tagHolder: Array<string> = [];
-    const tags = ref(tagHolder);
+allowOrRedirectToHome();
+const userDId: string = getUserDIdFromRoute();
+const store = useStore();
+const city = ref();
+const showSuccess = ref("");
+const showError = ref("");
+const placeName = ref("");
+const title = ref("");
+const text = ref("");
+const address = ref("");
+const maps = ref("");
+const photo = ref("");
+const website = ref("");
+const instagram = ref("");
+const facebook = ref("");
+const otherLink = ref("");
+const tagInput = ref("");
+let tagHolder: Array<string> = [];
+const tags = ref(tagHolder);
 
-    (async () => {
-      city.value = await getCityByDId(getCityDIdFromRoute());
-    })();
+(async () => {
+  city.value = await getCityByDId(getCityDIdFromRoute());
+})();
 
-    function addTag() {
-      if (tagInput.value) {
-        if (tagInput.value.includes(",")) {
-          const tags = tagInput.value.split(",");
-          tags.forEach((tag) => {
-            if (tag.includes(" ")) {
-              const subTags = tag.split(" ");
-              subTags.forEach((subTag) => {
-                addTagIfNotDuplicated(subTag);
-              });
-            } else {
-              addTagIfNotDuplicated(tag);
-            }
-          });
-        } else if (tagInput.value.includes(" ")) {
-          const tags = tagInput.value.split(" ");
-          tags.forEach((tag) => {
-            addTagIfNotDuplicated(tag);
+function addTag() {
+  if (tagInput.value) {
+    if (tagInput.value.includes(",")) {
+      const tags = tagInput.value.split(",");
+      tags.forEach((tag) => {
+        if (tag.includes(" ")) {
+          const subTags = tag.split(" ");
+          subTags.forEach((subTag) => {
+            addTagIfNotDuplicated(subTag);
           });
         } else {
-          addTagIfNotDuplicated(tagInput.value);
+          addTagIfNotDuplicated(tag);
         }
-        tagInput.value = "";
-      }
+      });
+    } else if (tagInput.value.includes(" ")) {
+      const tags = tagInput.value.split(" ");
+      tags.forEach((tag) => {
+        addTagIfNotDuplicated(tag);
+      });
+    } else {
+      addTagIfNotDuplicated(tagInput.value);
     }
+    tagInput.value = "";
+  }
+}
 
-    function addTagIfNotDuplicated(tag: string) {
-      if (!tags.value.includes(tag)) {
-        tags.value.push(tag);
-      }
-    }
+function addTagIfNotDuplicated(tag: string) {
+  if (!tags.value.includes(tag)) {
+    tags.value.push(tag);
+  }
+}
 
-    function removeTag(tag: string) {
-      tags.value = tags.value.filter((t) => t !== tag);
-    }
+function removeTag(tag: string) {
+  tags.value = tags.value.filter((t) => t !== tag);
+}
 
-    function resetAllInputs() {
-      placeName.value = "";
-      title.value = "";
-      text.value = "";
-      address.value = "";
-      maps.value = "";
-      photo.value = "";
-      website.value = "";
-      instagram.value = "";
-      facebook.value = "";
-      otherLink.value = "";
-      tagInput.value = "";
-    }
+function resetAllInputs() {
+  placeName.value = "";
+  title.value = "";
+  text.value = "";
+  address.value = "";
+  maps.value = "";
+  photo.value = "";
+  website.value = "";
+  instagram.value = "";
+  facebook.value = "";
+  otherLink.value = "";
+  tagInput.value = "";
+}
 
-    async function addRecommendation() {
-      if (city.value) {
-        if (!placeName.value) {
-          showError.value = "A name for this place is required.";
-        } else if (!title.value) {
-          showError.value = "A title is required.";
-        } else if (!text.value) {
-          showError.value = "A text is required.";
-        } else if (!address.value) {
-          showError.value = "Address is required.";
-        } else {
-          const newRecommendation: CreateRecommendation = {
-            placeName: placeName.value,
-            title: title.value,
-            text: text.value,
-            address: address.value,
-            maps: maps.value,
-            website: website.value,
-            instagram: instagram.value,
-            facebook: facebook.value,
-            otherLink: otherLink.value,
-            photo: photo.value,
-            cityDId: city.value.dId,
-            tags: tags.value,
-            fromUserDId: store.getters.getLoggedUser.dId,
-            toUserDId: userDId,
-          };
-          const response = await createRecommendation(newRecommendation);
-          if (!response) {
-            showSuccess.value = "";
-            showError.value = "Error while creating the Recommendation :(";
-            console.log("Error: No Response on Create Recommendation");
-            moveUp();
-          } else if (response.status !== 201) {
-            showSuccess.value = "";
-            showError.value = "Error while creating the Recommendation :(";
-            console.log("Error: HttpResponse " + response.statusText);
-            moveUp();
-          } else {
-            showError.value = "";
-            showSuccess.value = "Recommendation Created! :)";
-            resetAllInputs();
-            moveUp();
-          }
-        }
+async function addRecommendation() {
+  if (city.value) {
+    if (!placeName.value) {
+      showError.value = "A name for this place is required.";
+    } else if (!title.value) {
+      showError.value = "A title is required.";
+    } else if (!text.value) {
+      showError.value = "A text is required.";
+    } else if (!address.value) {
+      showError.value = "Address is required.";
+    } else {
+      const newRecommendation: CreateRecommendation = {
+        placeName: placeName.value,
+        title: title.value,
+        text: text.value,
+        address: address.value,
+        maps: maps.value,
+        website: website.value,
+        instagram: instagram.value,
+        facebook: facebook.value,
+        otherLink: otherLink.value,
+        photo: photo.value,
+        cityDId: city.value.dId,
+        tags: tags.value,
+        fromUserDId: store.getters.getLoggedUser.dId,
+        toUserDId: userDId,
+      };
+      const response = await createRecommendation(newRecommendation);
+      if (!response) {
+        showSuccess.value = "";
+        showError.value = "Error while creating the Recommendation :(";
+        console.log("Error: No Response on Create Recommendation");
+        moveUp();
+      } else if (response.status !== 201) {
+        showSuccess.value = "";
+        showError.value = "Error while creating the Recommendation :(";
+        console.log("Error: HttpResponse " + response.statusText);
+        moveUp();
       } else {
-        redirectToUserProfile(store.getters.getLoggedUser.dId);
+        showError.value = "";
+        showSuccess.value = "Recommendation Created! :)";
+        resetAllInputs();
+        moveUp();
       }
     }
-    return {
-      city,
-      placeName,
-      title,
-      text,
-      address,
-      maps,
-      photo,
-      website,
-      instagram,
-      facebook,
-      otherLink,
-      tagInput,
-      tags,
-      showSuccess,
-      showError,
-      addTag,
-      removeTag,
-      addRecommendation,
-    };
-  },
-});
+  } else {
+    redirectToUserProfile(store.getters.getLoggedUser.dId);
+  }
+}
 </script>

@@ -94,8 +94,8 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
 import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
 import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
@@ -104,31 +104,24 @@ import { getUserByDId } from "@/services/userService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationByDId } from "@/services/recommendationService";
 
-export default defineComponent({
-  components: { GoogleMapsIframe, DetailsInfoCard },
-  setup() {
-    allowOrRedirectToHome();
-    const recommendation = ref();
-    const city = ref();
-    const recommendedByUser = ref();
-    const createdOn = ref("");
+allowOrRedirectToHome();
+const recommendation = ref();
+const city = ref();
+const recommendedByUser = ref();
+const createdOn = ref("");
 
-    (async () => {
-      recommendation.value = await getRecommendationByDId(
-        getRecommendationDIdFromRoute()
-      );
-      if (recommendation.value) {
-        recommendedByUser.value = await getUserByDId(
-          recommendation.value.fromUserDId
-        );
-        city.value = await getCityByDId(recommendation.value.cityDId);
-        createdOn.value = getDateFromDatetime(recommendation.value.createdOn);
-      }
-    })();
-
-    return { recommendation, city, recommendedByUser, createdOn };
-  },
-});
+(async () => {
+  recommendation.value = await getRecommendationByDId(
+    getRecommendationDIdFromRoute()
+  );
+  if (recommendation.value) {
+    recommendedByUser.value = await getUserByDId(
+      recommendation.value.fromUserDId
+    );
+    city.value = await getCityByDId(recommendation.value.cityDId);
+    createdOn.value = getDateFromDatetime(recommendation.value.createdOn);
+  }
+})();
 </script>
 
 <style scoped>

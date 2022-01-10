@@ -51,26 +51,19 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getUserByUsername } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
 
-export default defineComponent({
-  components: { FriendCard },
-  setup() {
-    allowOrRedirectToHome();
-    const users = ref();
-    const username = ref("");
+allowOrRedirectToHome();
+const users = ref();
+const username = ref("");
 
-    async function searchUser() {
-      if (username.value) {
-        users.value = await getUserByUsername(username.value.toLowerCase());
-      }
-    }
-
-    return { username, users, searchUser };
-  },
-});
+async function searchUser() {
+  if (username.value) {
+    users.value = await getUserByUsername(username.value.toLowerCase());
+  }
+}
 </script>

@@ -69,35 +69,25 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { getUserByDId } from "@/services/userService";
 import { Recommendation } from "@/store/types/types";
 import { getDateFromDatetime } from "@/views/helpers";
-import { PropType, defineComponent, ref } from "vue";
+import { ref } from "vue";
 
-export default defineComponent({
-  props: {
-    recommendation: {
-      type: Object as PropType<Recommendation>,
-      defafult: undefined,
-    },
-  },
-  setup(props) {
-    const recommendedByUser = ref();
-    const createdOn = ref("");
+const props = defineProps<{ recommendation: Recommendation }>();
 
-    (async () => {
-      if (props.recommendation) {
-        recommendedByUser.value = await getUserByDId(
-          props.recommendation.fromUserDId
-        );
-        createdOn.value = getDateFromDatetime(props.recommendation.createdOn);
-      }
-    })();
+const recommendedByUser = ref();
+const createdOn = ref("");
 
-    return { recommendedByUser, createdOn };
-  },
-});
+(async () => {
+  if (props.recommendation) {
+    recommendedByUser.value = await getUserByDId(
+      props.recommendation.fromUserDId
+    );
+    createdOn.value = getDateFromDatetime(props.recommendation.createdOn);
+  }
+})();
 </script>
 
 <style scoped>

@@ -28,34 +28,27 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
 
-export default defineComponent({
-  components: { FriendCard },
-  setup() {
-    allowOrRedirectToHome();
-    const store = useStore();
-    const user = ref();
-    const userDId: string = getUserDIdFromRoute();
-    const friends = ref();
+allowOrRedirectToHome();
+const store = useStore();
+const user = ref();
+const userDId: string = getUserDIdFromRoute();
+const friends = ref();
 
-    (async () => {
-      if (store.getters.getLoggedUser.dId !== userDId) {
-        user.value = await getUserByDId(userDId);
-        friends.value = await getFriendsByUserDId(userDId);
-      } else {
-        user.value = store.getters.getLoggedUser;
-        friends.value = store.getters.getLoggedUserFriends;
-      }
-    })();
-
-    return { user, friends };
-  },
-});
+(async () => {
+  if (store.getters.getLoggedUser.dId !== userDId) {
+    user.value = await getUserByDId(userDId);
+    friends.value = await getFriendsByUserDId(userDId);
+  } else {
+    user.value = store.getters.getLoggedUser;
+    friends.value = store.getters.getLoggedUserFriends;
+  }
+})();
 </script>

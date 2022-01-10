@@ -57,34 +57,17 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { City, Recommendation } from "@/store/types/types";
-import { PropType, defineComponent } from "vue";
 
-export default defineComponent({
-  props: {
-    recommendation: {
-      type: Object as PropType<Recommendation>,
-      defafult: undefined,
-    },
-    city: {
-      type: Object as PropType<City>,
-      defafult: undefined,
-    },
-  },
-  setup() {
-    function getLinkNameToDisplay(linkName: string): string {
-      if (linkName.length > 40) {
-        return linkName.substring(0, 38) + "...";
-      }
-      return linkName;
-    }
+const props = defineProps<{ recommendation: Recommendation; city: City }>();
 
-    return {
-      getLinkNameToDisplay,
-    };
-  },
-});
+function getLinkNameToDisplay(linkName: string): string {
+  if (linkName.length > 40) {
+    return linkName.substring(0, 38) + "...";
+  }
+  return linkName;
+}
 </script>
 
 <style scoped>

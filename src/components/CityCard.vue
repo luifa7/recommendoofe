@@ -39,27 +39,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { City } from "@/store/types/types";
-import { PropType, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 
-export default defineComponent({
-  props: {
-    city: {
-      type: Object as PropType<City>,
-      defafult: undefined,
-    },
-  },
-  setup() {
-    const route = useRoute();
-    let isVisited = false;
-    if (route.name == "CitiesVisited") {
-      isVisited = true;
-    }
-    return {
-      isVisited,
-    };
-  },
-});
+const props = defineProps<{ city: City }>();
+const route = useRoute();
+let isVisited = false;
+if (route.name == "CitiesVisited") {
+  isVisited = true;
+}
 </script>
