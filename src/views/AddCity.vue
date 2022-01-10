@@ -140,7 +140,7 @@ async function addCity() {
       moveUp();
     } else if (response.status !== 201) {
       showSuccess.value = "";
-      showError.value = "Error while creating the Recommendation :(";
+      showError.value = "Error while creating the City :(";
       console.log("Error: HttpResponse " + response.statusText);
       moveUp();
     } else {
@@ -150,6 +150,7 @@ async function addCity() {
       showSuccess.value = "City Created! :)";
       resetAllInputs();
       moveUp();
+      setTimeout(() => (showSuccess.value = ""), 4000);
     }
   }
 }

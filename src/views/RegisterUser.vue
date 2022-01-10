@@ -12,6 +12,14 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
             <form id="add-user-form" @submit.prevent="createNewUser">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                style="text-align: center"
+                v-if="showError"
+              >
+                {{ showError }}
+              </div>
               <!-- Username input-->
               <div class="form-floating mb-3">
                 <input
@@ -171,6 +179,7 @@ import {
   allowOrRedirectToProfile,
   redirectToUserProfile,
 } from "@/services/authService";
+import { moveUp } from "./helpers";
 
 allowOrRedirectToProfile();
 const store = useStore();
@@ -184,6 +193,7 @@ const interestedIn = ref("");
 const photo = ref("");
 const password = ref("");
 const passwordRepeat = ref("");
+const showError = ref("");
 
 async function createNewUser() {
   const user: Array<User> = await getUserByUsername(
@@ -202,11 +212,17 @@ async function createNewUser() {
     };
     const response = await createUser(newUser);
     if (!response) {
-      console.log("Error: No Response on Create City");
+      console.log("Error: No Response on Create User");
+      showError.value = "Error while creating the User :(";
+      moveUp();
     } else if (response.status === 409) {
+      showError.value = "User Name Already Exist :/";
       console.log("User Name Already Exist");
+      moveUp();
     } else if (response.status !== 201) {
-      console.log(response.statusText);
+      showError.value = "Error while creating the User :(";
+      console.log("Error: HttpResponse " + response.statusText);
+      moveUp();
     } else {
       const createdUser: User = response.data as User;
       store.commit("loginUser", createdUser);

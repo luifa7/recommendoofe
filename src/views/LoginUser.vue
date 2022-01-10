@@ -12,6 +12,14 @@
         <div class="row gx-5 justify-content-center mb-4">
           <div class="col-lg-8 col-xl-6">
             <form id="login-form" @submit.prevent="loginUser">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                style="text-align: center"
+                v-if="showError"
+              >
+                {{ showError }}
+              </div>
               <!-- Username input-->
               <div class="form-floating mb-3">
                 <input
@@ -74,15 +82,17 @@ import { useStore } from "vuex";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
+import { moveUp } from "./helpers";
 
 allowOrRedirectToProfile();
 const store = useStore();
 const username = ref("");
 const password = ref("");
+const showError = ref("");
 
 async function loginUser() {
-  // const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
-  const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
+  const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
+  // const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
   const user: User | undefined = await getUserByDId(myUserDId);
   if (user) {
     store.commit("loginUser", user);
@@ -91,6 +101,10 @@ async function loginUser() {
     const cities = await getCitiesByUserDId(myUserDId);
     store.commit("setLoggedUserCities", cities);
     redirectToUserProfile(user.dId);
+  } else {
+    showError.value = "Wrong password or username :/";
+    console.log("Wrong password or username");
+    moveUp();
   }
 }
 </script>

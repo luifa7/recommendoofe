@@ -328,6 +328,7 @@ async function addRecommendation() {
         showSuccess.value = "Recommendation Created! :)";
         resetAllInputs();
         moveUp();
+        setTimeout(() => (showSuccess.value = ""), 4000);
       }
     }
   } else {
