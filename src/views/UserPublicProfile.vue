@@ -105,8 +105,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import {
   getUserByDId,
   isFriendRequestPending,
@@ -117,59 +117,49 @@ import { useStore } from "vuex";
 import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
 import { FriendRequest } from "@/store/types/types";
 
-export default defineComponent({
-  setup() {
-    allowOrRedirectToHome();
-    const store = useStore();
-    const user = ref();
-    const showAddFriendButton = ref(false);
-    const showRequestAlreadySent = ref(false);
-    const userDId: string = getUserDIdFromRoute();
-    (async () => {
-      if (store.getters.getLoggedUser.dId !== userDId) {
-        user.value = await getUserByDId(userDId);
-        showAddFriendButton.value = !isThisUserMyFriend(
-          userDId,
-          store.getters.getLoggedUserFriends
-        );
-        if (showAddFriendButton.value) {
-          const isPending = await isFriendRequestPending(
-            store.getters.getLoggedUser.dId,
-            userDId
-          );
-          if (isPending) {
-            showAddFriendButton.value = false;
-            showRequestAlreadySent.value = true;
-          }
-        }
-      } else {
-        user.value = store.getters.getLoggedUser;
-      }
-    })();
-
-    async function sendFriendRequest() {
-      const friendRequest: FriendRequest = {
-        userDId: store.getters.getLoggedUser.dId,
-        friendDId: userDId,
-      };
-      const response = await postFriendRequest(friendRequest);
-      if (!response) {
-        console.log("Error: No Response on Send Friend Request");
-      } else if (response.status !== 201) {
-        console.log(response.statusText);
-      } else {
+allowOrRedirectToHome();
+const store = useStore();
+const user = ref();
+const showAddFriendButton = ref(false);
+const showRequestAlreadySent = ref(false);
+const userDId: string = getUserDIdFromRoute();
+(async () => {
+  if (store.getters.getLoggedUser.dId !== userDId) {
+    user.value = await getUserByDId(userDId);
+    showAddFriendButton.value = !isThisUserMyFriend(
+      userDId,
+      store.getters.getLoggedUserFriends
+    );
+    if (showAddFriendButton.value) {
+      const isPending = await isFriendRequestPending(
+        store.getters.getLoggedUser.dId,
+        userDId
+      );
+      if (isPending) {
         showAddFriendButton.value = false;
         showRequestAlreadySent.value = true;
       }
     }
-    return {
-      user,
-      showAddFriendButton,
-      showRequestAlreadySent,
-      sendFriendRequest,
-    };
-  },
-});
+  } else {
+    user.value = store.getters.getLoggedUser;
+  }
+})();
+
+async function sendFriendRequest() {
+  const friendRequest: FriendRequest = {
+    userDId: store.getters.getLoggedUser.dId,
+    friendDId: userDId,
+  };
+  const response = await postFriendRequest(friendRequest);
+  if (!response) {
+    console.log("Error: No Response on Send Friend Request");
+  } else if (response.status !== 201) {
+    console.log(response.statusText);
+  } else {
+    showAddFriendButton.value = false;
+    showRequestAlreadySent.value = true;
+  }
+}
 </script>
 
 <style scoped>

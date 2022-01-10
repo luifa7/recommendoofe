@@ -4,20 +4,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 import { useStore } from "vuex";
 import router from "@/router";
 import { allowOrRedirectToHome } from "@/services/authService";
-
-export default defineComponent({
-  setup() {
-    allowOrRedirectToHome();
-    const store = useStore();
-    store.commit("logoutUser");
-    router.push({
-      name: "Home",
-    });
-  },
+allowOrRedirectToHome();
+const store = useStore();
+store.commit("logoutUser");
+router.push({
+  name: "Home",
 });
 </script>

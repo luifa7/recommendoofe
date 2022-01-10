@@ -64,8 +64,8 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import {
   allowOrRedirectToProfile,
   redirectToUserProfile,
@@ -75,30 +75,22 @@ import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 
-export default defineComponent({
-  setup() {
-    allowOrRedirectToProfile();
-    const store = useStore();
-    const username = ref("");
-    const password = ref("");
+allowOrRedirectToProfile();
+const store = useStore();
+const username = ref("");
+const password = ref("");
 
-    async function loginUser() {
-      const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
-      const user: User | undefined = await getUserByDId(myUserDId);
-      if (user) {
-        store.commit("loginUser", user);
-        const friends = await getFriendsByUserDId(myUserDId);
-        store.commit("setLoggedUserFriends", friends);
-        const cities = await getCitiesByUserDId(myUserDId);
-        store.commit("setLoggedUserCities", cities);
-        redirectToUserProfile(user.dId);
-      }
-    }
-    return {
-      username,
-      password,
-      loginUser,
-    };
-  },
-});
+async function loginUser() {
+  // const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
+  const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
+  const user: User | undefined = await getUserByDId(myUserDId);
+  if (user) {
+    store.commit("loginUser", user);
+    const friends = await getFriendsByUserDId(myUserDId);
+    store.commit("setLoggedUserFriends", friends);
+    const cities = await getCitiesByUserDId(myUserDId);
+    store.commit("setLoggedUserCities", cities);
+    redirectToUserProfile(user.dId);
+  }
+}
 </script>

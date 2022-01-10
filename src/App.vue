@@ -108,18 +108,12 @@
   <router-view :key="$route.fullPath" />
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from "vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 import { useStore } from "vuex";
 
-export default defineComponent({
-  setup() {
-    const store = useStore();
-    return {
-      actualUser: computed(() => store.getters.getLoggedUser),
-    };
-  },
-});
+const store = useStore();
+const actualUser = computed(() => store.getters.getLoggedUser);
 </script>
 
 <style>

@@ -162,8 +162,8 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import { createUser, getUserByUsername } from "@/services/userService";
 import { useStore } from "vuex";
 import { CreateUser, User } from "@/store/types/types";
@@ -172,63 +172,46 @@ import {
   redirectToUserProfile,
 } from "@/services/authService";
 
-export default defineComponent({
-  setup() {
-    allowOrRedirectToProfile();
-    const store = useStore();
-    const username = ref("");
-    const fullName = ref("");
-    const shortFact1 = ref("");
-    const shortFact2 = ref("");
-    const shortFact3 = ref("");
-    const aboutMe = ref("");
-    const interestedIn = ref("");
-    const photo = ref("");
-    const password = ref("");
-    const passwordRepeat = ref("");
+allowOrRedirectToProfile();
+const store = useStore();
+const username = ref("");
+const fullName = ref("");
+const shortFact1 = ref("");
+const shortFact2 = ref("");
+const shortFact3 = ref("");
+const aboutMe = ref("");
+const interestedIn = ref("");
+const photo = ref("");
+const password = ref("");
+const passwordRepeat = ref("");
 
-    async function newUser() {
-      const user: Array<User> = await getUserByUsername(
-        username.value.toLowerCase()
-      );
-      if (user.length === 0) {
-        const newUser: CreateUser = {
-          userName: username.value.toLowerCase(),
-          name: fullName.value,
-          shortFact1: shortFact1.value,
-          shortFact2: shortFact2.value,
-          shortFact3: shortFact3.value,
-          aboutMe: aboutMe.value,
-          interestedIn: interestedIn.value,
-          photo: photo.value,
-        };
-        const response = await createUser(newUser);
-        if (!response) {
-          console.log("Error: No Response on Create City");
-        } else if (response.status !== 201) {
-          console.log(response.statusText);
-        } else {
-          const createdUser: User = response.data as User;
-          store.commit("loginUser", createdUser);
-          redirectToUserProfile(createdUser.dId);
-        }
-      } else {
-        console.log("User Name Already Exist");
-      }
-    }
-    return {
-      username,
-      fullName,
-      shortFact1,
-      shortFact2,
-      shortFact3,
-      aboutMe,
-      interestedIn,
-      photo,
-      password,
-      passwordRepeat,
-      newUser,
+async function newUser() {
+  const user: Array<User> = await getUserByUsername(
+    username.value.toLowerCase()
+  );
+  if (user.length === 0) {
+    const newUser: CreateUser = {
+      userName: username.value.toLowerCase(),
+      name: fullName.value,
+      shortFact1: shortFact1.value,
+      shortFact2: shortFact2.value,
+      shortFact3: shortFact3.value,
+      aboutMe: aboutMe.value,
+      interestedIn: interestedIn.value,
+      photo: photo.value,
     };
-  },
-});
+    const response = await createUser(newUser);
+    if (!response) {
+      console.log("Error: No Response on Create City");
+    } else if (response.status !== 201) {
+      console.log(response.statusText);
+    } else {
+      const createdUser: User = response.data as User;
+      store.commit("loginUser", createdUser);
+      redirectToUserProfile(createdUser.dId);
+    }
+  } else {
+    console.log("User Name Already Exist");
+  }
+}
 </script>
