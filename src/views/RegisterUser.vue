@@ -11,7 +11,7 @@
         </div>
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
-            <form id="add-user-form" @submit.prevent="newUser">
+            <form id="add-user-form" @submit.prevent="createNewUser">
               <!-- Username input-->
               <div class="form-floating mb-3">
                 <input
@@ -185,7 +185,7 @@ const photo = ref("");
 const password = ref("");
 const passwordRepeat = ref("");
 
-async function newUser() {
+async function createNewUser() {
   const user: Array<User> = await getUserByUsername(
     username.value.toLowerCase()
   );
@@ -203,6 +203,8 @@ async function newUser() {
     const response = await createUser(newUser);
     if (!response) {
       console.log("Error: No Response on Create City");
+    } else if (response.status === 409) {
+      console.log("User Name Already Exist");
     } else if (response.status !== 201) {
       console.log(response.statusText);
     } else {
