@@ -96,9 +96,13 @@
 <script lang="ts" setup>
 import { allowOrRedirectToHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
+import FriendCard from "@/components/FriendCard.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { getFriendsByUserDId } from "@/services/userService";
+import {
+  getReceivedFriendRequestsByUserDId,
+  getSentFriendRequestsByUserDId,
+} from "@/services/userService";
 
 allowOrRedirectToHome();
 const store = useStore();
@@ -106,10 +110,10 @@ const receivedFriendRequests = ref();
 const sentFriendRequests = ref();
 
 (async () => {
-  receivedFriendRequests.value = await getFriendsByUserDId(
+  receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
     store.getters.getLoggedUser.DId
   );
-  sentFriendRequests.value = await getFriendsByUserDId(
+  sentFriendRequests.value = await getSentFriendRequestsByUserDId(
     store.getters.getLoggedUser.DId
   );
 })();

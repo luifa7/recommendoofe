@@ -52,6 +52,41 @@ export async function getFriendsDIdsByUserDId(
   }
 }
 
+export async function getSentFriendRequestsDIdsByUserDId(
+  userDId: string
+): Promise<string[]> {
+  {
+    const friendDIds = await axios
+      .get(`${API_URL}/friends/${userDId}?status=sent`)
+      .then((response) => response.data as Array<string>)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!friendDIds) {
+      return [];
+    }
+    console.log(friendDIds);
+    return friendDIds;
+  }
+}
+
+export async function getReceivedFriendRequestsDIdsByUserDId(
+  userDId: string
+): Promise<string[]> {
+  {
+    const friendDIds = await axios
+      .get(`${API_URL}/friends/${userDId}?status=received`)
+      .then((response) => response.data as Array<string>)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!friendDIds) {
+      return [];
+    }
+    return friendDIds;
+  }
+}
+
 export async function postFriendRequest(friendRequest: FriendRequest) {
   {
     const response = await axios
@@ -90,6 +125,50 @@ export async function getFriendsByUserDId(
 ): Promise<Array<User>> {
   {
     const friendsDIds = await getFriendsDIdsByUserDId(userDId);
+    let friendsDIdsForQuery = friendsDIds.join();
+    if (!friendsDIdsForQuery.includes(",")) {
+      friendsDIdsForQuery += ",";
+    }
+    const friends = await axios
+      .get(`${API_URL}/users/${friendsDIdsForQuery}`)
+      .then((response) => response.data as Array<User>)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!friends) {
+      return [];
+    }
+    return friends;
+  }
+}
+
+export async function getSentFriendRequestsByUserDId(
+  userDId: string
+): Promise<Array<User>> {
+  {
+    const friendsDIds = await getSentFriendRequestsDIdsByUserDId(userDId);
+    let friendsDIdsForQuery = friendsDIds.join();
+    if (!friendsDIdsForQuery.includes(",")) {
+      friendsDIdsForQuery += ",";
+    }
+    const friends = await axios
+      .get(`${API_URL}/users/${friendsDIdsForQuery}`)
+      .then((response) => response.data as Array<User>)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!friends) {
+      return [];
+    }
+    return friends;
+  }
+}
+
+export async function getReceivedFriendRequestsByUserDId(
+  userDId: string
+): Promise<Array<User>> {
+  {
+    const friendsDIds = await getReceivedFriendRequestsDIdsByUserDId(userDId);
     let friendsDIdsForQuery = friendsDIds.join();
     if (!friendsDIdsForQuery.includes(",")) {
       friendsDIdsForQuery += ",";
