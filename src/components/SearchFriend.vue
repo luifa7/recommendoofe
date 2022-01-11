@@ -1,0 +1,53 @@
+<template>
+  <div class="row gx-5 justify-content-center mb-4">
+    <div class="col-lg-8 col-xl-6">
+      <form id="search-form" @submit.prevent="searchUser">
+        <!-- Search input-->
+        <div class="form-floating mb-3">
+          <input
+            class="form-control"
+            id="username"
+            type="text"
+            placeholder="Username to find..."
+            v-model="username"
+            required
+            style="text-transform: lowercase"
+          />
+          <label for="username">Search by username</label>
+        </div>
+        <!-- Submit Button-->
+        <div class="d-grid">
+          <button
+            class="btn btn-primary btn-lg"
+            id="submitButton"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+    class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
+  >
+    <div v-for="user in users" :key="user.dId">
+      <friend-card :friend="user" />
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { ref } from "vue";
+import FriendCard from "@/components/FriendCard.vue";
+import { getUserByUsername } from "@/services/userService";
+
+const users = ref();
+const username = ref("");
+
+async function searchUser() {
+  if (username.value) {
+    users.value = await getUserByUsername(username.value.toLowerCase());
+  }
+}
+</script>

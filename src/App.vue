@@ -57,6 +57,18 @@
           <li class="nav-item">
             <router-link
               :to="{
+                name: 'AddFriend',
+                params: {
+                  userdid: actualUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-person-plus"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
                 name: 'CitiesToVisit',
                 params: {
                   userdid: actualUser.dId,
