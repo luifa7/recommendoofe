@@ -74,8 +74,12 @@
           role="tabpanel"
           aria-labelledby="pills-profile-tab"
         >
-          <div v-for="friend in receivedFriendRequests" :key="friend.dId">
-            <friend-card :friend="friend" />
+          <div
+            class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
+          >
+            <div v-for="friend in receivedFriendRequests" :key="friend.dId">
+              <friend-card :friend="friend" />
+            </div>
           </div>
         </div>
         <div
@@ -84,8 +88,12 @@
           role="tabpanel"
           aria-labelledby="pills-contact-tab"
         >
-          <div v-for="friend in sentFriendRequests" :key="friend.dId">
-            <friend-card :friend="friend" />
+          <div
+            class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
+          >
+            <div v-for="friend in sentFriendRequests" :key="friend.dId">
+              <friend-card :friend="friend" />
+            </div>
           </div>
         </div>
       </div>
@@ -111,10 +119,10 @@ const sentFriendRequests = ref();
 
 (async () => {
   receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-    store.getters.getLoggedUser.DId
+    store.getters.getLoggedUser.dId
   );
   sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-    store.getters.getLoggedUser.DId
+    store.getters.getLoggedUser.dId
   );
 })();
 </script>

@@ -65,7 +65,6 @@ export async function getSentFriendRequestsDIdsByUserDId(
     if (!friendDIds) {
       return [];
     }
-    console.log(friendDIds);
     return friendDIds;
   }
 }
@@ -74,8 +73,9 @@ export async function getReceivedFriendRequestsDIdsByUserDId(
   userDId: string
 ): Promise<string[]> {
   {
+    const queryUrl = `${API_URL}/friends/${userDId}?status=received`;
     const friendDIds = await axios
-      .get(`${API_URL}/friends/${userDId}?status=received`)
+      .get(queryUrl)
       .then((response) => response.data as Array<string>)
       .catch((error) => {
         console.log(error);
