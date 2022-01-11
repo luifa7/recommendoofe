@@ -22,7 +22,7 @@
             id="submitButton"
             type="submit"
           >
-            Submit
+            Search
           </button>
         </div>
       </form>

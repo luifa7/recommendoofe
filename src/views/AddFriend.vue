@@ -11,10 +11,14 @@
           Expand your network. Increase your experiences.
         </p>
       </div>
-      <ul class="nav nav-pills mb-5 nav-fill" id="pills-tab" role="tablist">
+      <ul
+        class="nav nav-pills mb-5 justify-content-center"
+        id="pills-tab"
+        role="tablist"
+      >
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link active"
+            class="nav-link border border-warning active"
             id="pills-home-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-home"
@@ -23,12 +27,12 @@
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Search
+            Find users
           </button>
         </li>
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link"
+            class="nav-link border border-warning"
             id="pills-profile-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-profile"
@@ -42,7 +46,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link"
+            class="nav-link border border-warning"
             id="pills-contact-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-contact"
@@ -110,3 +114,14 @@ const sentFriendRequests = ref();
   );
 })();
 </script>
+
+<style scoped>
+.nav-link {
+  font-weight: bold;
+  color: black;
+  margin-inline-end: 1rem;
+}
+.nav-link.active {
+  background-color: orange;
+}
+</style>
