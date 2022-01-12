@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 import {
   getUserByDId,
   isFriendRequestPending,
@@ -115,7 +115,7 @@ import {
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
-import { FriendRequest } from "@/store/types/types";
+import { FriendRequest, User } from "@/store/types/types";
 
 allowOrRedirectToHome();
 const store = useStore();
@@ -123,16 +123,22 @@ const user = ref();
 const showAddFriendButton = ref(false);
 const showRequestAlreadySent = ref(false);
 const userDId: string = getUserDIdFromRoute();
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
+const loggedUserFriends: ComputedRef<Array<User>> = computed(
+  () => store.getters.getLoggedUserFriends
+);
 (async () => {
-  if (store.getters.getLoggedUser.dId !== userDId) {
+  if (loggedInUser.value.dId !== userDId) {
     user.value = await getUserByDId(userDId);
     showAddFriendButton.value = !isThisUserMyFriend(
       userDId,
-      store.getters.getLoggedUserFriends
+      loggedUserFriends.value
     );
     if (showAddFriendButton.value) {
       const isPending = await isFriendRequestPending(
-        store.getters.getLoggedUser.dId,
+        loggedInUser.value.dId,
         userDId
       );
       if (isPending) {
@@ -141,13 +147,13 @@ const userDId: string = getUserDIdFromRoute();
       }
     }
   } else {
-    user.value = store.getters.getLoggedUser;
+    user.value = loggedInUser.value;
   }
 })();
 
 async function sendFriendRequest() {
   const friendRequest: FriendRequest = {
-    userDId: store.getters.getLoggedUser.dId,
+    userDId: loggedInUser.value.dId,
     friendDId: userDId,
   };
   const response = await postFriendRequest(friendRequest);

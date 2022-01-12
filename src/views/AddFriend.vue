@@ -105,24 +105,28 @@
 import { allowOrRedirectToHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
 import FriendCard from "@/components/FriendCard.vue";
-import { ref } from "vue";
+import { ref, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import {
   getReceivedFriendRequestsByUserDId,
   getSentFriendRequestsByUserDId,
 } from "@/services/userService";
+import { User } from "@/store/types/types";
 
 allowOrRedirectToHome();
 const store = useStore();
 const receivedFriendRequests = ref();
 const sentFriendRequests = ref();
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
 
 (async () => {
   receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-    store.getters.getLoggedUser.dId
+    loggedInUser.value.dId
   );
   sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-    store.getters.getLoggedUser.dId
+    loggedInUser.value.dId
   );
 })();
 </script>

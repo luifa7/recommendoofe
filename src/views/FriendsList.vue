@@ -29,26 +29,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useStore } from "vuex";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
+import { User } from "@/store/types/types";
 
 allowOrRedirectToHome();
 const store = useStore();
 const user = ref();
 const userDId: string = getUserDIdFromRoute();
 const friends = ref();
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
+const loggedUserFriends: ComputedRef<Array<User>> = computed(
+  () => store.getters.getLoggedUserFriends
+);
 
 (async () => {
-  if (store.getters.getLoggedUser.dId !== userDId) {
+  if (loggedInUser.value.dId !== userDId) {
     user.value = await getUserByDId(userDId);
     friends.value = await getFriendsByUserDId(userDId);
   } else {
-    user.value = store.getters.getLoggedUser;
-    friends.value = store.getters.getLoggedUserFriends;
+    user.value = loggedInUser.value;
+    friends.value = loggedUserFriends.value;
   }
 })();
 </script>

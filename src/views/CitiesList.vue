@@ -27,12 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 import CityCard from "@/components/CityCard.vue";
 import { useStore } from "vuex";
 import { getUserDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
-import { City } from "@/store/types/types";
+import { City, User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 import { useRoute } from "vue-router";
 
@@ -46,13 +46,19 @@ const store = useStore();
 const userDId: string = getUserDIdFromRoute();
 const cities = ref();
 const displayAddButton = ref(true);
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
+const loggedUserCities: ComputedRef<Array<City>> = computed(
+  () => store.getters.getLoggedUserCities
+);
 
 (async () => {
-  if (store.getters.getLoggedUser.dId !== userDId) {
+  if (loggedInUser.value.dId !== userDId) {
     displayAddButton.value = false;
     cities.value = await getCitiesByUserDId(userDId);
   } else {
-    cities.value = store.getters.getLoggedUserCities;
+    cities.value = loggedUserCities.value;
   }
   cities.value = cities.value.filter((c: City) => c.visited === isVisited);
 })();

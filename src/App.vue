@@ -29,13 +29,13 @@
         style="margin-right: 0.7rem"
       >
         <!-- User is logged -->
-        <ul v-if="actualUser" class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul v-if="loggedInUser" class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link
               :to="{
                 name: 'UserPublicProfile',
                 params: {
-                  userdid: actualUser.dId,
+                  userdid: loggedInUser.dId,
                 },
               }"
               class="nav-link"
@@ -47,7 +47,7 @@
               :to="{
                 name: 'UserFriends',
                 params: {
-                  userdid: actualUser.dId,
+                  userdid: loggedInUser.dId,
                 },
               }"
               class="nav-link"
@@ -59,7 +59,7 @@
               :to="{
                 name: 'AddFriend',
                 params: {
-                  userdid: actualUser.dId,
+                  userdid: loggedInUser.dId,
                 },
               }"
               class="nav-link"
@@ -71,7 +71,7 @@
               :to="{
                 name: 'CitiesToVisit',
                 params: {
-                  userdid: actualUser.dId,
+                  userdid: loggedInUser.dId,
                 },
               }"
               class="nav-link"
@@ -83,7 +83,7 @@
               :to="{
                 name: 'CitiesVisited',
                 params: {
-                  userdid: actualUser.dId,
+                  userdid: loggedInUser.dId,
                 },
               }"
               class="nav-link"
@@ -121,11 +121,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
+import { User } from "./store/types/types";
 
 const store = useStore();
-const actualUser = computed(() => store.getters.getLoggedUser);
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
 </script>
 
 <style>

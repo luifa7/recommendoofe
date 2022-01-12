@@ -200,8 +200,8 @@
 </template>
 
 <script lang="ts" setup>
-import { CreateRecommendation } from "@/store/types/types";
-import { ref } from "vue";
+import { CreateRecommendation, User } from "@/store/types/types";
+import { computed, ComputedRef, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useStore } from "vuex";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
@@ -230,6 +230,9 @@ const otherLink = ref("");
 const tagInput = ref("");
 let tagHolder: Array<string> = [];
 const tags = ref(tagHolder);
+const loggedInUser: ComputedRef<User> = computed(
+  () => store.getters.getLoggedUser
+);
 
 (async () => {
   city.value = await getCityByDId(getCityDIdFromRoute());
@@ -309,7 +312,7 @@ async function addRecommendation() {
         photo: photo.value,
         cityDId: city.value.dId,
         tags: tags.value,
-        fromUserDId: store.getters.getLoggedUser.dId,
+        fromUserDId: loggedInUser.value.dId,
         toUserDId: userDId,
       };
       const response = await createRecommendation(newRecommendation);
@@ -332,7 +335,7 @@ async function addRecommendation() {
       }
     }
   } else {
-    redirectToUserProfile(store.getters.getLoggedUser.dId);
+    redirectToUserProfile(loggedInUser.value.dId);
   }
 }
 </script>
