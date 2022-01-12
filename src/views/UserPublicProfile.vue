@@ -22,31 +22,35 @@
           class="d-grid d-sm-flex justify-content-sm-center justify-content-xl-start"
         >
           <router-link
-            class="btn btn-primary btn-lg px-2 my-2 me-sm-2"
+            class="btn btn-primary btn-lg px-3 my-2 me-sm-2"
+            style="font-size: 2rem"
             :to="{
               name: 'CitiesToVisit',
             }"
-            ><i class="bi bi-journal-bookmark"></i> To visit</router-link
-          >
+            ><i class="bi bi-journal-bookmark"></i
+          ></router-link>
           <router-link
-            class="btn btn-success btn-lg px-2 my-2 me-sm-2"
+            class="btn btn-success btn-lg px-3 my-2 me-sm-2"
+            style="font-size: 2rem"
             :to="{
               name: 'CitiesVisited',
             }"
-            ><i class="bi bi-journal-check"></i> Visited</router-link
-          >
+            ><i class="bi bi-journal-check"></i
+          ></router-link>
           <div
             v-if="showAddFriendButton"
-            class="btn btn-outline-light btn-lg my-2 px-2"
+            class="btn btn-outline-light btn-lg px-3 my-2"
+            style="font-size: 2rem"
             @click="sendFriendRequest"
           >
-            <i class="bi bi-person-plus"></i> Add friend
+            <i class="bi bi-person-plus"></i>
           </div>
           <div
             v-if="showRequestAlreadySent"
-            class="btn-secondary btn-lg my-2 px-2"
+            class="btn-secondary btn-lg px-3 my-2"
+            style="font-size: 2rem"
           >
-            <i class="bi bi-person-plus"></i> Friend request pending
+            <i class="bi bi-clock-history"></i>
           </div>
         </div>
       </div>
@@ -68,13 +72,6 @@
               <div class="fs-4 mb-4 fst-italic">
                 {{ user.interestedIn }}
               </div>
-              <router-link
-                class="btn btn-warning btn-lg px-4 me-sm-3 text-white fw-bolder"
-                :to="{
-                  name: 'CitiesToVisit',
-                }"
-                >Recommend me something!</router-link
-              >
             </div>
           </div>
         </div>
