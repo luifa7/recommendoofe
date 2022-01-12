@@ -1,6 +1,7 @@
 <template>
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav v-if="!loggedInUser" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <!-- No user logged -->
     <div class="container px-3" style="text-align: right">
       <router-link
         :to="{ name: 'Home' }"
@@ -28,76 +29,7 @@
         id="navbarSupportedContent"
         style="margin-right: 0.7rem"
       >
-        <!-- User is logged -->
-        <ul v-if="loggedInUser" class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'UserPublicProfile',
-                params: {
-                  userdid: loggedInUser.dId,
-                },
-              }"
-              class="nav-link"
-              ><i class="bi bi-person"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'UserFriends',
-                params: {
-                  userdid: loggedInUser.dId,
-                },
-              }"
-              class="nav-link"
-              ><i class="bi bi-people"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'AddFriend',
-                params: {
-                  userdid: loggedInUser.dId,
-                },
-              }"
-              class="nav-link"
-              ><i class="bi bi-person-plus"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'CitiesToVisit',
-                params: {
-                  userdid: loggedInUser.dId,
-                },
-              }"
-              class="nav-link"
-              ><i class="bi bi-journal-bookmark"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{
-                name: 'CitiesVisited',
-                params: {
-                  userdid: loggedInUser.dId,
-                },
-              }"
-              class="nav-link"
-              ><i class="bi bi-journal-check"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
-              ><i class="bi bi-power"></i
-            ></router-link>
-          </li>
-        </ul>
-        <!-- No user logged -->
-        <ul v-else class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link :to="{ name: 'Home' }" class="nav-link"
               ><i class="bi bi-house-door"></i
@@ -115,6 +47,78 @@
           </li>
         </ul>
       </div>
+    </div>
+  </nav>
+  <!-- User is logged -->
+  <nav v-else class="navbar-dark bg-dark nav-link-logged">
+    <div id="navbarSupportedContent">
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'UserPublicProfile',
+              params: {
+                userdid: loggedInUser.dId,
+              },
+            }"
+            class="nav-link"
+            ><i class="bi bi-person"></i
+          ></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'UserFriends',
+              params: {
+                userdid: loggedInUser.dId,
+              },
+            }"
+            class="nav-link"
+            ><i class="bi bi-people"></i
+          ></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'AddFriend',
+              params: {
+                userdid: loggedInUser.dId,
+              },
+            }"
+            class="nav-link"
+            ><i class="bi bi-person-plus"></i
+          ></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'CitiesToVisit',
+              params: {
+                userdid: loggedInUser.dId,
+              },
+            }"
+            class="nav-link"
+            ><i class="bi bi-journal-bookmark"></i
+          ></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            :to="{
+              name: 'CitiesVisited',
+              params: {
+                userdid: loggedInUser.dId,
+              },
+            }"
+            class="nav-link"
+            ><i class="bi bi-journal-check"></i
+          ></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
+            ><i class="bi bi-power"></i
+          ></router-link>
+        </li>
+      </ul>
     </div>
   </nav>
   <router-view :key="$route.fullPath" />
@@ -144,5 +148,12 @@ const loggedInUser: ComputedRef<User> = computed(
 }
 .logo-font {
   font-family: "Shrikhand", cursive;
+}
+.nav-link-logged .nav-link {
+  color: rgba(255, 255, 255, 0.55);
+}
+.nav-link-logged .nav-link:hover,
+.nav-link-logged .nav-link:focus {
+  color: rgba(255, 255, 255, 0.75);
 }
 </style>

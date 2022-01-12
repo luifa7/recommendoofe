@@ -15,10 +15,11 @@
         class="nav nav-pills mb-5 justify-content-center"
         id="pills-tab"
         role="tablist"
+        style="font-size: 2rem"
       >
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link border border-warning active"
+            class="nav-link border border-warning px-4 active"
             id="pills-home-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-home"
@@ -27,26 +28,12 @@
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Find users
+            <i class="bi bi-search"></i>
           </button>
         </li>
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link border border-warning"
-            id="pills-profile-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-profile"
-            type="button"
-            role="tab"
-            aria-controls="pills-profile"
-            aria-selected="false"
-          >
-            Requests received
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link border border-warning"
+            class="nav-link border border-warning px-4"
             id="pills-contact-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-contact"
@@ -55,7 +42,21 @@
             aria-controls="pills-contact"
             aria-selected="false"
           >
-            Requests sents
+            <i class="bi bi-envelope-plus"></i>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link border border-warning px-4"
+            id="pills-profile-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-profile"
+            type="button"
+            role="tab"
+            aria-controls="pills-profile"
+            aria-selected="false"
+          >
+            <i class="bi bi-send-plus"></i>
           </button>
         </li>
       </ul>
