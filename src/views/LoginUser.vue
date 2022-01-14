@@ -1,6 +1,6 @@
 <template>
   <!-- Page content-->
-  <section class="bg-light py-5">
+  <section class="py-5">
     <div class="container px-4 px-md-5">
       <!-- Login form-->
       <div class="py-5 px-md-5 mb-5">

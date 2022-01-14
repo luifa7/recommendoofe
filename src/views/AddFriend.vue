@@ -20,12 +20,12 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link border border-warning px-4 active"
-            id="pills-home-tab"
+            id="pills-search-tab"
             data-bs-toggle="pill"
-            data-bs-target="#pills-home"
+            data-bs-target="#pills-search"
             type="button"
             role="tab"
-            aria-controls="pills-home"
+            aria-controls="pills-search"
             aria-selected="true"
           >
             <i class="bi bi-search"></i>
@@ -34,12 +34,12 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link border border-warning px-4"
-            id="pills-contact-tab"
+            id="pills-received-tab"
             data-bs-toggle="pill"
-            data-bs-target="#pills-contact"
+            data-bs-target="#pills-received"
             type="button"
             role="tab"
-            aria-controls="pills-contact"
+            aria-controls="pills-received"
             aria-selected="false"
           >
             <i class="bi bi-envelope-plus"></i>
@@ -48,12 +48,12 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link border border-warning px-4"
-            id="pills-profile-tab"
+            id="pills-sent-tab"
             data-bs-toggle="pill"
-            data-bs-target="#pills-profile"
+            data-bs-target="#pills-sent"
             type="button"
             role="tab"
-            aria-controls="pills-profile"
+            aria-controls="pills-sent"
             aria-selected="false"
           >
             <i class="bi bi-send-plus"></i>
@@ -63,37 +63,41 @@
       <div class="tab-content" id="pills-tabContent">
         <div
           class="tab-pane fade show active"
-          id="pills-home"
+          id="pills-search"
           role="tabpanel"
-          aria-labelledby="pills-home-tab"
+          aria-labelledby="pills-search-tab"
         >
           <search-friend />
         </div>
         <div
           class="tab-pane fade"
-          id="pills-profile"
+          id="pills-received"
           role="tabpanel"
-          aria-labelledby="pills-profile-tab"
+          aria-labelledby="pills-received-tab"
         >
+          <h2 class="my-4" style="text-align: center">
+            Received friend requests
+          </h2>
           <div
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
             <div v-for="friend in receivedFriendRequests" :key="friend.dId">
-              <friend-card :friend="friend" />
+              <friend-request-received-card :friend="friend" />
             </div>
           </div>
         </div>
         <div
           class="tab-pane fade"
-          id="pills-contact"
+          id="pills-sent"
           role="tabpanel"
-          aria-labelledby="pills-contact-tab"
+          aria-labelledby="pills-sent-tab"
         >
+          <h2 class="my-4" style="text-align: center">Sent friend requests</h2>
           <div
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
             <div v-for="friend in sentFriendRequests" :key="friend.dId">
-              <friend-card :friend="friend" />
+              <friend-request-sent-card :friend="friend" />
             </div>
           </div>
         </div>
@@ -105,7 +109,8 @@
 <script lang="ts" setup>
 import { allowOrRedirectToHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
-import FriendCard from "@/components/FriendCard.vue";
+import FriendRequestReceivedCard from "@/components/FriendRequestReceivedCard.vue";
+import FriendRequestSentCard from "@/components/FriendRequestSentCard.vue";
 import { ref, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import {
