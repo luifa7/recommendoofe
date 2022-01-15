@@ -18,11 +18,9 @@
           {{ user.shortFact2 }} <i class="bi bi-star-fill"></i>
           {{ user.shortFact3 }}
         </p>
-        <div
-          class="d-grid d-sm-flex justify-content-sm-center justify-content-xl-start"
-        >
+        <div class="d-flex">
           <router-link
-            class="btn btn-primary btn-lg px-3 my-2 me-sm-2"
+            class="btn btn-primary btn-lg px-3 my-2 me-2"
             style="font-size: 2rem"
             :to="{
               name: 'CitiesToVisit',
@@ -30,7 +28,7 @@
             ><i class="bi bi-journal-bookmark"></i
           ></router-link>
           <router-link
-            class="btn btn-success btn-lg px-3 my-2 me-sm-2"
+            class="btn btn-success btn-lg px-3 my-2 me-2"
             style="font-size: 2rem"
             :to="{
               name: 'CitiesVisited',

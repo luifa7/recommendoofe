@@ -82,7 +82,38 @@
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
             <div v-for="friend in receivedFriendRequests" :key="friend.dId">
-              <friend-request-received-card :friend="friend" />
+              <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                  <router-link
+                    :to="{
+                      name: 'UserPublicProfile',
+                      params: {
+                        userdid: friend.dId,
+                      },
+                    }"
+                    class="nav-link"
+                  >
+                    <img
+                      class="img-fluid rounded-3 img-same-size mb-4"
+                      :src="friend.photo"
+                      alt="..."
+                    />
+                    <h5 class="fw-bolder">{{ friend.name }}</h5>
+                  </router-link>
+                  <div>
+                    <button type="button" class="btn btn-success mx-3 px-4">
+                      <i class="bi bi-check-square"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger mx-3 px-4"
+                      @click="deleteRequest(friend.dId, true)"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -97,7 +128,35 @@
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
             <div v-for="friend in sentFriendRequests" :key="friend.dId">
-              <friend-request-sent-card :friend="friend" />
+              <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                  <router-link
+                    :to="{
+                      name: 'UserPublicProfile',
+                      params: {
+                        userdid: friend.dId,
+                      },
+                    }"
+                    class="nav-link"
+                  >
+                    <img
+                      class="img-fluid rounded-3 img-same-size mb-4"
+                      :src="friend.photo"
+                      alt="..."
+                    />
+                    <h5 class="fw-bolder">{{ friend.name }}</h5>
+                  </router-link>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="deleteRequest(friend.dId, false)"
+                    >
+                      Cancel <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -109,15 +168,14 @@
 <script lang="ts" setup>
 import { allowOrRedirectToHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
-import FriendRequestReceivedCard from "@/components/FriendRequestReceivedCard.vue";
-import FriendRequestSentCard from "@/components/FriendRequestSentCard.vue";
 import { ref, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import {
+  deleteFriendRequest,
   getReceivedFriendRequestsByUserDId,
   getSentFriendRequestsByUserDId,
 } from "@/services/userService";
-import { User } from "@/store/types/types";
+import { FriendRequest, User } from "@/store/types/types";
 
 allowOrRedirectToHome();
 const store = useStore();
@@ -135,6 +193,29 @@ const loggedInUser: ComputedRef<User> = computed(
     loggedInUser.value.dId
   );
 })();
+
+async function deleteRequest(friendDId: string, isReceived: boolean) {
+  const friendRequest: FriendRequest = {
+    userDId: loggedInUser.value.dId,
+    friendDId: friendDId,
+  };
+  const response = await deleteFriendRequest(friendRequest);
+  if (!response) {
+    console.log("Error: No Response on Send Friend Request");
+  } else if (response.status !== 204) {
+    console.log(response.statusText);
+  } else {
+    if (isReceived) {
+      receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
+        loggedInUser.value.dId
+      );
+    } else {
+      sentFriendRequests.value = await getSentFriendRequestsByUserDId(
+        loggedInUser.value.dId
+      );
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -102,6 +102,23 @@ export async function postFriendRequest(friendRequest: FriendRequest) {
   }
 }
 
+export async function deleteFriendRequest(friendRequest: FriendRequest) {
+  {
+    const response = await axios
+      .delete(
+        `${API_URL}/friends/${friendRequest.userDId}?friend=${friendRequest.friendDId}`
+      )
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    return response;
+  }
+}
+
 export async function isFriendRequestPending(
   user1DId: string,
   user2DId: string
