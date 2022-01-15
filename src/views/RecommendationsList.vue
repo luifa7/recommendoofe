@@ -1,22 +1,29 @@
 <template>
   <!-- Page Content-->
-  <section class="py-5">
+  <header class="text-black text-center py-4">
+    <!-- Masthead Avatar Image-->
+    <img
+      class="mb-4 rounded-3"
+      :src="city.photo"
+      alt="..."
+      style="max-width: 20rem"
+    />
+    <h1 class="logo-font">
+      Recommendations
+      <router-link
+        :to="{
+          name: 'AddRecommendation',
+        }"
+      >
+        <i class="bi bi-plus-square-fill" style="color: orange"></i>
+      </router-link>
+    </h1>
+    <p v-if="city" class="lead logo-font text-muted mb-0">
+      for {{ city.name }}, {{ city.country }}
+    </p>
+  </header>
+  <section v-if="recommendations.length > 0" class="py-5 bg-light">
     <div class="container px-5">
-      <div class="text-center mb-5">
-        <h1 class="logo-font">
-          Recommendations
-          <router-link
-            :to="{
-              name: 'AddRecommendation',
-            }"
-          >
-            <i class="bi bi-plus-square-fill" style="color: orange"></i>
-          </router-link>
-        </h1>
-        <p v-if="city" class="lead logo-font text-muted mb-0">
-          for {{ city.name }}, {{ city.country }}
-        </p>
-      </div>
       <div class="row gx-5">
         <div
           class="col-lg-4 mb-5"

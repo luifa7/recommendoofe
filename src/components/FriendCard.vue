@@ -17,9 +17,9 @@
         />
         <h5 class="logo-font">{{ friend.name }}</h5>
         <div class="fst-italic text-muted">
-          <i class="bi bi-star"></i> {{ friend.shortFact1 }}<br />
-          <i class="bi bi-star"></i> {{ friend.shortFact2 }}<br />
-          <i class="bi bi-star"></i> {{ friend.shortFact3 }}
+          {{ friend.shortFact1 }}<br />
+          {{ friend.shortFact2 }}<br />
+          {{ friend.shortFact3 }}
         </div>
       </div></router-link
     >

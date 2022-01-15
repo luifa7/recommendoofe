@@ -1,7 +1,7 @@
 <template>
   <!-- Page Content-->
-  <section class="py-5">
-    <div class="container px-5 my-5">
+  <section class="py-3">
+    <div class="container px-5 my-4">
       <div class="text-center mb-5">
         <h1 class="logo-font">
           <span v-if="isVisited">Visited cities </span>

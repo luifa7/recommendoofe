@@ -1,37 +1,6 @@
 <template>
   <!-- Navigation-->
-  <nav v-if="!loggedInUser" class="navbar nav-link-logged navbar-dark bg-dark">
-    <!-- No user logged -->
-    <div class="container px-3" style="text-align: right">
-      <router-link
-        :to="{ name: 'Home' }"
-        class="navbar-brand logo-font"
-        id="name-logo"
-        >Recommendoo</router-link
-      >
-      <div id="navbarSupportedContent">
-        <ul class="nav justify-content-end">
-          <li class="nav-item">
-            <router-link :to="{ name: 'Home' }" class="nav-link"
-              ><i class="bi bi-house-door"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'About' }" class="nav-link"
-              ><i class="bi bi-info-square"></i
-            ></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'LoginUser' }" class="nav-link"
-              ><i class="bi bi-key"></i
-            ></router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- User is logged -->
-  <nav v-else class="navbar navbar-dark bg-dark nav-link-logged">
+  <nav class="navbar nav-link-logged navbar-dark bg-dark">
     <div class="container px-2" style="text-align: right">
       <router-link
         :to="{ name: 'Home' }"
@@ -40,7 +9,8 @@
         >Recommendoo</router-link
       >
       <div id="navbarSupportedContent">
-        <ul class="nav justify-content-end">
+        <!-- User is logged -->
+        <ul v-if="loggedInUser" class="nav justify-content-end">
           <li class="nav-item">
             <router-link
               :to="{
@@ -104,6 +74,24 @@
           <li class="nav-item">
             <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
               ><i class="bi bi-power"></i
+            ></router-link>
+          </li>
+        </ul>
+        <!-- No user logged -->
+        <ul v-else class="nav justify-content-end">
+          <li class="nav-item">
+            <router-link :to="{ name: 'Home' }" class="nav-link"
+              ><i class="bi bi-house-door"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'About' }" class="nav-link"
+              ><i class="bi bi-info-square"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'LoginUser' }" class="nav-link"
+              ><i class="bi bi-key"></i
             ></router-link>
           </li>
         </ul>
