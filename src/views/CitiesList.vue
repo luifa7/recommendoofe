@@ -3,8 +3,8 @@
   <section class="py-5">
     <div class="container px-5 my-5">
       <div class="text-center mb-5">
-        <h1 class="fw-bolder">
-          <span v-if="isVisited">Visited Cities </span>
+        <h1 class="logo-font">
+          <span v-if="isVisited">Visited cities </span>
           <span v-else>Cities to visit </span>
           <router-link
             v-if="displayAddButton"

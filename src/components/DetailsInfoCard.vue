@@ -2,7 +2,7 @@
   <!-- Details-->
   <section v-if="recommendation && city" class="mb-5">
     <div class="card border-light mb-3" style="max-width: 38rem">
-      <h5 class="card-header">Details</h5>
+      <h5 class="card-header logo-font">Details</h5>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <i class="bi bi-house-door-fill"></i>{{ recommendation.address }},

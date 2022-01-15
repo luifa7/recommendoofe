@@ -8,8 +8,8 @@
           <div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
             <i class="bi bi-bookmark-plus-fill"></i>
           </div>
-          <h1 class="fw-bolder">Add new recommendation</h1>
-          <p class="lead fw-bold mb-0">
+          <h1 class="logo-font">Add recommendation</h1>
+          <p class="lead logo-font text-muted mb-0">
             for {{ city.name }}, {{ city.country }}
           </p>
         </div>

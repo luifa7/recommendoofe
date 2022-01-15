@@ -3,7 +3,7 @@
   <section class="py-5">
     <div class="container px-5">
       <div class="text-center mb-5">
-        <h1 class="fw-bolder">
+        <h1 class="logo-font">
           Recommendations
           <router-link
             :to="{
@@ -13,7 +13,7 @@
             <i class="bi bi-plus-square-fill" style="color: orange"></i>
           </router-link>
         </h1>
-        <p v-if="city" class="lead fw-normal text-muted mb-0">
+        <p v-if="city" class="lead logo-font text-muted mb-0">
           for {{ city.name }}, {{ city.country }}
         </p>
       </div>

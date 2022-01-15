@@ -24,7 +24,7 @@
         :recommendation="recommendation"
         class="text-decoration-none link-dark stretched-link"
       >
-        <div class="h5 card-title mb-3">
+        <div class="h5 logo-font card-title mb-3">
           {{ recommendation.placeName }}
         </div></router-link
       >
@@ -60,7 +60,9 @@
           />
           <div class="small">
             <div>Recommended by:</div>
-            <div class="fw-bold">{{ recommendedByUser.userName }}</div>
+            <div class="logo-font">
+              {{ recommendedByUser.name }}
+            </div>
             <div class="text-muted">on {{ createdOn }}</div>
           </div>
         </div>

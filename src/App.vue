@@ -1,35 +1,16 @@
 <template>
   <!-- Navigation-->
-  <nav v-if="!loggedInUser" class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav v-if="!loggedInUser" class="navbar nav-link-logged navbar-dark bg-dark">
     <!-- No user logged -->
     <div class="container px-3" style="text-align: right">
       <router-link
         :to="{ name: 'Home' }"
         class="navbar-brand logo-font"
         id="name-logo"
-        ><img
-          src="./assets/logo-2.png"
-          class="center"
-          style="height: 3rem; width: 3rem"
-        />Recommendoo</router-link
+        >Recommendoo</router-link
       >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
-        style="margin-right: 0.7rem"
-      >
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <div id="navbarSupportedContent">
+        <ul class="nav justify-content-end">
           <li class="nav-item">
             <router-link :to="{ name: 'Home' }" class="nav-link"
               ><i class="bi bi-house-door"></i
@@ -50,75 +31,83 @@
     </div>
   </nav>
   <!-- User is logged -->
-  <nav v-else class="navbar-dark bg-dark nav-link-logged">
-    <div id="navbarSupportedContent">
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
-          <router-link
-            :to="{
-              name: 'UserPublicProfile',
-              params: {
-                userdid: loggedInUser.dId,
-              },
-            }"
-            class="nav-link"
-            ><i class="bi bi-person"></i
-          ></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            :to="{
-              name: 'UserFriends',
-              params: {
-                userdid: loggedInUser.dId,
-              },
-            }"
-            class="nav-link"
-            ><i class="bi bi-people"></i
-          ></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            :to="{
-              name: 'AddFriend',
-              params: {
-                userdid: loggedInUser.dId,
-              },
-            }"
-            class="nav-link"
-            ><i class="bi bi-person-plus"></i
-          ></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            :to="{
-              name: 'CitiesToVisit',
-              params: {
-                userdid: loggedInUser.dId,
-              },
-            }"
-            class="nav-link"
-            ><i class="bi bi-journal-bookmark"></i
-          ></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            :to="{
-              name: 'CitiesVisited',
-              params: {
-                userdid: loggedInUser.dId,
-              },
-            }"
-            class="nav-link"
-            ><i class="bi bi-journal-check"></i
-          ></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
-            ><i class="bi bi-power"></i
-          ></router-link>
-        </li>
-      </ul>
+  <nav v-else class="navbar navbar-dark bg-dark nav-link-logged">
+    <div class="container px-2" style="text-align: right">
+      <router-link
+        :to="{ name: 'Home' }"
+        class="navbar-brand logo-font"
+        id="name-logo"
+        >Recommendoo</router-link
+      >
+      <div id="navbarSupportedContent">
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'UserPublicProfile',
+                params: {
+                  userdid: loggedInUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-person"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'UserFriends',
+                params: {
+                  userdid: loggedInUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-people"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'AddFriend',
+                params: {
+                  userdid: loggedInUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-person-plus"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'CitiesToVisit',
+                params: {
+                  userdid: loggedInUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-journal-bookmark"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'CitiesVisited',
+                params: {
+                  userdid: loggedInUser.dId,
+                },
+              }"
+              class="nav-link"
+              ><i class="bi bi-journal-check"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
+              ><i class="bi bi-power"></i
+            ></router-link>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
   <router-view :key="$route.fullPath" />
@@ -141,10 +130,10 @@ const loggedInUser: ComputedRef<User> = computed(
 }
 #name-logo {
   color: orange;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 #navbarSupportedContent {
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 .logo-font {
   font-family: "Shrikhand", cursive;

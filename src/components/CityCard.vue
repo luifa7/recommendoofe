@@ -20,9 +20,9 @@
           citydid: city.dId,
         },
       }"
-      class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+      class="h3 text-decoration-none link-dark stretched-link"
     >
-      <div class="h5 card-title mb-3">{{ city.name }}, {{ city.country }}</div>
+      <div class="logo-font">{{ city.name }}, {{ city.country }}</div>
     </router-link>
     <router-link
       v-else
@@ -32,9 +32,9 @@
           citydid: city.dId,
         },
       }"
-      class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+      class="h3 text-decoration-none link-dark stretched-link"
     >
-      <div class="h5 card-title mb-3">{{ city.name }}, {{ city.country }}</div>
+      <div class="logo-font">{{ city.name }}, {{ city.country }}</div>
     </router-link>
   </div>
 </template>

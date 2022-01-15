@@ -38,9 +38,9 @@
                   userdid: recommendedByUser.dId,
                 },
               }"
-              class="fw-bold"
+              class="logo-font text-decoration-none"
             >
-              {{ recommendedByUser.userName }}
+              {{ recommendedByUser.name }}
             </router-link>
             <div class="text-muted">on {{ createdOn }}</div>
           </div>
@@ -51,7 +51,7 @@
             <!-- Recommendation header-->
             <header class="mb-4">
               <!-- Place Name-->
-              <h1 class="fw-bolder mb-1">{{ recommendation.placeName }}</h1>
+              <h1 class="logo-font mb-1">{{ recommendation.placeName }}</h1>
               <!-- Tags-->
               <a
                 v-for="tag in recommendation.tags"

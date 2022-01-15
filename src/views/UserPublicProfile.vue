@@ -11,7 +11,7 @@
           alt="..."
         />
         <!-- Masthead Heading-->
-        <h1 class="masthead-heading fw-bold mb-0">{{ user.name }}</h1>
+        <h1 class="masthead-heading logo-font">{{ user.name }}</h1>
         <!-- Masthead Subheading-->
         <p class="masthead-subheading fw-bold mb-3">
           {{ user.shortFact1 }} <i class="bi bi-star-fill"></i>
@@ -60,7 +60,7 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-10 col-xl-7">
             <div class="text-center">
-              <h2 class="text-center text-uppercase fw-bolder">
+              <h2 class="text-center fw-bolder logo-font">
                 Interested in <i class="bi bi-hand-thumbs-up-fill"></i>
               </h2>
               <!-- Icon Divider-->
@@ -82,7 +82,7 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-10 col-xl-7">
             <div class="text-center">
-              <h2 class="text-center text-uppercase fw-bolder">
+              <h2 class="text-center fw-bolder logo-font">
                 About me <i class="bi bi-person-lines-fill"></i>
               </h2>
               <!-- Icon Divider-->

@@ -3,8 +3,8 @@
   <section class="py-5">
     <div class="container px-5 my-5">
       <div class="text-center">
-        <h1 class="fw-bolder">
-          Find Friends to Add
+        <h1 class="logo-font">
+          Find friends to add
           <i class="bi bi-person-plus-fill" style="color: orange"></i>
         </h1>
         <p class="lead fw-normal text-muted mb-5">
@@ -75,9 +75,9 @@
           role="tabpanel"
           aria-labelledby="pills-received-tab"
         >
-          <h2 class="my-4" style="text-align: center">
+          <h3 class="my-4 logo-font" style="text-align: center">
             Received friend requests
-          </h2>
+          </h3>
           <div
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
@@ -98,7 +98,7 @@
                       :src="friend.photo"
                       alt="..."
                     />
-                    <h5 class="fw-bolder">{{ friend.name }}</h5>
+                    <h5 class="logo-font">{{ friend.name }}</h5>
                   </router-link>
                   <div>
                     <button
@@ -127,7 +127,9 @@
           role="tabpanel"
           aria-labelledby="pills-sent-tab"
         >
-          <h2 class="my-4" style="text-align: center">Sent friend requests</h2>
+          <h3 class="my-4 logo-font" style="text-align: center">
+            Sent friend requests
+          </h3>
           <div
             class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center"
           >
@@ -148,7 +150,7 @@
                       :src="friend.photo"
                       alt="..."
                     />
-                    <h5 class="fw-bolder">{{ friend.name }}</h5>
+                    <h5 class="logo-font">{{ friend.name }}</h5>
                   </router-link>
                   <div>
                     <button

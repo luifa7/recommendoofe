@@ -6,9 +6,9 @@
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-5">
           <div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
-            <i class="bi bi-bookmark-plus-fill"></i>
+            <i class="bi bi-building"></i>
           </div>
-          <h1 class="fw-bolder">Add new city</h1>
+          <h1 class="logo-font">Add new city</h1>
         </div>
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
