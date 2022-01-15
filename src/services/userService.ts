@@ -102,6 +102,21 @@ export async function postFriendRequest(friendRequest: FriendRequest) {
   }
 }
 
+export async function acceptFriendRequest(friendRequest: FriendRequest) {
+  {
+    const response = await axios
+      .put(`${API_URL}/friends`, friendRequest)
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    return response;
+  }
+}
+
 export async function deleteFriendRequest(friendRequest: FriendRequest) {
   {
     const response = await axios

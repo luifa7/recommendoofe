@@ -101,7 +101,11 @@
                     <h5 class="fw-bolder">{{ friend.name }}</h5>
                   </router-link>
                   <div>
-                    <button type="button" class="btn btn-success mx-3 px-4">
+                    <button
+                      type="button"
+                      class="btn btn-success mx-3 px-4"
+                      @click="acceptRequest(friend.dId)"
+                    >
                       <i class="bi bi-check-square"></i>
                     </button>
                     <button
@@ -171,7 +175,9 @@ import SearchFriend from "@/components/SearchFriend.vue";
 import { ref, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import {
+  acceptFriendRequest,
   deleteFriendRequest,
+  getFriendsByUserDId,
   getReceivedFriendRequestsByUserDId,
   getSentFriendRequestsByUserDId,
 } from "@/services/userService";
@@ -194,6 +200,25 @@ const loggedInUser: ComputedRef<User> = computed(
   );
 })();
 
+async function acceptRequest(friendDId: string) {
+  const friendRequest: FriendRequest = {
+    userDId: loggedInUser.value.dId,
+    friendDId: friendDId,
+  };
+  const response = await acceptFriendRequest(friendRequest);
+  if (!response) {
+    console.log("Error: No Response on Accept Friend Request");
+  } else if (response.status !== 200) {
+    console.log(response.statusText);
+  } else {
+    receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
+      loggedInUser.value.dId
+    );
+    const friends = await getFriendsByUserDId(loggedInUser.value.dId);
+    store.commit("setLoggedUserFriends", friends);
+  }
+}
+
 async function deleteRequest(friendDId: string, isReceived: boolean) {
   const friendRequest: FriendRequest = {
     userDId: loggedInUser.value.dId,
@@ -201,7 +226,7 @@ async function deleteRequest(friendDId: string, isReceived: boolean) {
   };
   const response = await deleteFriendRequest(friendRequest);
   if (!response) {
-    console.log("Error: No Response on Send Friend Request");
+    console.log("Error: No Response on Reject Friend Request");
   } else if (response.status !== 204) {
     console.log(response.statusText);
   } else {
