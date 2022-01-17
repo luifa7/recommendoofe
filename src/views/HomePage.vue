@@ -126,11 +126,7 @@
                 src="data:image/webp;base64,UklGRkYEAABXRUJQVlA4IDoEAABQFACdASpgAGAAPpE+mkglo6KhK5YsKLASCWUA1DW1GJ/WWZ06L7f5fQPLlMK98aHLznAsx8P4bc4urzNQdyqTZ8396qMokBqKu4J0i+iyhLl5zlSzbxmosGgWlQSZ/SBi/VAtnB9/KMKpgEce2uF66HNBjjdmL1YMMFJPaVyhJL5TqZtVwiuZwSSsMFdq+Mkb+YiMbKrXqhNc//yzKxJDIzvBOzci5p69/yAA/vfQpc/9IKsXNbG5OLMbUDw9JnSfiqaKXQm26PqF3jjqTdKYpd7MBGYt7XLIUpVUPPhAJqxE0q7FL4IG8KyNufaxaJDpZv8IgaUCr5HlSJ+P5W6rPQj15mz/V/QXQGRbesJLPeSfGyWbsUXP1nPOYYATO5uPOjiaG2XSZYYKgDHdVjo3iAm4SXGs5mymTqISRngQ1FPnHqpg+Bf2inYgSVHkp4OdVHFmBaJ/HK0pu2MMpIkoNZvqe8Sf2m/ochOT2Fx/t2xs2EP1vHsCv+FGgUuYi/q1Et5QIi4nA91zZkgvr1GkEXUUpNA/iWTIJU7RjBvoG8rGyU7Pnnk4HboPxvTZozh2csx6j72qrbSLfJRBr5ySk4mCXN/dOgb9wT4iIku2HYr4+UA9dGQJClMtT9eCHRV+pEuO0yjvMCHnI8rj9djStBCE0cbgPcD15tmilIt97nFchxPvh8/wpHTrzw0zEcpQXa4oHQ6uxV5mkCPFNMlGr9EIGUT1jHOFnpr6P5ahlb+VymIFP5qyQPiEHCMX24FGhqrw6aVFsDpgrEPrt1rK/1hL3oZQzTP1jpi2KgjhgQNow/+gsLKSRMd7dFCVQo/T6bJrfwJk2z0qpfpE8b3vTUcuwlB7u5Bms+YIVi1iIdX8P0qLLcoVB9+BmeICrir+ffDOkowXm/Ak5EEq6vZ8bfXh5sp2xaIy1ADyAEtvgzy6+ZtGY7hIcgGvljnMg/QXnpNBMx+JA5PV8Tc4yTB18cHgCIUUeuBS5xh93H4MdA74j9dVg5akOQvd9gAfkT4V/677efEYhjCHKdHzScjxLbGdt96n5tbqjqH7AwmJFEQwOKe9H6cefhtM1akrwx5el2a9WqDI/2G/UdSi0ItA+8XZf729830sSK9vLukqMUj4VuhHFbuXBSMmgg4xM+mqbOoyl6S9Zm0Pfd5wIEyy78KvmG9U8ZcZL6NjwCwRMRmZWuJkP6J7ZPSi9gAv6StPGVx62pqYKy/sILQEkCkhs+qwXwz5UT+X88A/awlzUO5ISOYOV6+0fAIrITD9XwvBcQS25WvMJSza2mLxlhfSenSbMB/A64BRPf0RgjZZ4CupT9SAJgK7LtWyBwJcXEkTQpPG7JzssAUurM+mX0H0aUkGPZniFLaubBQ4N2n0sKLxo9jnR2OZlLgKiBGBjSmeBBVkB3PJ8jhOhenO/LLGpQHbDH8C1wAAAA=="
                 alt="..."
               />
-              <div class="fw-bold">
-                Lyaksandro Kaleva Góðoysson
-                <span class="fw-bold text-primary mx-1">/</span>
-                CEO, Recommendoo
-              </div>
+              <div class="fw-bold">Lyaksandro Kaleva Góðoysson</div>
             </div>
           </div>
         </div>

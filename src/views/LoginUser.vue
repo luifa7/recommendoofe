@@ -91,8 +91,8 @@ const password = ref("");
 const showError = ref("");
 
 async function loginUser() {
-  const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
-  // const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
+  // const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
+  const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
   const user: User | undefined = await getUserByDId(myUserDId);
   if (user) {
     store.commit("loginUser", user);
