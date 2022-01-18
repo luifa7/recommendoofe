@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 import router from "@/router";
 import { allowOrRedirectToHome } from "@/services/authService";
 allowOrRedirectToHome();
-const store = useStore();
-store.commit("logoutUser");
+const userStore = useUserStore();
+userStore.logoutUser();
 router.push({
   name: "Home",
 });

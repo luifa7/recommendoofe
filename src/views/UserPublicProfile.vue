@@ -101,54 +101,44 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ComputedRef, ref } from "vue";
+import { ref } from "vue";
 import {
   getUserByDId,
   isFriendRequestPending,
   postFriendRequest,
 } from "@/services/userService";
 import { allowOrRedirectToHome } from "@/services/authService";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
 import { FriendRequest, User } from "@/store/types/types";
 
 allowOrRedirectToHome();
-const store = useStore();
+const userStore = useUserStore();
 const user = ref();
 const showAddFriendButton = ref(false);
 const showRequestAlreadySent = ref(false);
 const userDId: string = getUserDIdFromRoute();
-const loggedInUser: ComputedRef<User> = computed(
-  () => store.getters.getLoggedUser
-);
-const loggedUserFriends: ComputedRef<Array<User>> = computed(
-  () => store.getters.getLoggedUserFriends
-);
+const loggedInUser: User = userStore.loggedInUser;
+const loggedUserFriends: Array<User> = userStore.userFriends;
 (async () => {
-  if (loggedInUser.value.dId !== userDId) {
+  if (loggedInUser.dId !== userDId) {
     user.value = await getUserByDId(userDId);
-    showAddFriendButton.value = !isThisUserMyFriend(
-      userDId,
-      loggedUserFriends.value
-    );
+    showAddFriendButton.value = !isThisUserMyFriend(userDId, loggedUserFriends);
     if (showAddFriendButton.value) {
-      const isPending = await isFriendRequestPending(
-        loggedInUser.value.dId,
-        userDId
-      );
+      const isPending = await isFriendRequestPending(loggedInUser.dId, userDId);
       if (isPending) {
         showAddFriendButton.value = false;
         showRequestAlreadySent.value = true;
       }
     }
   } else {
-    user.value = loggedInUser.value;
+    user.value = loggedInUser;
   }
 })();
 
 async function sendFriendRequest() {
   const friendRequest: FriendRequest = {
-    userDId: loggedInUser.value.dId,
+    userDId: loggedInUser.dId,
     friendDId: userDId,
   };
   const response = await postFriendRequest(friendRequest);

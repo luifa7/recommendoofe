@@ -1,10 +1,11 @@
 import router from "@/router";
-import { useStore } from "vuex";
+import { User } from "@/store/types/types";
+import { useUserStore } from "@/store/userStore";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function allowOrRedirectToHome() {
-  const store = useStore();
-  const actualUser = store.getters.getLoggedUser;
+  const userStore = useUserStore();
+  const actualUser: User = userStore.loggedInUser;
   if (!actualUser) {
     router.push({
       name: "Home",
@@ -14,8 +15,8 @@ export function allowOrRedirectToHome() {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function allowOrRedirectToProfile() {
-  const store = useStore();
-  const actualUser = store.getters.getLoggedUser;
+  const userStore = useUserStore();
+  const actualUser: User = userStore.loggedInUser;
   if (actualUser) {
     router.push({
       name: "UserPublicProfile",

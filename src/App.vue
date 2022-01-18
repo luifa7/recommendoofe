@@ -102,14 +102,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserStore } from "@/store/userStore";
+import { User } from "@/store/types/types";
 import { computed, ComputedRef } from "vue";
-import { useStore } from "vuex";
-import { User } from "./store/types/types";
 
-const store = useStore();
-const loggedInUser: ComputedRef<User> = computed(
-  () => store.getters.getLoggedUser
-);
+const userStore = useUserStore();
+const loggedInUser: ComputedRef<User> = computed(() => userStore.loggedInUser);
 </script>
 
 <style>

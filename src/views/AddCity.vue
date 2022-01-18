@@ -100,10 +100,10 @@ import { ref } from "vue";
 import { createCity, getCitiesByUserDId } from "@/services/cityService";
 import { getUserDIdFromRoute, moveUp } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 
 allowOrRedirectToHome();
-const store = useStore();
+const userStore = useUserStore();
 const userDId: string = getUserDIdFromRoute();
 const showSuccess = ref("");
 const showError = ref("");
@@ -145,7 +145,7 @@ async function addCity() {
       moveUp();
     } else {
       const cities = await getCitiesByUserDId(userDId);
-      store.commit("setLoggedUserCities", cities);
+      userStore.setLoggedUserCities(cities);
       showError.value = "";
       showSuccess.value = "City Created! :)";
       resetAllInputs();

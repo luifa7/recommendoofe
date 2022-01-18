@@ -203,7 +203,7 @@
 import { CreateRecommendation, User } from "@/store/types/types";
 import { computed, ComputedRef, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
 import {
   allowOrRedirectToHome,
@@ -213,7 +213,7 @@ import { getCityByDId } from "@/services/cityService";
 
 allowOrRedirectToHome();
 const userDId: string = getUserDIdFromRoute();
-const store = useStore();
+const userStore = useUserStore();
 const city = ref();
 const showSuccess = ref("");
 const showError = ref("");
@@ -230,9 +230,7 @@ const otherLink = ref("");
 const tagInput = ref("");
 let tagHolder: Array<string> = [];
 const tags = ref(tagHolder);
-const loggedInUser: ComputedRef<User> = computed(
-  () => store.getters.getLoggedUser
-);
+const loggedInUser: User = userStore.loggedInUser;
 
 (async () => {
   city.value = await getCityByDId(getCityDIdFromRoute());
@@ -312,7 +310,7 @@ async function addRecommendation() {
         photo: photo.value,
         cityDId: city.value.dId,
         tags: tags.value,
-        fromUserDId: loggedInUser.value.dId,
+        fromUserDId: loggedInUser.dId,
         toUserDId: userDId,
       };
       const response = await createRecommendation(newRecommendation);
@@ -335,7 +333,7 @@ async function addRecommendation() {
       }
     }
   } else {
-    redirectToUserProfile(loggedInUser.value.dId);
+    redirectToUserProfile(loggedInUser.dId);
   }
 }
 </script>

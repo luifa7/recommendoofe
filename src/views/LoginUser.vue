@@ -78,14 +78,14 @@ import {
   allowOrRedirectToProfile,
   redirectToUserProfile,
 } from "@/services/authService";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 import { moveUp } from "./helpers";
 
 allowOrRedirectToProfile();
-const store = useStore();
+const userStore = useUserStore();
 const username = ref("");
 const password = ref("");
 const showError = ref("");
@@ -95,11 +95,11 @@ async function loginUser() {
   const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
   const user: User | undefined = await getUserByDId(myUserDId);
   if (user) {
-    store.commit("loginUser", user);
+    userStore.loginUser(user);
     const friends = await getFriendsByUserDId(myUserDId);
-    store.commit("setLoggedUserFriends", friends);
+    userStore.setLoggedUserFriends(friends);
     const cities = await getCitiesByUserDId(myUserDId);
-    store.commit("setLoggedUserCities", cities);
+    userStore.setLoggedUserCities(cities);
     redirectToUserProfile(user.dId);
   } else {
     showError.value = "Wrong password or username :/";

@@ -29,18 +29,15 @@
 <script lang="ts" setup>
 import { deleteFriendRequest } from "@/services/userService";
 import { FriendRequest, User } from "@/store/types/types";
-import { computed, ComputedRef } from "vue";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 
 const props = defineProps<{ friend: User }>();
-const store = useStore();
-const loggedInUser: ComputedRef<User> = computed(
-  () => store.getters.getLoggedUser
-);
+const userStore = useUserStore();
+const loggedInUser: User = userStore.loggedInUser;
 
 async function deleteRequest() {
   const friendRequest: FriendRequest = {
-    userDId: loggedInUser.value.dId,
+    userDId: loggedInUser.dId,
     friendDId: props.friend.dId,
   };
   const response = await deleteFriendRequest(friendRequest);

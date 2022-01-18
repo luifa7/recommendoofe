@@ -174,8 +174,8 @@
 <script lang="ts" setup>
 import { allowOrRedirectToHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
-import { ref, computed, ComputedRef } from "vue";
-import { useStore } from "vuex";
+import { ref } from "vue";
+import { useUserStore } from "@/store/userStore";
 import {
   acceptFriendRequest,
   deleteFriendRequest,
@@ -186,25 +186,23 @@ import {
 import { FriendRequest, User } from "@/store/types/types";
 
 allowOrRedirectToHome();
-const store = useStore();
+const userStore = useUserStore();
 const receivedFriendRequests = ref();
 const sentFriendRequests = ref();
-const loggedInUser: ComputedRef<User> = computed(
-  () => store.getters.getLoggedUser
-);
+const loggedInUser: User = userStore.loggedInUser;
 
 (async () => {
   receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-    loggedInUser.value.dId
+    loggedInUser.dId
   );
   sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-    loggedInUser.value.dId
+    loggedInUser.dId
   );
 })();
 
 async function acceptRequest(friendDId: string) {
   const friendRequest: FriendRequest = {
-    userDId: loggedInUser.value.dId,
+    userDId: loggedInUser.dId,
     friendDId: friendDId,
   };
   const response = await acceptFriendRequest(friendRequest);
@@ -214,16 +212,16 @@ async function acceptRequest(friendDId: string) {
     console.log(response.statusText);
   } else {
     receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-      loggedInUser.value.dId
+      loggedInUser.dId
     );
-    const friends = await getFriendsByUserDId(loggedInUser.value.dId);
-    store.commit("setLoggedUserFriends", friends);
+    const friends = await getFriendsByUserDId(loggedInUser.dId);
+    userStore.setLoggedUserFriends(friends);
   }
 }
 
 async function deleteRequest(friendDId: string, isReceived: boolean) {
   const friendRequest: FriendRequest = {
-    userDId: loggedInUser.value.dId,
+    userDId: loggedInUser.dId,
     friendDId: friendDId,
   };
   const response = await deleteFriendRequest(friendRequest);
@@ -234,11 +232,11 @@ async function deleteRequest(friendDId: string, isReceived: boolean) {
   } else {
     if (isReceived) {
       receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-        loggedInUser.value.dId
+        loggedInUser.dId
       );
     } else {
       sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-        loggedInUser.value.dId
+        loggedInUser.dId
       );
     }
   }

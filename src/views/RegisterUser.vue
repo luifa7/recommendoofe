@@ -173,7 +173,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createUser, getUserByUsername } from "@/services/userService";
-import { useStore } from "vuex";
+import { useUserStore } from "@/store/userStore";
 import { CreateUser, User } from "@/store/types/types";
 import {
   allowOrRedirectToProfile,
@@ -182,7 +182,7 @@ import {
 import { moveUp } from "./helpers";
 
 allowOrRedirectToProfile();
-const store = useStore();
+const userStore = useUserStore();
 const username = ref("");
 const fullName = ref("");
 const shortFact1 = ref("");
@@ -225,7 +225,7 @@ async function createNewUser() {
       moveUp();
     } else {
       const createdUser: User = response.data as User;
-      store.commit("loginUser", createdUser);
+      userStore.loginUser(createdUser);
       redirectToUserProfile(createdUser.dId);
     }
   } else {
