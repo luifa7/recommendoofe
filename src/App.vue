@@ -72,6 +72,15 @@
             ></router-link>
           </li>
           <li class="nav-item">
+            <router-link
+              :to="{
+                name: 'Settings',
+              }"
+              class="nav-link"
+              ><i class="bi bi-sliders"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
             <router-link :to="{ name: 'LogoutUser' }" class="nav-link"
               ><i class="bi bi-power"></i
             ></router-link>
