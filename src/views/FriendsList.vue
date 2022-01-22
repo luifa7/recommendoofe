@@ -29,29 +29,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { getUserDIdFromRoute } from "./helpers";
-import { allowOrRedirectToHome } from "@/services/authService";
+import { pushHome } from "@/services/authService";
 import { useUserStore } from "@/store/userStore";
 import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
 import { User } from "@/store/types/types";
 
-allowOrRedirectToHome();
 const userStore = useUserStore();
-const user = ref();
+const loggedInUser: User | undefined = userStore.loggedInUser;
+const user: Ref<User | undefined> = ref();
 const userDId: string = getUserDIdFromRoute();
-const friends = ref();
-const loggedInUser: User = userStore.loggedInUser;
+const friends: Ref<Array<User>> = ref([]);
 const loggedUserFriends: Array<User> = userStore.userFriends;
 
-(async () => {
-  if (loggedInUser.dId !== userDId) {
-    user.value = await getUserByDId(userDId);
-    friends.value = await getFriendsByUserDId(userDId);
-  } else {
-    user.value = loggedInUser;
-    friends.value = loggedUserFriends;
-  }
-})();
+if (!loggedInUser) {
+  pushHome;
+} else {
+  (async () => {
+    if (loggedInUser.dId !== userDId) {
+      user.value = await getUserByDId(userDId);
+      friends.value = await getFriendsByUserDId(userDId);
+    } else {
+      user.value = loggedInUser;
+      friends.value = loggedUserFriends;
+    }
+  })();
+}
 </script>

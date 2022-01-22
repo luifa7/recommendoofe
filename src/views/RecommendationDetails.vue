@@ -85,7 +85,11 @@
                 {{ recommendation.text }}
               </p>
             </section>
-            <details-info-card :recommendation="recommendation" :city="city" />
+            <details-info-card
+              v-if="city"
+              :recommendation="recommendation"
+              :city="city"
+            />
             <google-maps-iframe :maps-url="recommendation.maps" />
           </article>
         </div>
@@ -95,7 +99,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
 import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
 import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
@@ -103,12 +107,13 @@ import { allowOrRedirectToHome } from "@/services/authService";
 import { getUserByDId } from "@/services/userService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationByDId } from "@/services/recommendationService";
+import { City, Recommendation, User } from "@/store/types/types";
 
 allowOrRedirectToHome();
-const recommendation = ref();
-const city = ref();
-const recommendedByUser = ref();
-const createdOn = ref("");
+const recommendation: Ref<Recommendation | undefined> = ref();
+const city: Ref<City | undefined> = ref();
+const recommendedByUser: Ref<User | undefined> = ref();
+const createdOn: Ref<string> = ref("");
 
 (async () => {
   recommendation.value = await getRecommendationByDId(

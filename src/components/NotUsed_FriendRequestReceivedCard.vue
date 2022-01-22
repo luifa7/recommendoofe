@@ -41,18 +41,20 @@ import { useUserStore } from "@/store/userStore";
 
 const props = defineProps<{ friend: User }>();
 const userStore = useUserStore();
-const loggedInUser: User = userStore.loggedInUser;
+const loggedInUser: User | undefined = userStore.loggedInUser;
 
 async function deleteRequest() {
-  const friendRequest: FriendRequest = {
-    userDId: loggedInUser.dId,
-    friendDId: props.friend.dId,
-  };
-  const response = await deleteFriendRequest(friendRequest);
-  if (!response) {
-    console.log("Error: No Response on Send Friend Request");
-  } else if (response.status !== 204) {
-    console.log(response.statusText);
+  if (loggedInUser) {
+    const friendRequest: FriendRequest = {
+      userDId: loggedInUser.dId,
+      friendDId: props.friend.dId,
+    };
+    const response = await deleteFriendRequest(friendRequest);
+    if (!response) {
+      console.log("Error: No Response on Send Friend Request");
+    } else if (response.status !== 204) {
+      console.log(response.statusText);
+    }
   }
 }
 </script>

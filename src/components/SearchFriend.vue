@@ -34,20 +34,32 @@
     <div v-for="user in users" :key="user.dId">
       <friend-card :friend="user" />
     </div>
+    <h4 v-if="noUserFound" class="logo-font text-center">No user found</h4>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref, watch } from "vue";
 import FriendCard from "@/components/FriendCard.vue";
 import { getUserByUsername } from "@/services/userService";
+import { User } from "@/store/types/types";
 
-const users = ref();
-const username = ref("");
+const users: Ref<Array<User>> = ref([]);
+const username: Ref<string> = ref("");
+const noUserFound: Ref<boolean> = ref(false);
 
 async function searchUser() {
   if (username.value) {
     users.value = await getUserByUsername(username.value.toLowerCase());
+    noUserFound.value = users.value.length == 0;
   }
 }
+watch(
+  () => username.value,
+  (newValue) => {
+    if (newValue.length == 0) {
+      noUserFound.value = false;
+    }
+  }
+);
 </script>

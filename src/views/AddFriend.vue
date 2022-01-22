@@ -172,9 +172,9 @@
 </template>
 
 <script lang="ts" setup>
-import { allowOrRedirectToHome } from "@/services/authService";
+import { pushHome } from "@/services/authService";
 import SearchFriend from "@/components/SearchFriend.vue";
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { useUserStore } from "@/store/userStore";
 import {
   acceptFriendRequest,
@@ -185,59 +185,66 @@ import {
 } from "@/services/userService";
 import { FriendRequest, User } from "@/store/types/types";
 
-allowOrRedirectToHome();
 const userStore = useUserStore();
-const receivedFriendRequests = ref();
-const sentFriendRequests = ref();
-const loggedInUser: User = userStore.loggedInUser;
+const receivedFriendRequests: Ref<Array<User>> = ref([]);
+const sentFriendRequests: Ref<Array<User>> = ref([]);
+const loggedInUser: User | undefined = userStore.loggedInUser;
 
-(async () => {
-  receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-    loggedInUser.dId
-  );
-  sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-    loggedInUser.dId
-  );
-})();
-
-async function acceptRequest(friendDId: string) {
-  const friendRequest: FriendRequest = {
-    userDId: loggedInUser.dId,
-    friendDId: friendDId,
-  };
-  const response = await acceptFriendRequest(friendRequest);
-  if (!response) {
-    console.log("Error: No Response on Accept Friend Request");
-  } else if (response.status !== 200) {
-    console.log(response.statusText);
-  } else {
+if (!loggedInUser) {
+  pushHome;
+} else {
+  (async () => {
     receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
       loggedInUser.dId
     );
-    const friends = await getFriendsByUserDId(loggedInUser.dId);
-    userStore.setLoggedUserFriends(friends);
+    sentFriendRequests.value = await getSentFriendRequestsByUserDId(
+      loggedInUser.dId
+    );
+  })();
+}
+
+async function acceptRequest(friendDId: string) {
+  if (loggedInUser) {
+    const friendRequest: FriendRequest = {
+      userDId: loggedInUser.dId,
+      friendDId: friendDId,
+    };
+    const response = await acceptFriendRequest(friendRequest);
+    if (!response) {
+      console.log("Error: No Response on Accept Friend Request");
+    } else if (response.status !== 200) {
+      console.log(response.statusText);
+    } else {
+      receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
+        loggedInUser.dId
+      );
+      const friends = await getFriendsByUserDId(loggedInUser.dId);
+      userStore.setLoggedUserFriends(friends);
+    }
   }
 }
 
 async function deleteRequest(friendDId: string, isReceived: boolean) {
-  const friendRequest: FriendRequest = {
-    userDId: loggedInUser.dId,
-    friendDId: friendDId,
-  };
-  const response = await deleteFriendRequest(friendRequest);
-  if (!response) {
-    console.log("Error: No Response on Reject Friend Request");
-  } else if (response.status !== 204) {
-    console.log(response.statusText);
-  } else {
-    if (isReceived) {
-      receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
-        loggedInUser.dId
-      );
+  if (loggedInUser) {
+    const friendRequest: FriendRequest = {
+      userDId: loggedInUser.dId,
+      friendDId: friendDId,
+    };
+    const response = await deleteFriendRequest(friendRequest);
+    if (!response) {
+      console.log("Error: No Response on Reject Friend Request");
+    } else if (response.status !== 204) {
+      console.log(response.statusText);
     } else {
-      sentFriendRequests.value = await getSentFriendRequestsByUserDId(
-        loggedInUser.dId
-      );
+      if (isReceived) {
+        receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
+          loggedInUser.dId
+        );
+      } else {
+        sentFriendRequests.value = await getSentFriendRequestsByUserDId(
+          loggedInUser.dId
+        );
+      }
     }
   }
 }

@@ -171,7 +171,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { createUser, getUserByUsername } from "@/services/userService";
 import { useUserStore } from "@/store/userStore";
 import { CreateUser, User } from "@/store/types/types";
@@ -183,17 +183,17 @@ import { moveUp } from "./helpers";
 
 allowOrRedirectToProfile();
 const userStore = useUserStore();
-const username = ref("");
-const fullName = ref("");
-const shortFact1 = ref("");
-const shortFact2 = ref("");
-const shortFact3 = ref("");
-const aboutMe = ref("");
-const interestedIn = ref("");
-const photo = ref("");
-const password = ref("");
-const passwordRepeat = ref("");
-const showError = ref("");
+const username: Ref<string> = ref("");
+const fullName: Ref<string> = ref("");
+const shortFact1: Ref<string> = ref("");
+const shortFact2: Ref<string> = ref("");
+const shortFact3: Ref<string> = ref("");
+const aboutMe: Ref<string> = ref("");
+const interestedIn: Ref<string> = ref("");
+const photo: Ref<string> = ref("");
+const password: Ref<string> = ref("");
+const passwordRepeat: Ref<string> = ref("");
+const showError: Ref<string> = ref("");
 
 async function createNewUser() {
   const user: Array<User> = await getUserByUsername(

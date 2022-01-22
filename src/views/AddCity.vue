@@ -96,7 +96,7 @@
 
 <script lang="ts" setup>
 import { CreateCity } from "@/store/types/types";
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { createCity, getCitiesByUserDId } from "@/services/cityService";
 import { getUserDIdFromRoute, moveUp } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
@@ -105,12 +105,12 @@ import { useUserStore } from "@/store/userStore";
 allowOrRedirectToHome();
 const userStore = useUserStore();
 const userDId: string = getUserDIdFromRoute();
-const showSuccess = ref("");
-const showError = ref("");
-const name = ref("");
-const country = ref("");
-const photo = ref("");
-const isVisited = ref(false);
+const showSuccess: Ref<string> = ref("");
+const showError: Ref<string> = ref("");
+const name: Ref<string> = ref("");
+const country: Ref<string> = ref("");
+const photo: Ref<string> = ref("");
+const isVisited: Ref<boolean> = ref(false);
 
 function resetAllInputs() {
   name.value = "";

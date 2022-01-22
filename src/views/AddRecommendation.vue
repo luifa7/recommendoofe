@@ -200,41 +200,40 @@
 </template>
 
 <script lang="ts" setup>
-import { CreateRecommendation, User } from "@/store/types/types";
-import { computed, ComputedRef, ref } from "vue";
+import { City, CreateRecommendation, User } from "@/store/types/types";
+import { computed, ComputedRef, Ref, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useUserStore } from "@/store/userStore";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
-import {
-  allowOrRedirectToHome,
-  redirectToUserProfile,
-} from "@/services/authService";
+import { pushHome, redirectToUserProfile } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 
-allowOrRedirectToHome();
-const userDId: string = getUserDIdFromRoute();
 const userStore = useUserStore();
-const city = ref();
-const showSuccess = ref("");
-const showError = ref("");
-const placeName = ref("");
-const title = ref("");
-const text = ref("");
-const address = ref("");
-const maps = ref("");
-const photo = ref("");
-const website = ref("");
-const instagram = ref("");
-const facebook = ref("");
-const otherLink = ref("");
-const tagInput = ref("");
-let tagHolder: Array<string> = [];
-const tags = ref(tagHolder);
-const loggedInUser: User = userStore.loggedInUser;
+const userDId: string = getUserDIdFromRoute();
+const city: Ref<City | undefined> = ref();
+const showSuccess: Ref<string> = ref("");
+const showError: Ref<string> = ref("");
+const placeName: Ref<string> = ref("");
+const title: Ref<string> = ref("");
+const text: Ref<string> = ref("");
+const address: Ref<string> = ref("");
+const maps: Ref<string> = ref("");
+const photo: Ref<string> = ref("");
+const website: Ref<string> = ref("");
+const instagram: Ref<string> = ref("");
+const facebook: Ref<string> = ref("");
+const otherLink: Ref<string> = ref("");
+const tagInput: Ref<string> = ref("");
+const tags: Ref<Array<string>> = ref([]);
+const loggedInUser: User | undefined = userStore.loggedInUser;
 
-(async () => {
-  city.value = await getCityByDId(getCityDIdFromRoute());
-})();
+if (!loggedInUser) {
+  pushHome;
+} else {
+  (async () => {
+    city.value = await getCityByDId(getCityDIdFromRoute());
+  })();
+}
 
 function addTag() {
   if (tagInput.value) {
@@ -287,53 +286,55 @@ function resetAllInputs() {
 }
 
 async function addRecommendation() {
-  if (city.value) {
-    if (!placeName.value) {
-      showError.value = "A name for this place is required.";
-    } else if (!title.value) {
-      showError.value = "A title is required.";
-    } else if (!text.value) {
-      showError.value = "A text is required.";
-    } else if (!address.value) {
-      showError.value = "Address is required.";
-    } else {
-      const newRecommendation: CreateRecommendation = {
-        placeName: placeName.value,
-        title: title.value,
-        text: text.value,
-        address: address.value,
-        maps: maps.value,
-        website: website.value,
-        instagram: instagram.value,
-        facebook: facebook.value,
-        otherLink: otherLink.value,
-        photo: photo.value,
-        cityDId: city.value.dId,
-        tags: tags.value,
-        fromUserDId: loggedInUser.dId,
-        toUserDId: userDId,
-      };
-      const response = await createRecommendation(newRecommendation);
-      if (!response) {
-        showSuccess.value = "";
-        showError.value = "Error while creating the Recommendation :(";
-        console.log("Error: No Response on Create Recommendation");
-        moveUp();
-      } else if (response.status !== 201) {
-        showSuccess.value = "";
-        showError.value = "Error while creating the Recommendation :(";
-        console.log("Error: HttpResponse " + response.statusText);
-        moveUp();
+  if (loggedInUser) {
+    if (city.value) {
+      if (!placeName.value) {
+        showError.value = "A name for this place is required.";
+      } else if (!title.value) {
+        showError.value = "A title is required.";
+      } else if (!text.value) {
+        showError.value = "A text is required.";
+      } else if (!address.value) {
+        showError.value = "Address is required.";
       } else {
-        showError.value = "";
-        showSuccess.value = "Recommendation Created! :)";
-        resetAllInputs();
-        moveUp();
-        setTimeout(() => (showSuccess.value = ""), 4000);
+        const newRecommendation: CreateRecommendation = {
+          placeName: placeName.value,
+          title: title.value,
+          text: text.value,
+          address: address.value,
+          maps: maps.value,
+          website: website.value,
+          instagram: instagram.value,
+          facebook: facebook.value,
+          otherLink: otherLink.value,
+          photo: photo.value,
+          cityDId: city.value.dId,
+          tags: tags.value,
+          fromUserDId: loggedInUser.dId,
+          toUserDId: userDId,
+        };
+        const response = await createRecommendation(newRecommendation);
+        if (!response) {
+          showSuccess.value = "";
+          showError.value = "Error while creating the Recommendation :(";
+          console.log("Error: No Response on Create Recommendation");
+          moveUp();
+        } else if (response.status !== 201) {
+          showSuccess.value = "";
+          showError.value = "Error while creating the Recommendation :(";
+          console.log("Error: HttpResponse " + response.statusText);
+          moveUp();
+        } else {
+          showError.value = "";
+          showSuccess.value = "Recommendation Created! :)";
+          resetAllInputs();
+          moveUp();
+          setTimeout(() => (showSuccess.value = ""), 4000);
+        }
       }
+    } else {
+      redirectToUserProfile(loggedInUser.dId);
     }
-  } else {
-    redirectToUserProfile(loggedInUser.dId);
   }
 }
 </script>

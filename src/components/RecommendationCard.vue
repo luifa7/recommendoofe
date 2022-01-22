@@ -73,14 +73,14 @@
 
 <script lang="ts" setup>
 import { getUserByDId } from "@/services/userService";
-import { Recommendation } from "@/store/types/types";
+import { Recommendation, User } from "@/store/types/types";
 import { getDateFromDatetime } from "@/views/helpers";
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 
 const props = defineProps<{ recommendation: Recommendation }>();
 
-const recommendedByUser = ref();
-const createdOn = ref("");
+const recommendedByUser: Ref<User | undefined> = ref();
+const createdOn: Ref<string> = ref("");
 
 (async () => {
   if (props.recommendation) {

@@ -7,7 +7,7 @@
         :to="{ name: 'Home' }"
         class="d-sm-none"
         id="name-logo"
-        ><img src="src/assets/logo-2.png" style="max-width: 4rem"
+        ><img src="@/assets/logo-2.png" style="max-width: 4rem"
       /></router-link>
       <router-link
         v-if="loggedInUser"
@@ -132,7 +132,9 @@ import { User } from "@/store/types/types";
 import { computed, ComputedRef } from "vue";
 
 const userStore = useUserStore();
-const loggedInUser: ComputedRef<User> = computed(() => userStore.loggedInUser);
+const loggedInUser: ComputedRef<User | undefined> = computed(
+  () => userStore.loggedInUser
+);
 </script>
 
 <style>

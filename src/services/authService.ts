@@ -5,18 +5,23 @@ import { useUserStore } from "@/store/userStore";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function allowOrRedirectToHome() {
   const userStore = useUserStore();
-  const actualUser: User = userStore.loggedInUser;
+  const actualUser: User | undefined = userStore.loggedInUser;
   if (!actualUser) {
-    router.push({
-      name: "Home",
-    });
+    pushHome();
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function pushHome() {
+  router.push({
+    name: "Home",
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function allowOrRedirectToProfile() {
   const userStore = useUserStore();
-  const actualUser: User = userStore.loggedInUser;
+  const actualUser: User | undefined = userStore.loggedInUser;
   if (actualUser) {
     router.push({
       name: "UserPublicProfile",

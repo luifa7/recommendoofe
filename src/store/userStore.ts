@@ -3,7 +3,7 @@ import { Ref, ref } from "vue";
 import { City, User } from "./types/types";
 
 export const useUserStore = defineStore("user", () => {
-  const loggedInUser = ref();
+  const loggedInUser: Ref<User | undefined> = ref();
   const userFriends: Ref<Array<User>> = ref([]);
   const userCities: Ref<Array<City>> = ref([]);
 

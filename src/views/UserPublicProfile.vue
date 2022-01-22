@@ -101,54 +101,65 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import {
   getUserByDId,
   isFriendRequestPending,
   postFriendRequest,
 } from "@/services/userService";
-import { allowOrRedirectToHome } from "@/services/authService";
+import { pushHome } from "@/services/authService";
 import { useUserStore } from "@/store/userStore";
 import { getUserDIdFromRoute, isThisUserMyFriend } from "./helpers";
 import { FriendRequest, User } from "@/store/types/types";
 
-allowOrRedirectToHome();
 const userStore = useUserStore();
-const user = ref();
-const showAddFriendButton = ref(false);
-const showRequestAlreadySent = ref(false);
+const user: Ref<User | undefined> = ref();
+const showAddFriendButton: Ref<boolean> = ref(false);
+const showRequestAlreadySent: Ref<boolean> = ref(false);
 const userDId: string = getUserDIdFromRoute();
-const loggedInUser: User = userStore.loggedInUser;
+const loggedInUser: User | undefined = userStore.loggedInUser;
 const loggedUserFriends: Array<User> = userStore.userFriends;
-(async () => {
-  if (loggedInUser.dId !== userDId) {
-    user.value = await getUserByDId(userDId);
-    showAddFriendButton.value = !isThisUserMyFriend(userDId, loggedUserFriends);
-    if (showAddFriendButton.value) {
-      const isPending = await isFriendRequestPending(loggedInUser.dId, userDId);
-      if (isPending) {
-        showAddFriendButton.value = false;
-        showRequestAlreadySent.value = true;
+if (!loggedInUser) {
+  pushHome;
+} else {
+  (async () => {
+    if (loggedInUser.dId !== userDId) {
+      user.value = await getUserByDId(userDId);
+      showAddFriendButton.value = !isThisUserMyFriend(
+        userDId,
+        loggedUserFriends
+      );
+      if (showAddFriendButton.value) {
+        const isPending = await isFriendRequestPending(
+          loggedInUser.dId,
+          userDId
+        );
+        if (isPending) {
+          showAddFriendButton.value = false;
+          showRequestAlreadySent.value = true;
+        }
       }
+    } else {
+      user.value = loggedInUser;
     }
-  } else {
-    user.value = loggedInUser;
-  }
-})();
+  })();
+}
 
 async function sendFriendRequest() {
-  const friendRequest: FriendRequest = {
-    userDId: loggedInUser.dId,
-    friendDId: userDId,
-  };
-  const response = await postFriendRequest(friendRequest);
-  if (!response) {
-    console.log("Error: No Response on Send Friend Request");
-  } else if (response.status !== 201) {
-    console.log(response.statusText);
-  } else {
-    showAddFriendButton.value = false;
-    showRequestAlreadySent.value = true;
+  if (loggedInUser) {
+    const friendRequest: FriendRequest = {
+      userDId: loggedInUser.dId,
+      friendDId: userDId,
+    };
+    const response = await postFriendRequest(friendRequest);
+    if (!response) {
+      console.log("Error: No Response on Send Friend Request");
+    } else if (response.status !== 201) {
+      console.log(response.statusText);
+    } else {
+      showAddFriendButton.value = false;
+      showRequestAlreadySent.value = true;
+    }
   }
 }
 </script>

@@ -3,6 +3,7 @@
   <header class="text-black text-center py-4">
     <!-- Masthead Avatar Image-->
     <img
+      v-if="city"
       class="mb-4 rounded-3"
       :src="city.photo"
       alt="..."
@@ -38,16 +39,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import RecommendationCard from "@/components/RecommendationCard.vue";
 import { getCityDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationsByCityDId } from "@/services/recommendationService";
+import { City, Recommendation } from "@/store/types/types";
 
 allowOrRedirectToHome();
-const city = ref();
-const recommendations = ref();
+const city: Ref<City | undefined> = ref();
+const recommendations: Ref<Array<Recommendation>> = ref([]);
 const cityDId: string = getCityDIdFromRoute();
 
 (async () => {

@@ -27,16 +27,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import CityCard from "@/components/CityCard.vue";
 import { useUserStore } from "@/store/userStore";
 import { getUserDIdFromRoute } from "./helpers";
-import { allowOrRedirectToHome } from "@/services/authService";
+import { pushHome } from "@/services/authService";
 import { City, User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 import { useRoute } from "vue-router";
 
-allowOrRedirectToHome();
 const route = useRoute();
 let isVisited = false;
 if (route.name == "CitiesVisited") {
@@ -44,18 +43,22 @@ if (route.name == "CitiesVisited") {
 }
 const userStore = useUserStore();
 const userDId: string = getUserDIdFromRoute();
-const cities = ref();
-const displayAddButton = ref(true);
-const loggedInUser: User = userStore.loggedInUser;
+const cities: Ref<Array<City>> = ref([]);
+const displayAddButton: Ref<boolean> = ref(true);
+const loggedInUser: User | undefined = userStore.loggedInUser;
 const loggedUserCities: Array<City> = userStore.userCities;
 
-(async () => {
-  if (loggedInUser.dId !== userDId) {
-    displayAddButton.value = false;
-    cities.value = await getCitiesByUserDId(userDId);
-  } else {
-    cities.value = loggedUserCities;
-  }
-  cities.value = cities.value.filter((c: City) => c.visited === isVisited);
-})();
+if (!loggedInUser) {
+  pushHome;
+} else {
+  (async () => {
+    if (loggedInUser.dId !== userDId) {
+      displayAddButton.value = false;
+      cities.value = await getCitiesByUserDId(userDId);
+    } else {
+      cities.value = loggedUserCities;
+    }
+    cities.value = cities.value.filter((c: City) => c.visited === isVisited);
+  })();
+}
 </script>
