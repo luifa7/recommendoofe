@@ -23,6 +23,9 @@
         <div v-for="friend in friends" :key="friend.dId">
           <friend-card :friend="friend" />
         </div>
+        <h4 v-if="friends.length == 0" class="logo-font text-center">
+          Still no friends
+        </h4>
       </div>
     </div>
   </section>

@@ -21,6 +21,9 @@
         <div class="col-lg-6" v-for="city in cities" :key="city.dId">
           <city-card :city="city" />
         </div>
+        <h4 v-if="cities.length == 0" class="logo-font text-center">
+          No cities to display
+        </h4>
       </div>
     </div>
   </section>
