@@ -42,7 +42,12 @@
             aria-controls="pills-received"
             aria-selected="false"
           >
-            <i class="bi bi-envelope-plus"></i>
+            <div style="position: relative">
+              <i class="bi bi-envelope-plus"></i>
+              <span class="badge badge-danger badge-counter">{{
+                pendingRequestText
+              }}</span>
+            </div>
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -189,6 +194,7 @@ const userStore = useUserStore();
 const receivedFriendRequests: Ref<Array<User>> = ref([]);
 const sentFriendRequests: Ref<Array<User>> = ref([]);
 const loggedInUser: User | undefined = userStore.loggedInUser;
+const pendingRequestText: Ref<string> = ref("");
 
 if (!loggedInUser) {
   pushHome;
@@ -197,6 +203,13 @@ if (!loggedInUser) {
     receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
       loggedInUser.dId
     );
+    if (receivedFriendRequests.value.length > 9) {
+      pendingRequestText.value = receivedFriendRequests.value.length + "+";
+    } else if (receivedFriendRequests.value.length > 0) {
+      pendingRequestText.value = receivedFriendRequests.value.length + "";
+    } else {
+      pendingRequestText.value = "";
+    }
     sentFriendRequests.value = await getSentFriendRequestsByUserDId(
       loggedInUser.dId
     );
@@ -258,5 +271,23 @@ async function deleteRequest(friendDId: string, isReceived: boolean) {
 }
 .nav-link.active {
   background-color: orange;
+}
+
+.badge {
+  border: 1px solid #000;
+}
+
+.badge-counter {
+  position: absolute;
+  transform: scale(0.5);
+  transform-origin: top right;
+  right: -1.2rem;
+  margin-top: -1.2rem;
+  color: black;
+}
+
+.badge-danger {
+  color: #fff;
+  background-color: #e74a3b;
 }
 </style>
