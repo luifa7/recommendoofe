@@ -1,8 +1,16 @@
 <template>
   <!-- Navigation-->
   <nav class="navbar nav-link-logged navbar-dark bg-dark">
-    <div class="container px-2" style="text-align: right">
+    <div class="container">
       <router-link
+        v-if="loggedInUser"
+        :to="{ name: 'Home' }"
+        class="navbar-brand logo-font d-none d-sm-inline-block"
+        id="name-logo"
+        >Recommendoo</router-link
+      >
+      <router-link
+        v-else
         :to="{ name: 'Home' }"
         class="navbar-brand logo-font"
         id="name-logo"
@@ -10,7 +18,7 @@
       >
       <div id="navbarSupportedContent">
         <!-- User is logged -->
-        <ul v-if="loggedInUser" class="nav justify-content-end">
+        <ul v-if="loggedInUser" class="nav">
           <li class="nav-item">
             <router-link
               :to="{
