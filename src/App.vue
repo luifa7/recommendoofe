@@ -5,6 +5,13 @@
       <router-link
         v-if="loggedInUser"
         :to="{ name: 'Home' }"
+        class="d-sm-none"
+        id="name-logo"
+        ><img src="src/assets/logo-2.png" style="max-width: 4rem"
+      /></router-link>
+      <router-link
+        v-if="loggedInUser"
+        :to="{ name: 'Home' }"
         class="navbar-brand logo-font d-none d-sm-inline-block"
         id="name-logo"
         >Recommendoo</router-link
@@ -16,6 +23,7 @@
         id="name-logo"
         >Recommendoo</router-link
       >
+
       <div id="navbarSupportedContent">
         <!-- User is logged -->
         <ul v-if="loggedInUser" class="nav">
