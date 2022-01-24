@@ -138,6 +138,18 @@
             <div class="fst-italic text-muted">Product Owner</div>
           </div>
         </div>
+        <div class="col mb-5 mb-5 mb-xl-0">
+          <div class="text-center">
+            <img
+              class="img-fluid rounded-circle mb-4 px-4"
+              src="https://avatars.githubusercontent.com/u/98329763?v=4"
+              alt="..."
+              style="max-width: 12rem"
+            />
+            <h5 class="fw-bolder">Ásgeir</h5>
+            <div class="fst-italic text-muted">Developer</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
