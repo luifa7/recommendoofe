@@ -1,24 +1,27 @@
 # client-app
 
+You need to install pnpm to start working
+
 ## Project setup
+
 ```
-yarn install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
-yarn serve
+pnpm dev
 ```
 
 ### Compiles and minifies for production
+
 ```
-yarn build
+pnpm build
 ```
 
 ### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+pnpm lint
+```
