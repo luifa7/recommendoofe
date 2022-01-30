@@ -22,6 +22,9 @@
     <p v-if="city" class="lead logo-font text-muted mb-0">
       for {{ city.name }}, {{ city.country }}
     </p>
+    <button type="button" class="btn btn-danger" @click="deleteCi()">
+      <i class="bi bi-trash"></i> Delete City
+    </button>
   </header>
   <section class="py-5">
     <div class="container px-5">
@@ -42,15 +45,19 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from "vue";
+import { computed, ComputedRef, Ref, ref } from "vue";
 import RecommendationCard from "@/components/RecommendationCard.vue";
 import { getCityDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
 import { getRecommendationsByCityDId } from "@/services/recommendationService";
 import { City, Recommendation } from "@/store/types/types";
+import { deleteCity, getCitiesByUserDId } from "@/services/cityService";
+import router from "@/router";
+import { useUserStore } from "@/store/userStore";
 
 allowOrRedirectToHome();
+const userStore = useUserStore();
 const city: Ref<City | undefined> = ref();
 const recommendations: Ref<Array<Recommendation>> = ref([]);
 const cityDId: string = getCityDIdFromRoute();
@@ -59,4 +66,33 @@ const cityDId: string = getCityDIdFromRoute();
   city.value = await getCityByDId(cityDId);
   recommendations.value = await getRecommendationsByCityDId(cityDId);
 })();
+
+const canDelete: ComputedRef<boolean> = computed(
+  () => userStore.loggedInUser?.dId === city.value?.userDId
+);
+
+async function deleteCi() {
+  if (city.value && userStore.loggedInUser) {
+    const response = await deleteCity(city.value.dId);
+    if (!response) {
+      console.log("Error: No Response on Delete city");
+    } else if (response.status !== 204) {
+      console.log(response.statusText);
+    } else {
+      const cities = await getCitiesByUserDId(userStore.loggedInUser.dId);
+      userStore.setLoggedUserCities(cities);
+      if (city.value.visited) {
+        router.push({
+          name: "CitiesVisited",
+          params: { userdid: city.value.userDId },
+        });
+      } else {
+        router.push({
+          name: "CitiesToVisit",
+          params: { userdid: city.value.userDId },
+        });
+      }
+    }
+  }
+}
 </script>

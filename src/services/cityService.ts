@@ -47,3 +47,18 @@ export async function createCity(city: CreateCity) {
   }
   return response;
 }
+
+export async function deleteCity(cityDId: string) {
+  {
+    const response = await axios
+      .delete(`${API_URL}/cities/${cityDId}`)
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    return response;
+  }
+}
