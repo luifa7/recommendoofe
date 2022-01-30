@@ -92,8 +92,7 @@ const showError: Ref<string> = ref("");
 
 async function loginUser() {
   // const myUserDId = "549e021d-4c4a-4953-93d1-78538be728da";
-  // const myUserDId = "827f4e3f-687d-46f0-8e55-042da9ba8f19";
-  const myUserDId = "68462ab1-8b50-4c1a-89b7-dcc26241fef4";
+  const myUserDId = "37212a36-64a3-475c-829b-506a085432aa";
   const user: User | undefined = await getUserByDId(myUserDId);
   if (user) {
     userStore.loginUser(user);

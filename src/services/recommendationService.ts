@@ -51,3 +51,18 @@ export async function createRecommendation(
   }
   return response;
 }
+
+export async function deleteRecommenadtion(recommendationDId: string) {
+  {
+    const response = await axios
+      .delete(`${API_URL}/recommendations/${recommendationDId}`)
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    return response;
+  }
+}

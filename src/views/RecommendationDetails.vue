@@ -3,8 +3,11 @@
   <section class="py-5">
     <div class="container px-5 my-5">
       <div v-if="recommendation" class="row gx-5">
-        <div v-if="recommendedByUser" class="col-lg-3">
-          <div class="d-flex align-items-center mt-lg-5 mb-4">
+        <div class="col-lg-3">
+          <div
+            v-if="recommendedByUser"
+            class="d-flex align-items-center mt-lg-5 mb-4"
+          >
             <router-link
               :to="{
                 name: 'UserPublicProfile',
@@ -29,7 +32,7 @@
               />
             </router-link>
           </div>
-          <div>
+          <div v-if="recommendedByUser">
             <div class="text-muted">Recommended by:</div>
             <router-link
               :to="{
@@ -43,6 +46,11 @@
               {{ recommendedByUser.name }}
             </router-link>
             <div class="text-muted">on {{ createdOn }}</div>
+          </div>
+          <div v-if="canDelete">
+            <button type="button" class="btn btn-danger" @click="deleteReco()">
+              <i class="bi bi-trash"></i> Delete Recommendation
+            </button>
           </div>
         </div>
         <div class="col-lg-9">
@@ -99,21 +107,30 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from "vue";
+import { computed, ComputedRef, Ref, ref } from "vue";
+import router from "@/router";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
 import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
 import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getUserByDId } from "@/services/userService";
 import { getCityByDId } from "@/services/cityService";
-import { getRecommendationByDId } from "@/services/recommendationService";
+import {
+  deleteRecommenadtion,
+  getRecommendationByDId,
+} from "@/services/recommendationService";
 import { City, Recommendation, User } from "@/store/types/types";
+import { useUserStore } from "@/store/userStore";
 
 allowOrRedirectToHome();
+const userStore = useUserStore();
 const recommendation: Ref<Recommendation | undefined> = ref();
 const city: Ref<City | undefined> = ref();
 const recommendedByUser: Ref<User | undefined> = ref();
 const createdOn: Ref<string> = ref("");
+const canDelete: ComputedRef<boolean> = computed(
+  () => userStore.loggedInUser?.dId === recommendation.value?.fromUserDId
+);
 
 (async () => {
   recommendation.value = await getRecommendationByDId(
@@ -127,6 +144,31 @@ const createdOn: Ref<string> = ref("");
     createdOn.value = getDateFromDatetime(recommendation.value.createdOn);
   }
 })();
+
+async function deleteReco() {
+  if (recommendation.value) {
+    const response = await deleteRecommenadtion(recommendation.value.dId);
+    if (!response) {
+      console.log("Error: No Response on Delete recommendation");
+    } else if (response.status !== 204) {
+      console.log(response.statusText);
+    } else {
+      if (city.value) {
+        if (city.value.visited) {
+          router.push({
+            name: "RecommendationsVisited",
+            params: { userdid: city.value.userDId, citydid: city.value.dId },
+          });
+        } else {
+          router.push({
+            name: "RecommendationsToVisit",
+            params: { userdid: city.value.userDId, citydid: city.value.dId },
+          });
+        }
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
