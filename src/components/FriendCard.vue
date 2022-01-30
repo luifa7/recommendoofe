@@ -1,5 +1,5 @@
 <template>
-  <div v-if="friend" class="col mb-5 mb-5 mb-xl-0">
+  <div v-if="friend" class="col mb-xl-0">
     <router-link
       :to="{
         name: 'UserPublicProfile',
@@ -9,18 +9,13 @@
       }"
       class="nav-link"
     >
-      <div class="text-center">
+      <div>
         <img
-          class="img-fluid rounded-3 img-same-size mb-4"
+          class="img-fluid rounded-3 img-same-size mb-1"
           :src="friend.photo"
           alt="..."
         />
-        <h5 class="logo-font">{{ friend.name }}</h5>
-        <div class="fst-italic text-muted">
-          {{ friend.shortFact1 }}<br />
-          {{ friend.shortFact2 }}<br />
-          {{ friend.shortFact3 }}
-        </div>
+        <h5 class="logo-font mx-1">{{ friend.name }}</h5>
       </div></router-link
     >
   </div>

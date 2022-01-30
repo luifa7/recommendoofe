@@ -196,6 +196,16 @@ const sentFriendRequests: Ref<Array<User>> = ref([]);
 const loggedInUser: User | undefined = userStore.loggedInUser;
 const pendingRequestText: Ref<string> = ref("");
 
+function setPendingSizeText() {
+  if (receivedFriendRequests.value.length > 9) {
+    pendingRequestText.value = receivedFriendRequests.value.length + "+";
+  } else if (receivedFriendRequests.value.length > 0) {
+    pendingRequestText.value = receivedFriendRequests.value.length + "";
+  } else {
+    pendingRequestText.value = "";
+  }
+}
+
 if (!loggedInUser) {
   pushHome;
 } else {
@@ -203,13 +213,7 @@ if (!loggedInUser) {
     receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
       loggedInUser.dId
     );
-    if (receivedFriendRequests.value.length > 9) {
-      pendingRequestText.value = receivedFriendRequests.value.length + "+";
-    } else if (receivedFriendRequests.value.length > 0) {
-      pendingRequestText.value = receivedFriendRequests.value.length + "";
-    } else {
-      pendingRequestText.value = "";
-    }
+    setPendingSizeText();
     sentFriendRequests.value = await getSentFriendRequestsByUserDId(
       loggedInUser.dId
     );
@@ -231,6 +235,7 @@ async function acceptRequest(friendDId: string) {
       receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
         loggedInUser.dId
       );
+      setPendingSizeText();
       const friends = await getFriendsByUserDId(loggedInUser.dId);
       userStore.setLoggedUserFriends(friends);
     }
@@ -253,6 +258,7 @@ async function deleteRequest(friendDId: string, isReceived: boolean) {
         receivedFriendRequests.value = await getReceivedFriendRequestsByUserDId(
           loggedInUser.dId
         );
+        setPendingSizeText();
       } else {
         sentFriendRequests.value = await getSentFriendRequestsByUserDId(
           loggedInUser.dId

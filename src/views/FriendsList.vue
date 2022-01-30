@@ -22,6 +22,14 @@
       >
         <div v-for="friend in friends" :key="friend.dId">
           <friend-card :friend="friend" />
+          <button
+            v-if="canDelete"
+            type="button"
+            class="btn btn-danger mb-4 mx-2"
+            @click="deleteFr(friend.dId)"
+          >
+            <i class="bi bi-trash"></i> Remove
+          </button>
         </div>
         <h4 v-if="friends.length == 0" class="logo-font text-center">
           Still no friends
@@ -32,13 +40,17 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from "vue";
+import { computed, ComputedRef, Ref, ref } from "vue";
 import { getUserDIdFromRoute } from "./helpers";
 import { pushHome } from "@/services/authService";
 import { useUserStore } from "@/store/userStore";
-import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
+import {
+  deleteFriendRequest,
+  getFriendsByUserDId,
+  getUserByDId,
+} from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
-import { User } from "@/store/types/types";
+import { FriendRequest, User } from "@/store/types/types";
 
 const userStore = useUserStore();
 const loggedInUser: User | undefined = userStore.loggedInUser;
@@ -46,6 +58,9 @@ const user: Ref<User | undefined> = ref();
 const userDId: string = getUserDIdFromRoute();
 const friends: Ref<Array<User>> = ref([]);
 const loggedUserFriends: Array<User> = userStore.userFriends;
+const canDelete: ComputedRef<boolean> = computed(
+  () => userStore.loggedInUser?.dId === userDId
+);
 
 if (!loggedInUser) {
   pushHome;
@@ -59,5 +74,22 @@ if (!loggedInUser) {
       friends.value = loggedUserFriends;
     }
   })();
+}
+
+async function deleteFr(friendDId: string) {
+  if (loggedInUser) {
+    const friendRequest: FriendRequest = {
+      userDId: loggedInUser.dId,
+      friendDId: friendDId,
+    };
+    const response = await deleteFriendRequest(friendRequest);
+    if (!response) {
+      console.log("Error: No Response on Delete Friend");
+    } else if (response.status !== 204) {
+      console.log(response.statusText);
+    } else {
+      friends.value = await getFriendsByUserDId(userDId);
+    }
+  }
 }
 </script>

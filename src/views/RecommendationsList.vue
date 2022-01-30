@@ -22,7 +22,12 @@
     <p v-if="city" class="lead logo-font text-muted mb-0">
       for {{ city.name }}, {{ city.country }}
     </p>
-    <button type="button" class="btn btn-danger" @click="deleteCi()">
+    <button
+      v-if="canDelete"
+      type="button"
+      class="btn btn-danger"
+      @click="deleteCi()"
+    >
       <i class="bi bi-trash"></i> Delete City
     </button>
   </header>
