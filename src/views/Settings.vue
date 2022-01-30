@@ -14,31 +14,20 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="bi bi-sliders"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Settings</div>
       </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0" />
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
-          <span>Dashboard</span></a
-        >
-      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider" />
 
       <!-- Heading -->
-      <div class="sidebar-heading">Interface</div>
+      <div class="sidebar-heading">Empty</div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="#">
           <i class="bi bi-sliders"></i>
-          <span>Components</span>
+          <span>Empty</span>
         </a>
       </li>
 
@@ -46,7 +35,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="bi bi-sliders"></i>
-          <span>Utilities</span>
+          <span>Empty</span>
         </a>
       </li>
 
@@ -54,13 +43,13 @@
       <hr class="sidebar-divider" />
 
       <!-- Heading -->
-      <div class="sidebar-heading">Addons</div>
+      <div class="sidebar-heading">Empty</div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="bi bi-sliders"></i>
-          <span>Pages</span>
+          <span>Empty</span>
         </a>
       </li>
 
@@ -68,15 +57,18 @@
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="bi bi-sliders"></i>
-          <span>Charts</span></a
+          <span>Empty</span></a
         >
       </li>
 
-      <!-- Nav Item - Tables -->
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="bi bi-sliders"></i>
-          <span>Tables</span></a
+          <span>Delete profile</span></a
         >
       </li>
 
