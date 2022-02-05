@@ -88,7 +88,9 @@ async function deleteFr(friendDId: string) {
     } else if (response.status !== 204) {
       console.log(response.statusText);
     } else {
-      friends.value = await getFriendsByUserDId(userDId);
+      const updatedFriends = await getFriendsByUserDId(loggedInUser.dId);
+      userStore.setLoggedUserFriends(updatedFriends);
+      friends.value = userStore.userFriends;
     }
   }
 }
