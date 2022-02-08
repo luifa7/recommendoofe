@@ -21,21 +21,21 @@
       <hr class="sidebar-divider" />
 
       <!-- Heading -->
-      <div class="sidebar-heading">Empty</div>
+      <div class="sidebar-heading">Your activity</div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
         <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
-          <span>Empty</span>
+          <i class="bi bi-journal-bookmark"></i>
+          <span>Posts</span>
         </a>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
-          <span>Empty</span>
+          <i class="bi bi-envelope"></i>
+          <span>Notifications</span>
         </a>
       </li>
 
@@ -43,21 +43,21 @@
       <hr class="sidebar-divider" />
 
       <!-- Heading -->
-      <div class="sidebar-heading">Empty</div>
+      <div class="sidebar-heading">User</div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
-          <span>Empty</span>
+          <i class="bi bi-person"></i>
+          <span>Info</span>
         </a>
       </li>
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
-          <span>Empty</span></a
+          <i class="bi bi-toggles"></i>
+          <span>Preferences</span></a
         >
       </li>
 
@@ -67,7 +67,7 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <i class="bi bi-sliders"></i>
+          <i class="bi bi-trash"></i>
           <span>Delete profile</span></a
         >
       </li>
