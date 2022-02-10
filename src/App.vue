@@ -90,7 +90,7 @@
           <li class="nav-item">
             <router-link
               :to="{
-                name: 'Settings',
+                name: 'SettingsDeleteUser',
               }"
               class="nav-link"
               ><i class="bi bi-sliders"></i
@@ -123,7 +123,6 @@
       </div>
     </div>
   </nav>
-  <settings-bar v-if="isSettingsArea" />
   <router-view :key="$route.fullPath" />
 </template>
 
@@ -132,16 +131,11 @@ import { useUserStore } from "@/store/userStore";
 import { User } from "@/store/types/types";
 import { computed, ComputedRef } from "vue";
 import { useRoute } from "vue-router";
-import SettingsBar from "@/components/SettingsBar.vue";
 
 const userStore = useUserStore();
 const route = useRoute();
 const loggedInUser: ComputedRef<User | undefined> = computed(
   () => userStore.loggedInUser
-);
-
-const isSettingsArea: ComputedRef<boolean> = computed(() =>
-  route.path.includes("/settings")
 );
 </script>
 

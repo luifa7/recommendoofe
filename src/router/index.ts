@@ -74,9 +74,16 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/settings",
-    name: "Settings",
-    component: () => import("../views/Settings.vue"),
+    component: () => import("../views/settings/Settings.vue"),
+    children: [
+      {
+        path: "delete-account",
+        name: "SettingsDeleteUser",
+        component: () => import("../views/settings/SettingsDeleteUser.vue"),
+      },
+    ],
   },
+
   {
     path: "/about",
     name: "About",

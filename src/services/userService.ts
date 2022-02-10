@@ -1,5 +1,7 @@
 import { CreateUser, FriendRequest, User } from "@/store/types/types";
 import axios, { AxiosResponse } from "axios";
+import { useUserStore } from "@/store/userStore";
+import router from "@/router";
 
 export const API_URL = "http://localhost:5003";
 
@@ -244,4 +246,23 @@ export async function createUser(user: CreateUser) {
     return undefined;
   }
   return response;
+}
+
+export async function deleteUser() {
+  {
+    const userStore = useUserStore();
+    const response = await axios
+      .delete(`${API_URL}/users/${userStore.loggedInUser?.dId}`)
+      .then((response) => response as AxiosResponse)
+      .catch(function (error) {
+        console.log(error);
+      });
+    if (!response) {
+      return undefined;
+    }
+    userStore.logoutUser();
+    router.push({
+      name: "LogoutUser",
+    });
+  }
 }
