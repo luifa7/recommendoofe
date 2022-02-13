@@ -77,12 +77,27 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/settings/Settings.vue"),
     children: [
       {
+        path: "preferences",
+        name: "SettingsPreferences",
+        component: () => import("../views/settings/SettingsPreferences.vue"),
+      },
+      {
+        path: "info",
+        name: "SettingsUserInfo",
+        component: () => import("../views/settings/SettingsUserInfo.vue"),
+      },
+      {
         path: "posts",
         name: "SettingsYourPosts",
         component: () => import("../views/settings/SettingsYourPosts.vue"),
       },
       {
-        path: "delete-account",
+        path: "notifications",
+        name: "SettingsNotifications",
+        component: () => import("../views/settings/SettingsNotifications.vue"),
+      },
+      {
+        path: "delete",
         name: "SettingsDeleteUser",
         component: () => import("../views/settings/SettingsDeleteUser.vue"),
       },

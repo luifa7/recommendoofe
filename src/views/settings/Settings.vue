@@ -7,23 +7,54 @@
       id="accordionSidebar"
     >
       <!-- Sidebar - Brand -->
-      <a
+
+      <router-link
+        :to="{
+          name: 'SettingsPreferences',
+        }"
         class="sidebar-brand d-flex align-items-center justify-content-center"
-        href="#"
       >
-        <div class="sidebar-brand-icon rotate-n-15">
+        <div class="sidebar-brand-icon">
           <i class="bi bi-sliders"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Settings</div>
-      </a>
+      </router-link>
 
       <!-- Divider -->
       <hr class="sidebar-divider" />
 
       <!-- Heading -->
-      <div class="sidebar-heading">Your activity</div>
+      <div class="sidebar-heading">User</div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - Preferences -->
+      <li :class="{ active: isPreferencesArea }" class="nav-item">
+        <router-link
+          :to="{
+            name: 'SettingsPreferences',
+          }"
+          class="nav-link"
+          ><i class="bi bi-toggles"></i> <span>Preferences</span></router-link
+        >
+      </li>
+
+      <!-- Nav Item - User Info -->
+      <li :class="{ active: isInfoArea }" class="nav-item">
+        <router-link
+          :to="{
+            name: 'SettingsUserInfo',
+          }"
+          class="nav-link"
+          ><i class="bi bi-person"></i> <span>Info</span></router-link
+        >
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+      <!-- Heading -->
+      <div class="sidebar-heading">Activity</div>
+
+      <!-- Nav Item - Your posts -->
       <li :class="{ active: isPostsArea }" class="nav-item">
         <router-link
           :to="{
@@ -35,47 +66,29 @@
         >
       </li>
 
-      <!-- Nav Item - Utilities Collapse Menu -->
+      <!-- Nav Item - Notifications -->
       <li :class="{ active: isNotificationsArea }" class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-envelope"></i>
-          <span>Notifications</span>
-        </a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider" />
-
-      <!-- Heading -->
-      <div class="sidebar-heading">User</div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li :class="{ active: isInfoArea }" class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-person"></i>
-          <span>Info</span>
-        </a>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li :class="{ active: isPreferencesArea }" class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-toggles"></i>
-          <span>Preferences</span></a
+        <router-link
+          :to="{
+            name: 'SettingsNotifications',
+          }"
+          class="nav-link"
+          ><i class="bi bi-envelope"></i>
+          <span>Notifications</span></router-link
         >
       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0" />
 
-      <!-- Nav Item - Dashboard -->
+      <!-- Nav Item - Delete Account -->
       <li :class="{ active: isDeleteArea }" class="nav-item">
         <router-link
           :to="{
             name: 'SettingsDeleteUser',
           }"
           class="nav-link"
-          ><i class="bi bi-trash"></i> <span>Delete profile</span></router-link
+          ><i class="bi bi-trash"></i> <span>Delete account</span></router-link
         >
       </li>
 

@@ -90,7 +90,7 @@
           <li class="nav-item">
             <router-link
               :to="{
-                name: 'SettingsDeleteUser',
+                name: 'SettingsPreferences',
               }"
               class="nav-link"
               ><i class="bi bi-sliders"></i
