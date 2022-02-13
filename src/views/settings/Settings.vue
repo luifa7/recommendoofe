@@ -25,10 +25,14 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li :class="{ active: isPostsArea }" class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-journal-bookmark"></i>
-          <span>Posts</span>
-        </a>
+        <router-link
+          :to="{
+            name: 'SettingsYourPosts',
+          }"
+          class="nav-link"
+          ><i class="bi bi-journal-bookmark"></i>
+          <span>Posts</span></router-link
+        >
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->

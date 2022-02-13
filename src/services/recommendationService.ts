@@ -1,4 +1,5 @@
 import { CreateRecommendation, Recommendation } from "@/store/types/types";
+import { useUserStore } from "@/store/userStore";
 import axios, { AxiosResponse } from "axios";
 
 export const API_URL = "http://localhost:5003";
@@ -26,6 +27,24 @@ export async function getRecommendationsByCityDId(
   {
     const recommendations = await axios
       .get(`${API_URL}/cities/${cityDId}/recommendations`)
+      .then((response) => response.data as Array<Recommendation>)
+      .catch((error) => {
+        console.log(error);
+      });
+    if (!recommendations) {
+      return [];
+    }
+    return recommendations;
+  }
+}
+
+export async function getRecommendationsByUserCreatorDId(): Promise<
+  Array<Recommendation>
+> {
+  {
+    const userStore = useUserStore();
+    const recommendations = await axios
+      .get(`${API_URL}/users/${userStore.loggedInUser?.dId}/recommendations`)
       .then((response) => response.data as Array<Recommendation>)
       .catch((error) => {
         console.log(error);
