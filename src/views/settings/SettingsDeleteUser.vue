@@ -9,9 +9,7 @@
       </div>
     </div>
   </section>
-  <div
-    class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-  >
+  <div class="d-grid gap-3 d-flex justify-content-center">
     <button
       type="button"
       class="btn btn-danger btn-lg px-4 me-sm-3"

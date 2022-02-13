@@ -79,6 +79,15 @@ type FriendRequest = {
   friendDId: string;
 };
 
+type Notification = {
+  dId: string;
+  userDId: string;
+  type: string;
+  text: string;
+  wasOpen: string;
+  relatedDId: boolean;
+};
+
 export {
   Recommendation,
   CreateRecommendation,
@@ -87,4 +96,5 @@ export {
   User,
   CreateUser,
   FriendRequest,
+  Notification,
 };

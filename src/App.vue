@@ -90,6 +90,21 @@
           <li class="nav-item">
             <router-link
               :to="{
+                name: 'SettingsNotifications',
+              }"
+              class="nav-link"
+              ><i class="bi bi-envelope"
+                ><div style="position: relative">
+                  <span class="badge badge-danger badge-counter">{{
+                    pendingRequestText
+                  }}</span>
+                </div></i
+              ></router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              :to="{
                 name: 'SettingsPreferences',
               }"
               class="nav-link"
@@ -129,14 +144,31 @@
 <script lang="ts" setup>
 import { useUserStore } from "@/store/userStore";
 import { User } from "@/store/types/types";
-import { computed, ComputedRef } from "vue";
-import { useRoute } from "vue-router";
+import { computed, ComputedRef, ref, Ref } from "vue";
+import { onBeforeRouteUpdate, useRouter } from "vue-router";
+import { getNewNotificationsCount } from "./services/notificationService";
 
 const userStore = useUserStore();
-const route = useRoute();
 const loggedInUser: ComputedRef<User | undefined> = computed(
   () => userStore.loggedInUser
 );
+const pendingRequestText: ComputedRef<string> = computed(() => {
+  if (userStore.unreadNotifications > 9) {
+    return "9+";
+  } else if (userStore.unreadNotifications > 0) {
+    return userStore.unreadNotifications + "";
+  } else {
+    return "";
+  }
+});
+
+const router = useRouter();
+
+router.afterEach(async (to, from) => {
+  if (userStore.loggedInUser) {
+    userStore.setUnreadNotifications(await getNewNotificationsCount());
+  }
+});
 </script>
 
 <style>
@@ -159,5 +191,22 @@ const loggedInUser: ComputedRef<User | undefined> = computed(
 .nav-link-logged .nav-link:hover,
 .nav-link-logged .nav-link:focus {
   color: rgba(255, 255, 255, 0.75);
+}
+.badge {
+  border: 1px solid #000;
+}
+
+.badge-counter {
+  position: absolute;
+  transform: scale(0.5);
+  transform-origin: top right;
+  right: -0.4rem;
+  margin-top: -1.2rem;
+  color: black;
+}
+
+.badge-danger {
+  color: #fff;
+  background-color: #e74a3b;
 }
 </style>

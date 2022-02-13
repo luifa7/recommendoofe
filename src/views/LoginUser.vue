@@ -83,6 +83,7 @@ import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 import { moveUp } from "./helpers";
+import { getNewNotificationsCount } from "@/services/notificationService";
 
 allowOrRedirectToProfile();
 const userStore = useUserStore();
@@ -101,6 +102,7 @@ async function loginUser() {
     userStore.setLoggedUserFriends(friends);
     const cities = await getCitiesByUserDId(myUserDId);
     userStore.setLoggedUserCities(cities);
+    userStore.setUnreadNotifications(await getNewNotificationsCount());
     redirectToUserProfile(user.dId);
   } else {
     showError.value = "Wrong password or username :/";
