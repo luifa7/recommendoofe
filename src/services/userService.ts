@@ -42,7 +42,7 @@ export async function getFriendsDIdsByUserDId(
 ): Promise<string[]> {
   {
     const friendDIds = await axios
-      .get(`${API_URL}/friends/${userDId}`)
+      .get(`${API_URL}/users/${userDId}/friends`)
       .then((response) => response.data as Array<string>)
       .catch((error) => {
         console.log(error);
@@ -59,7 +59,7 @@ export async function getSentFriendRequestsDIdsByUserDId(
 ): Promise<string[]> {
   {
     const friendDIds = await axios
-      .get(`${API_URL}/friends/${userDId}?status=sent`)
+      .get(`${API_URL}/users/${userDId}/friends/sent`)
       .then((response) => response.data as Array<string>)
       .catch((error) => {
         console.log(error);
@@ -75,7 +75,7 @@ export async function getReceivedFriendRequestsDIdsByUserDId(
   userDId: string
 ): Promise<string[]> {
   {
-    const queryUrl = `${API_URL}/friends/${userDId}?status=received`;
+    const queryUrl = `${API_URL}/users/${userDId}/friends/received`;
     const friendDIds = await axios
       .get(queryUrl)
       .then((response) => response.data as Array<string>)
@@ -89,10 +89,13 @@ export async function getReceivedFriendRequestsDIdsByUserDId(
   }
 }
 
-export async function postFriendRequest(friendRequest: FriendRequest) {
+export async function postFriendRequest(
+  userDId: string,
+  friendRequest: FriendRequest
+) {
   {
     const response = await axios
-      .post(`${API_URL}/friends`, friendRequest)
+      .post(`${API_URL}/users/${userDId}/friends`, friendRequest)
       .then((response) => response as AxiosResponse)
       .catch(function (error) {
         console.log(error);
@@ -104,10 +107,10 @@ export async function postFriendRequest(friendRequest: FriendRequest) {
   }
 }
 
-export async function acceptFriendRequest(friendRequest: FriendRequest) {
+export async function acceptFriendRequest(userDId: string, friendDId: string) {
   {
     const response = await axios
-      .put(`${API_URL}/friends`, friendRequest)
+      .put(`${API_URL}/users/${userDId}/friends/${friendDId}/accept`)
       .then((response) => response as AxiosResponse)
       .catch(function (error) {
         console.log(error);
@@ -119,12 +122,10 @@ export async function acceptFriendRequest(friendRequest: FriendRequest) {
   }
 }
 
-export async function deleteFriendRequest(friendRequest: FriendRequest) {
+export async function deleteFriendRequest(userDId: string, friendDId: string) {
   {
     const response = await axios
-      .delete(
-        `${API_URL}/friends/${friendRequest.userDId}?friend=${friendRequest.friendDId}`
-      )
+      .delete(`${API_URL}/users/${userDId}/friends/${friendDId}`)
       .then((response) => response as AxiosResponse)
       .catch(function (error) {
         console.log(error);
@@ -142,7 +143,7 @@ export async function isFriendRequestPending(
 ): Promise<boolean> {
   {
     const isPending = await axios
-      .get(`${API_URL}/friends/${user1DId}/ispending?userid=${user2DId}`)
+      .get(`${API_URL}/users/${user1DId}/friends/${user2DId}/ispending`)
       .then((response) => response.data as boolean)
       .catch((error) => {
         console.log(error);

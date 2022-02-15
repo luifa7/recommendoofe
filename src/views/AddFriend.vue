@@ -188,7 +188,7 @@ import {
   getReceivedFriendRequestsByUserDId,
   getSentFriendRequestsByUserDId,
 } from "@/services/userService";
-import { FriendRequest, User } from "@/store/types/types";
+import { User } from "@/store/types/types";
 
 const userStore = useUserStore();
 const receivedFriendRequests: Ref<Array<User>> = ref([]);
@@ -222,11 +222,7 @@ if (!loggedInUser) {
 
 async function acceptRequest(friendDId: string) {
   if (loggedInUser) {
-    const friendRequest: FriendRequest = {
-      userDId: loggedInUser.dId,
-      friendDId: friendDId,
-    };
-    const response = await acceptFriendRequest(friendRequest);
+    const response = await acceptFriendRequest(loggedInUser.dId, friendDId);
     if (!response) {
       console.log("Error: No Response on Accept Friend Request");
     } else if (response.status !== 200) {
@@ -244,11 +240,7 @@ async function acceptRequest(friendDId: string) {
 
 async function deleteRequest(friendDId: string, isReceived: boolean) {
   if (loggedInUser) {
-    const friendRequest: FriendRequest = {
-      userDId: loggedInUser.dId,
-      friendDId: friendDId,
-    };
-    const response = await deleteFriendRequest(friendRequest);
+    const response = await deleteFriendRequest(loggedInUser.dId, friendDId);
     if (!response) {
       console.log("Error: No Response on Reject Friend Request");
     } else if (response.status !== 204) {

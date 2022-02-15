@@ -10,7 +10,7 @@ export async function getAllNotificationsByUserDId(): Promise<
   {
     const userStore = useUserStore();
     const notifications = await axios
-      .get(`${API_URL}/notifications/${userStore.loggedInUser?.dId}`)
+      .get(`${API_URL}/users/${userStore.loggedInUser?.dId}/notifications`)
       .then((response) => response.data as Array<Notification>)
       .catch((error) => {
         console.log(error);
@@ -29,7 +29,7 @@ export async function getNewNotificationsByUserDId(): Promise<
     const userStore = useUserStore();
     const notifications = await axios
       .get(
-        `${API_URL}/notifications/${userStore.loggedInUser?.dId}?opened=false`
+        `${API_URL}/users/${userStore.loggedInUser?.dId}/notifications/unread`
       )
       .then((response) => response.data as Array<Notification>)
       .catch((error) => {
@@ -47,7 +47,7 @@ export async function getNewNotificationsCount(): Promise<number> {
     const userStore = useUserStore();
     const notificationsCount = await axios
       .get(
-        `${API_URL}/users/${userStore.loggedInUser?.dId}/notifications-count`
+        `${API_URL}/users/${userStore.loggedInUser?.dId}/notifications/count`
       )
       .then((response) => response.data as number)
       .catch((error) => {

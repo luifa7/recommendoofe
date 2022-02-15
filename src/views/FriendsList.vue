@@ -50,7 +50,7 @@ import {
   getUserByDId,
 } from "@/services/userService";
 import FriendCard from "@/components/FriendCard.vue";
-import { FriendRequest, User } from "@/store/types/types";
+import { User } from "@/store/types/types";
 
 const userStore = useUserStore();
 const loggedInUser: User | undefined = userStore.loggedInUser;
@@ -78,11 +78,7 @@ if (!loggedInUser) {
 
 async function deleteFr(friendDId: string) {
   if (loggedInUser) {
-    const friendRequest: FriendRequest = {
-      userDId: loggedInUser.dId,
-      friendDId: friendDId,
-    };
-    const response = await deleteFriendRequest(friendRequest);
+    const response = await deleteFriendRequest(loggedInUser.dId, friendDId);
     if (!response) {
       console.log("Error: No Response on Delete Friend");
     } else if (response.status !== 204) {

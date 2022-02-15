@@ -148,10 +148,9 @@ if (!loggedInUser) {
 async function sendFriendRequest() {
   if (loggedInUser) {
     const friendRequest: FriendRequest = {
-      userDId: loggedInUser.dId,
       friendDId: userDId,
     };
-    const response = await postFriendRequest(friendRequest);
+    const response = await postFriendRequest(loggedInUser.dId, friendRequest);
     if (!response) {
       console.log("Error: No Response on Send Friend Request");
     } else if (response.status !== 201) {

@@ -75,7 +75,6 @@ type CreateUser = {
 };
 
 type FriendRequest = {
-  userDId: string;
   friendDId: string;
 };
 
