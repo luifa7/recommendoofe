@@ -79,7 +79,11 @@ import {
   redirectToUserProfile,
 } from "@/services/authService";
 import { useUserStore } from "@/store/userStore";
-import { getFriendsByUserDId, getUserByDId } from "@/services/userService";
+import {
+  getFriendsByUserDId,
+  getUserByDId,
+  getUserByUsername,
+} from "@/services/userService";
 import { User } from "@/store/types/types";
 import { getCitiesByUserDId } from "@/services/cityService";
 import { moveUp } from "./helpers";
@@ -92,15 +96,15 @@ const password: Ref<string> = ref("");
 const showError: Ref<string> = ref("");
 
 async function loginUser() {
-  // const myUserDId = "19b998f3-3483-489c-8b5a-73ca189dbd7e";
-  // const myUserDId = "3fb454fc-5547-4734-8323-5f5bcbd9db72";
-  const myUserDId = "3db99fe8-caf1-409c-bd02-323c63b4a4fd";
-  const user: User | undefined = await getUserByDId(myUserDId);
-  if (user) {
+  const userByUserName: Array<User> = await getUserByUsername(
+    username.value.toLowerCase()
+  );
+  if (userByUserName.length > 0) {
+    const user = userByUserName[0];
     userStore.loginUser(user);
-    const friends = await getFriendsByUserDId(myUserDId);
+    const friends = await getFriendsByUserDId(user.dId);
     userStore.setLoggedUserFriends(friends);
-    const cities = await getCitiesByUserDId(myUserDId);
+    const cities = await getCitiesByUserDId(user.dId);
     userStore.setLoggedUserCities(cities);
     userStore.setUnreadNotifications(await getNewNotificationsCount());
     redirectToUserProfile(user.dId);
