@@ -147,6 +147,7 @@ import { User } from "@/store/types/types";
 import { computed, ComputedRef, ref, Ref } from "vue";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import { getNewNotificationsCount } from "./services/notificationService";
+import { getFriendsByUserDId } from "./services/userService";
 
 const userStore = useUserStore();
 const loggedInUser: ComputedRef<User | undefined> = computed(
@@ -167,6 +168,9 @@ const router = useRouter();
 router.afterEach(async (to, from) => {
   if (userStore.loggedInUser) {
     userStore.setUnreadNotifications(await getNewNotificationsCount());
+    userStore.setLoggedUserFriends(
+      await getFriendsByUserDId(userStore.loggedInUser.dId)
+    );
   }
 });
 </script>
