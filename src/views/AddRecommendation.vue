@@ -262,8 +262,8 @@ function addTag() {
 }
 
 function addTagIfNotDuplicated(tag: string) {
-  if (!tags.value.includes(tag)) {
-    tags.value.push(tag);
+  if (tag.trim().length > 0 && !tags.value.includes(tag.trim())) {
+    tags.value.push(tag.trim());
   }
 }
 
@@ -283,6 +283,7 @@ function resetAllInputs() {
   facebook.value = "";
   otherLink.value = "";
   tagInput.value = "";
+  tags.value = [];
 }
 
 async function addRecommendation() {
