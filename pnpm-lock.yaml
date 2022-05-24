@@ -14,7 +14,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue: ^8.7.1
   pinia: ^2.0.14
-  pnpm: ^6.32.16
+  pnpm: ^7.1.5
   prettier: ^2.6.2
   typescript: ~4.6.4
   vite: ^2.9.9
@@ -40,7 +40,7 @@ devDependencies:
   eslint: 8.16.0
   eslint-plugin-prettier: 4.0.0_yzlwycfcjzj3trzruaflx2c53m
   eslint-plugin-vue: 8.7.1_eslint@8.16.0
-  pnpm: 6.32.16
+  pnpm: 7.1.5
   prettier: 2.6.2
   typescript: 4.6.4
 
@@ -1335,9 +1335,9 @@ packages:
       vue-demi: 0.12.1_vue@3.2.36
     dev: false
 
-  /pnpm/6.32.16:
-    resolution: {integrity: sha512-SIcXTMtLHIy3JIzK81rtUxnOJXGyHLNJ7KLNPmRXyLNnrM9xC7eAaxRNSKfWSLAjNjRehIaQeEfvQfjqHgfcGg==}
-    engines: {node: '>=12.17'}
+  /pnpm/7.1.5:
+    resolution: {integrity: sha512-Mkdb7mHUPbzsPjvKbhvNgHPPIX5NZlLcm7S6uFJWPJrkiiWnrq7tbqWHC09Spzwvao92R64mo6a6gGbrERNbrA==}
+    engines: {node: '>=14.19'}
     hasBin: true
     dev: true
 
