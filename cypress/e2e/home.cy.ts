@@ -1,7 +1,11 @@
-describe("My First Test", () => {
-  it("Gets, types and asserts", () => {
+describe("The Home Page", () => {
+  it("successfully loads", () => {
+    cy.visit("/"); // change URL to match your dev URL
+  });
+
+  it("Goes to Login on button click", () => {
     // Given
-    cy.visit("https://recommendoo.de/");
+    cy.visit("/");
 
     // When
     cy.get(".bi-key").click();

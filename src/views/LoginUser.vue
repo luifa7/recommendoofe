@@ -27,6 +27,7 @@
                   id="username"
                   type="text"
                   placeholder="Enter your username..."
+                  data-testid="input-username"
                   v-model="username"
                   required
                 />
@@ -40,6 +41,7 @@
                   id="password"
                   type="password"
                   placeholder="Enter your password..."
+                  data-testid="input-password"
                   v-model="password"
                   required
                 />
@@ -62,7 +64,10 @@
         <div class="text-center">
           <h5>
             You don't have an account?
-            <router-link :to="{ name: 'RegisterUser' }" class="nav-link"
+            <router-link
+              :to="{ name: 'RegisterUser' }"
+              class="nav-link"
+              data-testid="register-button"
               >Register here!</router-link
             >
           </h5>

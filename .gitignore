@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 # pnpm 
 .pnpm-debug.log
+
+# cypress
+cypress/videos
+cypress/screenshots
