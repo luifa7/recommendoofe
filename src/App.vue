@@ -14,6 +14,7 @@
         :to="{ name: 'Home' }"
         class="navbar-brand logo-font d-none d-sm-inline-block"
         id="name-logo"
+        data-testid="logo"
         >Recommendoo</router-link
       >
       <router-link
@@ -21,6 +22,7 @@
         :to="{ name: 'Home' }"
         class="navbar-brand logo-font"
         id="name-logo"
+        data-testid="logo"
         >Recommendoo</router-link
       >
 
@@ -120,17 +122,26 @@
         <!-- No user logged -->
         <ul v-else class="nav justify-content-end">
           <li class="nav-item">
-            <router-link :to="{ name: 'Home' }" class="nav-link"
+            <router-link
+              :to="{ name: 'Home' }"
+              class="nav-link"
+              data-testid="home-icon"
               ><i class="bi bi-house-door"></i
             ></router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'About' }" class="nav-link"
+            <router-link
+              :to="{ name: 'About' }"
+              class="nav-link"
+              data-testid="about-icon"
               ><i class="bi bi-info-square"></i
             ></router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'LoginUser' }" class="nav-link"
+            <router-link
+              :to="{ name: 'LoginUser' }"
+              class="nav-link"
+              data-testid="login-icon"
               ><i class="bi bi-key"></i
             ></router-link>
           </li>
