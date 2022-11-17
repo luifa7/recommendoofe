@@ -7,7 +7,7 @@ specifiers:
   '@types/node': ^17.0.10
   '@typescript-eslint/eslint-plugin': ^5.42.1
   '@typescript-eslint/parser': ^5.42.1
-  '@vitejs/plugin-vue': ^2.3.4
+  '@vitejs/plugin-vue': ^3.0.0
   '@vue/compiler-sfc': ^3.2.45
   '@vue/eslint-config-prettier': ^7.0.0
   '@vue/eslint-config-typescript': ^11.0.2
@@ -28,7 +28,7 @@ specifiers:
   vue-router: ^4.1.6
 
 dependencies:
-  '@vitejs/plugin-vue': 2.3.4_vite@3.2.4+vue@3.2.45
+  '@vitejs/plugin-vue': 3.2.0_vite@3.2.4+vue@3.2.45
   axios: 1.1.3
   core-js: 3.26.1
   cypress: 11.1.0
@@ -443,11 +443,11 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.3.4_vite@3.2.4+vue@3.2.45:
-    resolution: {integrity: sha512-IfFNbtkbIm36O9KB8QodlwwYvTEsJb4Lll4c2IwB3VHc2gie2mSPtSzL0eYay7X2jd/2WX02FjSGTWR6OPr/zg==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue/3.2.0_vite@3.2.4+vue@3.2.45:
+    resolution: {integrity: sha512-E0tnaL4fr+qkdCNxJ+Xd0yM31UwMkQje76fsDVBBUCoGOUPexu2VDUYHL8P4CwV+zMvWw6nlRw19OnRKmYAJpw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
       vite: 3.2.4_@types+node@17.0.10
