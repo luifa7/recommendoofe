@@ -13,7 +13,7 @@ specifiers:
   '@vue/eslint-config-typescript': ^11.0.2
   axios: ^0.27.2
   core-js: ^3.26.1
-  cypress: ^10.11.0
+  cypress: ^11.1.0
   eslint: ^8.27.0
   eslint-plugin-chai-friendly: ^0.7.2
   eslint-plugin-cypress: ^2.12.1
@@ -31,7 +31,7 @@ dependencies:
   '@vitejs/plugin-vue': 2.3.4_vite@2.9.15+vue@3.2.45
   axios: 0.27.2
   core-js: 3.26.1
-  cypress: 10.11.0
+  cypress: 11.1.0
   pinia: 2.0.23_zwu2zepfy3m6u2gunxlolp35gi
   vite: 2.9.15
   vue: 3.2.45
@@ -864,8 +864,8 @@ packages:
     resolution: {integrity: sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==}
     dev: false
 
-  /cypress/10.11.0:
-    resolution: {integrity: sha512-lsaE7dprw5DoXM00skni6W5ElVVLGAdRUUdZjX2dYsGjbY/QnpzWZ95Zom1mkGg0hAaO/QVTZoFVS7Jgr/GUPA==}
+  /cypress/11.1.0:
+    resolution: {integrity: sha512-kzizbG9s3p3ahWqxUwG/21NqLWEGtScMevMyUPeYlcmMX9RzVxWM18MkA3B4Cb3jKx72hSyIE2mHgHymfCM1bg==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     requiresBuild: true
