@@ -34,3 +34,23 @@ steps:
       pnpm install
       pnpm run build
     displayName: "pnpm install and build"
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: '*.tgz' 
+      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
+    displayName: 'Copy pnpm package'
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: 'package.json' 
+      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
+    displayName: 'Copy package.json'   
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)/pnpm'
+      artifactName: pnpm
+    displayName: 'Publish pnpm artifact'
