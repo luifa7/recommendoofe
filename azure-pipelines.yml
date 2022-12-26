@@ -10,6 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
   pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
 
 steps:
@@ -38,7 +40,7 @@ steps:
   - task: CopyFiles@2
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)'
-      contents: '*.tgz' 
+      contents: '**/dist/*' 
       targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
     displayName: 'Copy pnpm package'
 
@@ -48,9 +50,11 @@ steps:
       contents: 'package.json' 
       targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
     displayName: 'Copy package.json'   
-
-  - task: PublishPipelineArtifact@1
+  
+  - task: PublishBuildArtifacts@1
+    name: 'PublishBuildArtifacts'
+    displayName: 'Publish build artifacts'
     inputs:
-      targetPath: '$(Build.ArtifactStagingDirectory)/pnpm'
-      artifactName: pnpm
-    displayName: 'Publish pnpm artifact'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/pnpm'
+      ArtifactName: 'RecommendooUI'
+      publishLocation: 'Container'
