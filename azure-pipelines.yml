@@ -36,18 +36,20 @@ steps:
       pnpm install
       pnpm run build
     displayName: "pnpm install and build"
-
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: '$(Build.SourcesDirectory)'
-      contents: 'dist/assets/*' 
-      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
-    displayName: 'Copy assets'
   
   - task: CopyFiles@2
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)'
-      contents: 'dist/*' 
+      contents: '**/assets/*.*'
+      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm/assets
+    displayName: 'Copy assets'   
+  
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: |
+        '**/dist/*.ico'
+        '**/assets/*.html'
       targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
     displayName: 'Copy resources'   
 
