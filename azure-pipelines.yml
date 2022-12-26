@@ -40,8 +40,8 @@ steps:
   - task: CopyFiles@2
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)'
-      contents: 'dist/assets/*.*'
-      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm/assets
+      contents: 'dist/assets/*'
+      targetFolder: $(Build.ArtifactStagingDirectory)/pnpm
     displayName: 'Copy assets'   
   
   - task: CopyFiles@2
