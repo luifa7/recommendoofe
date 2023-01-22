@@ -5,7 +5,7 @@
     >
       <div class="col-auto">
         <div class="small m-0 text-white logo-font">
-          Copyright &copy; Recommendoo 2022
+          Copyright &copy; Recommendoo 2023
         </div>
       </div>
       <div class="col-auto">

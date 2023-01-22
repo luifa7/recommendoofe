@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomePage from "../views/HomePage.vue";
+import PathNotFound from "../views/PathNotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -110,6 +111,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutPage.vue"),
   },
+  { path: "/:pathMatch(.*)*", component: PathNotFound },
 ];
 
 const router = createRouter({
