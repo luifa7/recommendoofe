@@ -1,7 +1,7 @@
 import { City, CreateCity } from "@/store/types/types";
 import axios, { AxiosResponse } from "axios";
 
-export const API_URL = "http://localhost:5003";
+export const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export async function getCityByDId(cityDId: string): Promise<undefined | City> {
   {

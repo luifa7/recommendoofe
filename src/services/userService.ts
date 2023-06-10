@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { useUserStore } from "@/store/userStore";
 import router from "@/router";
 
-export const API_URL = "http://localhost:5003";
+export const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export async function getUserByDId(userDId: string): Promise<undefined | User> {
   {
