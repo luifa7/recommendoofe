@@ -29,6 +29,16 @@
               >
                 {{ showError }}
               </div>
+              <!-- Google Maps Autocomplete-->
+              <div class="form-floating mb-3">
+                <input 
+                class="form-control"
+                id="google-maps-input"
+                ref="cityInput" 
+                type="text" 
+                placeholder="Search for a city" 
+                />
+              </div>
               <!-- Name input-->
               <div class="form-floating mb-3">
                 <input
@@ -96,11 +106,12 @@
 
 <script lang="ts" setup>
 import { CreateCity } from "@/store/types/types";
-import { Ref, ref } from "vue";
+import { Ref, ref, onMounted } from "vue";
 import { createCity, getCitiesByUserDId } from "@/services/cityService";
 import { getUserDIdFromRoute, moveUp } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { useUserStore } from "@/store/userStore";
+import { loadGoogleMapsAPI } from '@/utils/loadGoogleMapsAPI';
 
 allowOrRedirectToHome();
 const userStore = useUserStore();
@@ -111,6 +122,57 @@ const name: Ref<string> = ref("");
 const country: Ref<string> = ref("");
 const photo: Ref<string> = ref("");
 const isVisited: Ref<boolean> = ref(false);
+
+
+const cityInput = ref<HTMLInputElement | null>(null);
+  let options = {
+  types: ['(cities)']
+};
+let autocomplete: google.maps.places.Autocomplete;
+if (cityInput.value) {
+  autocomplete = new google.maps.places.Autocomplete(cityInput.value, options);
+}
+
+  onMounted(async () => {
+  await loadGoogleMapsAPI();
+
+  // Add a delay before initializing the Autocomplete service
+  setTimeout(() => {
+    if (cityInput.value) {
+      autocomplete = new google.maps.places.Autocomplete(cityInput.value, {
+        fields: ['address_components'],
+      });
+
+      autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+  }, 2000);  // 2 seconds delay
+});
+
+
+function onPlaceChanged() {
+  let place = autocomplete.getPlace();
+  let mapsCity, mapsCountry;
+
+  if (place.address_components){
+
+    for (let i = 0; i < place.address_components.length; i++) {
+    let component = place.address_components[i];
+    for (let j = 0; j < component.types.length; j++) {
+      if (component.types[j] === 'locality' || component.types[j] === 'administrative_area_level_1' || 
+          component.types[j] === 'administrative_area_level_2' || component.types[j] === 'administrative_area_level_3' ||
+          component.types[j] === 'administrative_area_level_4') {
+        mapsCity = component.long_name;
+      } else if (component.types[j] === 'country') {
+        mapsCountry = component.long_name;
+      }
+    }
+  }
+
+  name.value =  mapsCity || "";
+  country.value = mapsCountry || "";
+  }
+  }
+
 
 function resetAllInputs() {
   name.value = "";
