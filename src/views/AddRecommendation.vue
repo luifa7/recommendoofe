@@ -35,6 +35,16 @@
               >
                 {{ showError }}
               </div>
+              <!-- Google Maps Autocomplete-->
+              <div class="form-floating mb-3">
+                <input 
+                class="form-control"
+                id="google-maps-input"
+                ref="placeInput" 
+                type="text" 
+                placeholder="Search for a place" 
+                />
+              </div>
               <!-- Place name input-->
               <div class="form-floating mb-3">
                 <input
@@ -46,6 +56,18 @@
                   required
                 />
                 <label for="place-name">Name of the place</label>
+              </div>
+              <!-- Address input-->
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="address"
+                  type="text"
+                  placeholder="Enter str. and str. nr. ..."
+                  v-model="address"
+                  required
+                />
+                <label for="address">Street and street number</label>
               </div>
               <!-- Title input-->
               <div class="form-floating mb-3">
@@ -72,21 +94,6 @@
                 ></textarea>
                 <label for="text">Text</label>
               </div>
-              <!-- Address input-->
-              <div class="form-floating mb-3">
-                <input
-                  class="form-control"
-                  id="address"
-                  type="text"
-                  placeholder="Enter str. and str. nr. ..."
-                  v-model="address"
-                  required
-                />
-                <label for="address">Street and street number</label>
-              </div>
-              <div>
-    <input ref="placeInput" type="text" placeholder="Search for a place" />
-  </div>
               <!-- Google Maps input-->
               <div class="form-floating mb-3">
                 <input
@@ -210,6 +217,7 @@ import { useUserStore } from "@/store/userStore";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
 import { pushHome, redirectToUserProfile } from "@/services/authService";
 import { getCityByDId } from "@/services/cityService";
+import { loadGoogleMapsAPI } from '@/utils/loadGoogleMapsAPI';
 
 const userStore = useUserStore();
 const userDId: string = getUserDIdFromRoute();
@@ -243,27 +251,19 @@ if (!loggedInUser) {
 
 onMounted(async () => {
   await loadGoogleMapsAPI();
-  if (placeInput.value) {
-    autocomplete = new google.maps.places.Autocomplete(placeInput.value, {
-      fields: ['name', 'formatted_address', 'types'],
-    });
 
-    autocomplete.addListener('place_changed', onPlaceChanged);
-  }
+  // Add a delay before initializing the Autocomplete service
+  setTimeout(() => {
+    if (placeInput.value) {
+      autocomplete = new google.maps.places.Autocomplete(placeInput.value, {
+        fields: ['name', 'formatted_address', 'types'],
+      });
+
+      autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+  }, 2000);  // 2 seconds delay
 });
 
-async function loadGoogleMapsAPI() {
-  return new Promise<void>((resolve) => {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      resolve();
-    };
-    document.body.appendChild(script);
-  });
-}
 
 function onPlaceChanged() {
   const place: google.maps.places.PlaceResult = autocomplete.getPlace();
