@@ -4,7 +4,6 @@
   
   <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY;
   const props = defineProps<{ address: string, city: string, country: string }>();
   
   let fullAddress = props.address + ", " + props.city + ", " + props.country;
@@ -13,7 +12,7 @@ import { ref, onMounted } from 'vue';
 
   onMounted(async () => {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}`;
     script.async = true;
     document.head.appendChild(script);
   
