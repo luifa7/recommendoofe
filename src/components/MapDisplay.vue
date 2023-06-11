@@ -24,11 +24,11 @@ import { ref, onMounted } from 'vue';
           if (mapElement.value) {
             const map = new google.maps.Map(mapElement.value, {
               zoom: 15,
-              center: results[0].geometry.location,
+              center: results?.[0]?.geometry?.location || { lat: 0, lng: 0 },
             });
             new google.maps.Marker({
               map,
-              position: results[0].geometry.location,
+                position: results?.[0]?.geometry?.location || { lat: 0, lng: 0 },
             });
           } else {
             console.error("Map element not found");

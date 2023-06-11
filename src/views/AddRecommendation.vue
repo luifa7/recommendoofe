@@ -270,7 +270,7 @@ function onPlaceChanged() {
 
   // Check if the 'types' array contains 'street_address' or 'route':
   if (!place.types?.includes('street_address') && !place.types?.includes('route')) {
-  placeName.value = place.name;
+  placeName.value = place.name || "";
 }
 
   address.value = place.formatted_address || "";
