@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/google.maps": "^3.53.4",
     "@types/googlemaps": "^3.43.3",
     "@vitejs/plugin-vue": "^3.2.0",
     "axios": "^1.2.1",

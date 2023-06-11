@@ -84,6 +84,9 @@
                 />
                 <label for="address">Street and street number</label>
               </div>
+              <div>
+    <input ref="placeInput" type="text" placeholder="Search for a place" />
+  </div>
               <!-- Google Maps input-->
               <div class="form-floating mb-3">
                 <input
@@ -201,7 +204,7 @@
 
 <script lang="ts" setup>
 import { City, CreateRecommendation, User } from "@/store/types/types";
-import { computed, ComputedRef, Ref, ref } from "vue";
+import { onMounted , Ref, ref } from "vue";
 import { createRecommendation } from "@/services/recommendationService";
 import { useUserStore } from "@/store/userStore";
 import { getCityDIdFromRoute, getUserDIdFromRoute, moveUp } from "./helpers";
@@ -227,12 +230,50 @@ const tagInput: Ref<string> = ref("");
 const tags: Ref<Array<string>> = ref([]);
 const loggedInUser: User | undefined = userStore.loggedInUser;
 
+let autocomplete: google.maps.places.Autocomplete;
+const placeInput = ref<HTMLInputElement | null>(null);
+
 if (!loggedInUser) {
   pushHome;
 } else {
   (async () => {
     city.value = await getCityByDId(getCityDIdFromRoute());
   })();
+}
+
+onMounted(async () => {
+  await loadGoogleMapsAPI();
+  if (placeInput.value) {
+    autocomplete = new google.maps.places.Autocomplete(placeInput.value, {
+      fields: ['name', 'formatted_address', 'types'],
+    });
+
+    autocomplete.addListener('place_changed', onPlaceChanged);
+  }
+});
+
+async function loadGoogleMapsAPI() {
+  return new Promise<void>((resolve) => {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      resolve();
+    };
+    document.body.appendChild(script);
+  });
+}
+
+function onPlaceChanged() {
+  const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+  // Check if the 'types' array contains 'street_address' or 'route':
+  if (!place.types?.includes('street_address') && !place.types?.includes('route')) {
+  placeName.value = place.name;
+}
+
+  address.value = place.formatted_address || "";
 }
 
 function addTag() {
