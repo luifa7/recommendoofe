@@ -2,7 +2,7 @@ import { useUserStore } from "@/store/userStore";
 import { Notification } from "@/store/types/types";
 import axios, { AxiosResponse } from "axios";
 
-export const API_URL = import.meta.env.VITE_APP_API_URL;
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export async function getAllNotificationsByUserDId(): Promise<
   Array<Notification>

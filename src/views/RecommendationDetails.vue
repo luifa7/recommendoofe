@@ -98,7 +98,12 @@
               :recommendation="recommendation"
               :city="city"
             />
-            <google-maps-iframe :maps-url="recommendation.maps" />
+            <map-display 
+            v-if="city"
+            :address="recommendation.address" 
+            :city="city.name"
+            :country="city.country" 
+            />
           </article>
         </div>
       </div>
@@ -110,7 +115,7 @@
 import { computed, ComputedRef, Ref, ref } from "vue";
 import router from "@/router";
 import DetailsInfoCard from "@/components/DetailsInfoCard.vue";
-import GoogleMapsIframe from "@/components/GoogleMapsIframe.vue";
+import MapDisplay from "@/components/MapDisplay.vue";
 import { getDateFromDatetime, getRecommendationDIdFromRoute } from "./helpers";
 import { allowOrRedirectToHome } from "@/services/authService";
 import { getUserByDId } from "@/services/userService";
